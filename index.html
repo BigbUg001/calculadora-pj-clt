@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora CLT vs PJ [PRECISA] - Otimizador de Pró-Labore</title>
-    <meta name="description" content="A calculadora mais precisa para comparar Salário Líquido CLT vs PJ. Inclui Alíquota Efetiva do Simples Nacional, MEI e otimização automática do Fator R.">
+    <title>Calculadora CLT vs PJ [V5] - Otimizador e Custo Empresa</title>
+    <meta name="description" content="A calculadora mais precisa para comparar Salário (CLT) vs Líquido (PJ). Inclui otimização de Fator R, Vale-Transporte e a visão de Custo para Empresa.">
     
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +16,15 @@
     <header>
         <h1>Comparador Definitivo: CLT vs PJ</h1>
         <p>Insira os valores nos cenários para descobrir a opção mais rentável.</p>
+        
+        <div class="visao-container">
+            <label class="visao-label" id="label-colaborador">Visão Colaborador</label>
+            <label class="toggle-switch">
+                <input type="checkbox" id="visao-toggle">
+                <span class="slider"></span>
+            </label>
+            <label class="visao-label" id="label-empresa">Visão Empresa</label>
+        </div>
     </header>
 
     <main class="container">
@@ -48,6 +57,14 @@
                         <label for="clt-outros-descontos">Outros Descontos</label>
                         <input type="number" id="clt-outros-descontos" placeholder="R$ 0" value="0">
                     </div>
+                    <div class="input-group vt-group">
+                        <label for="clt-vt-gasto">Gasto com Transporte (mês)</label>
+                        <input type="number" id="clt-vt-gasto" placeholder="R$ 300" value="0">
+                    </div>
+                </div>
+                <div class="checkbox-group vt-check">
+                    <input type="checkbox" id="clt-receber-vt">
+                    <label for="clt-receber-vt">Receber VT (com desconto de 6%)</label>
                 </div>
                 <div class="checkbox-group">
                     <input type="checkbox" id="clt-incluir-fgts" checked>
@@ -56,7 +73,7 @@
             </section>
 
             <section class="card" id="card-pj">
-                <h2><span class="cor-pj">■</span> Cenário PJ</h2>
+                 <h2><span class="cor-pj">■</span> Cenário PJ</h2>
                 
                 <div class="input-group">
                     <label for="pj-regime">Regime de Tributação</label>
@@ -80,11 +97,10 @@
                         <div class="input-group">
                             <label for="pj-anexo">Anexo do Simples</label>
                             <select id="pj-anexo">
-                                <option value="v">Anexo V (Ex: Consultoria, Eng.)</option>
+                                <option value="v">Anexo V (Ex: Consultoria)</option>
                                 <option value="iii">Anexo III (Ex: TI, Saúde)</option>
                             </select>
                         </div>
-                        
                         <div class="input-group">
                             <label for="pj-estrategia-prolabore">Estratégia de Pró-Labore</label>
                             <select id="pj-estrategia-prolabore">
@@ -92,7 +108,6 @@
                                 <option value="minimo">Usar Pró-labore Mínimo</option>
                             </select>
                         </div>
-                        
                         <div class="input-group">
                             <label for="pj-contabilidade">Contabilidade (mês)</label>
                             <input type="number" id="pj-contabilidade" placeholder="R$ 150" value="0">
@@ -106,89 +121,78 @@
 
                 <div class="pj-inputs" id="pj-mei-inputs" style="display: none;">
                     <div class="card-grid">
-                        <div class="input-group">
-                            <label for="pj-faturamento-mei">Faturamento Bruto (mês)</label>
-                            <input type="number" id="pj-faturamento-mei" placeholder="R$ 6.000">
-                        </div>
-                        <div class="input-group">
-                            <label for="pj-custo-mei">Custo Fixo DAS-MEI (mês)</label>
-                            <input type="number" id="pj-custo-mei" placeholder="R$ 72">
-                        </div>
-                        <div class="input-group">
-                            <label for="pj-outros-mei">Custos Fixos (Saúde, VR, etc)</label>
-                            <input type="number" id="pj-outros-mei" placeholder="R$ 700" value="0">
-                        </div>
+                        <div class="input-group"><label for="pj-faturamento-mei">Faturamento Bruto (mês)</label><input type="number" id="pj-faturamento-mei" placeholder="R$ 6.000"></div>
+                        <div class="input-group"><label for="pj-custo-mei">Custo Fixo DAS-MEI (mês)</label><input type="number" id="pj-custo-mei" placeholder="R$ 72"></div>
+                        <div class="input-group"><label for="pj-outros-mei">Custos Fixos (Saúde, VR, etc)</label><input type="number" id="pj-outros-mei" placeholder="R$ 700" value="0"></div>
                     </div>
-                     <small class="card-footer-note">Atenção: O faturamento máximo do MEI é R$ 81.000/ano (média de R$ 6.750/mês).</small>
+                    <small class="card-footer-note">Atenção: O faturamento máximo do MEI é R$ 81.000/ano (média de R$ 6.750/mês).</small>
                 </div>
-
                 <div class="pj-inputs" id="pj-manual-inputs" style="display: none;">
                     <div class="card-grid">
-                        <div class="input-group">
-                            <label for="pj-faturamento-manual">Faturamento Bruto (mês)</label>
-                            <input type="number" id="pj-faturamento-manual" placeholder="R$ 10.000">
-                        </div>
-                        <div class="input-group">
-                            <label for="pj-taxa-manual">Alíquota de Imposto (%)</label>
-                            <input type="number" id="pj-taxa-manual" placeholder="10">
-                        </div>
-                        <div class="input-group">
-                            <label for="pj-custos-fixos-manual">Todos os Custos Fixos (mês)</label>
-                            <input type="number" id="pj-custos-fixos-manual" placeholder="R$ 850" value="0">
-                        </div>
+                        <div class="input-group"><label for="pj-faturamento-manual">Faturamento Bruto (mês)</label><input type="number" id="pj-faturamento-manual" placeholder="R$ 10.000"></div>
+                        <div class="input-group"><label for="pj-taxa-manual">Alíquota de Imposto (%)</label><input type="number" id="pj-taxa-manual" placeholder="10"></div>
+                        <div class="input-group"><label for="pj-custos-fixos-manual">Todos os Custos Fixos (mês)</label><input type="number" id="pj-custos-fixos-manual" placeholder="R$ 850" value="0"></div>
                     </div>
                 </div>
             </section>
         </div>
 
-        <button id="btn-calcular">Comparar Cenários</button>
+        <div class="botoes-container">
+            <button id="btn-calcular">
+                <span id="btn-text">Comparar Cenários</span>
+                <span id="btn-spinner" class="spinner" style="display: none;"></span>
+            </button>
+            <button id="btn-share" class="btn-secundario">Compartilhar Simulação</button>
+        </div>
 
         <div id="resultado-container" class="resultado-grid">
+            <div class="resultado-col clt" id="resultado-clt-col" style="display: none;">
+                <h3 id="clt-resultado-titulo"><span class="cor-clt">■</span> Resumo Mensal CLT</h3>
+                <ul id="clt-resultado-lista">
+                    </ul>
             </div>
+            
+            <div class="resultado-col pj" id="resultado-pj-col" style="display: none;">
+                <h3 id="pj-resultado-titulo"><span class="cor-pj">■</span> Resumo Mensal PJ</h3>
+                <ul id="pj-resultado-lista">
+                    </ul>
+            </div>
+        </div>
 
         <div id="anual-container" style="display: none;">
              </div>
 
         <article class="card conteudo-seo">
-            <h2>Como Usar a Calculadora</h2>
+            <h2>Como Usar a Calculadora (Metodologia)</h2>
             <p>Esta ferramenta foi desenhada para ser a mais precisa do mercado. Siga os passos para uma comparação correta:</p>
             
-            <h3>1. Cenário CLT</h3>
+            <h3>1. Escolha sua Visão (Colaborador ou Empresa)</h3>
+            <p>Use o botão no topo da página. A "Visão Colaborador" foca no seu salário/pacote líquido. A "Visão Empresa" calcula o custo total que uma empresa tem para te contratar em cada modalidade.</p>
+
+            <h3>2. Cenário CLT</h3>
             <ul>
-                <li><strong>Provisão (13º + Férias):</strong> A calculadora já provisiona automaticamente 19.44% do seu bruto (13º + Férias + 1/3) no "Pacote Total". Isso é essencial para uma comparação justa com o PJ, que não tem esses benefícios.</li>
-                <li><strong>Incluir FGTS:</strong> O FGTS não cai na sua conta, mas é parte da sua remuneração. Marque esta caixa para incluí-lo no "pacote" total.</li>
+                <li><strong>Vale-Transporte (VT):</strong> Adicione seu gasto mensal e marque a caixa se você recebe o benefício. A calculadora aplicará o desconto correto de 6% (limitado ao seu gasto).</li>
+                <li><strong>Provisão (13º + Férias):</strong> A calculadora já provisiona automaticamente 19.44% do seu bruto no "Pacote Total". Isso é essencial para uma comparação justa com o PJ.</li>
             </ul>
 
-            <h3>2. Cenário PJ</h3>
+            <h3>3. Cenário PJ</h3>
             <ul>
-                <li><strong>Regime de Tributação:</strong> Escolha entre MEI (mais simples, com limite de R$ 81.000/ano), Simples Nacional (o mais comum) ou Manual (se você já sabe sua alíquota).</li>
-                <li><strong>Se escolher "Simples Nacional":</strong>
-                    <ul>
-                        <li><strong>Receita Bruta (Últimos 12 meses):</strong> O ponto-chave. A Receita Federal usa sua média de faturamento para calcular sua alíquota real (Alíquota Efetiva).</li>
-                        <li><strong>Anexo do Simples:</strong> Depende da sua atividade (CNAE). Softwares, consultoria e engenharia geralmente são Anexo V. TI, saúde e design podem ser Anexo III.</li>
-                        <li><strong>Estratégia de Pró-Labore (O Pulo do Gato):</strong>
-                            <ul>
-                                <li><strong>Otimizar Fator R (Recomendado):</strong> Se você for Anexo V, a calculadora simulará os dois cenários (pró-labore mínimo vs. pró-labore de 28%) e **escolherá automaticamente o que paga menos imposto**.</li>
-                                <li><strong>Usar Pró-labore Mínimo:</strong> Força a calculadora a usar apenas o salário mínimo como pró-labore.</li>
-                                <li>(Se você for Anexo III, a calculadora sempre usará o mínimo, pois o Fator R é irrelevante).</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><strong>Custos Fixos (PJ):</strong> Como PJ, você paga tudo. Some seu plano de saúde, contabilidade, VR/VA, aluguel de espaço, etc.</li>
+                <li><strong>Otimizador de Pró-Labore:</strong> No Simples Nacional (Anexo V), não se preocupe em adivinhar o pró-labore. Apenas escolha "Otimizar Fator R" e a calculadora simulará o cenário mais barato para você.</li>
             </ul>
-        
-            <hr>
-            
-            <h3>O que é o Fator R?</h3>
-            <p>O Fator R é um cálculo que define se uma empresa do Anexo V do Simples Nacional pode ser tributada pelas alíquotas do Anexo III, que são muito menores...</p>
 
+            <h3>4. Compartilhe</h3>
+            <p>Use o botão "Compartilhar Simulação" para gerar um link único com todos os seus dados. Perfeito para enviar para seu contador, RH ou sócio.</p>
         </article>
     </main>
 
     <footer>
-        <p>© 2025 - SeuSite.com.br - Esta é uma ferramenta de simulação. Consulte um contador.</p>
-        <p>Valores de INSS e IRRF baseados na legislação de 2024/2025 (MP 1.206/2024). Salário Mínimo: R$ 1.412,00.</p>
+        <p>
+            <a href="sobre.html">Sobre e Metodologia</a> | 
+            <a href="#">Política de Privacidade</a>
+        </p>
+        <p>© 2025 - calculadoracltoupj.com.br - Esta é uma ferramenta de simulação. Consulte um contador.</p>
+        <p id="footer-update">Valores e tabelas (INSS, IRRF, Simples) atualizados em: **Outubro de 2025**.</p>
+        <p>Dúvidas sobre a calculadora: bigbusin7@gmail.com</p>
     </footer>
 
     <script src="script.js"></script>

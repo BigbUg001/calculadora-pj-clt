@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre e Metodologia - Calculadora CLT vs PJ</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos específicos para esta página */
+        body { padding-bottom: 5rem; }
+        .container-sobre {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .container-sobre .card {
+            padding: 2.5rem 3rem;
+        }
+        .container-sobre h1 {
+            color: var(--cor-acao);
+            border-bottom: 1px solid var(--cor-borda);
+            padding-bottom: 1rem;
+        }
+        .container-sobre h2 {
+            color: var(--cor-texto);
+            margin-top: 2.5rem;
+        }
+        .container-sobre p, .container-sobre li {
+            color: var(--cor-texto-fraco);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        .container-sobre a {
+            color: var(--cor-pj-primaria);
+            font-weight: 700;
+        }
+        .btn-voltar {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            font-weight: 700;
+            color: var(--cor-acao-texto);
+            background-color: var(--cor-acao);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .btn-voltar:hover {
+            background-color: #d68bff;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-sobre">
+        <div class="card">
+            <h1>Sobre e Metodologia</h1>
+            
+            <p>Esta calculadora foi criada com um objetivo: ser a ferramenta mais precisa e transparente do Brasil para a comparação entre os regimes CLT e PJ.</p>
+            <p>Diferente de outras ferramentas que usam estimativas simples, nossos cálculos são baseados integralmente na legislação vigente (2024/2025), garantindo que você tenha a visão mais próxima da realidade.</p>
+            
+            <h2>Nossos Diferenciais (A Precisão)</h2>
+            
+            <h3>1. Cálculo de IRRF (Imposto de Renda)</h3>
+            <p>Não usamos apenas a tabela de dedução padrão. Desde Fevereiro de 2024 (MP 1.206/2024), a lei permite um **Desconto Simplificado** alternativo de R$ 564,80. Nossa calculadora calcula o imposto usando os dois métodos (Dedução Padrão vs. Desconto Simplificado) e **automaticamente seleciona o que resulta em menos imposto para você**.</p>
+            
+            <h3>2. Otimizador de Pró-Labore (Fator R)</h3>
+            <p>Este é o ponto mais complexo do Simples Nacional. Se sua atividade é do Anexo V, você não precisa saber qual pró-labore usar. Ao selecionar "Otimizar Fator R", nossa ferramenta simula dois cenários:</p>
+            <ol>
+                <li>Pagando o imposto do Anexo V (alíquota inicial de 15.5%) com pró-labore mínimo.</li>
+                <li>Pagando o imposto do Anexo III (alíquota inicial de 6%) com um pró-labore de 28% (para ativar o Fator R).</li>
+            </ol>
+            <p>A calculadora então escolhe o cenário que resulta no **menor custo total (Imposto + INSS)** e o utiliza no resultado.</p>
+            
+            <h3>3. Alíquota Efetiva (Simples Nacional)</h3>
+            <p>Não usamos a "alíquota de prateleira" (6% ou 15.5%). O imposto do Simples é calculado com base no seu faturamento dos últimos 12 meses (RBT12). Usamos a fórmula oficial da Receita Federal para encontrar sua **Alíquota Efetiva** real, incluindo a "Parcela a Deduzir" de cada faixa.</p>
+            
+            <h3>4. Visão Empresa (Custo Real)</h3>
+            <p>Ao ativar a "Visão Empresa", a ferramenta recalcula o cenário CLT sob a ótica do empregador, incluindo INSS Patronal (20%), RAT (3% média), Terceiros (5.8% média) e FGTS (8%), além de todos os benefícios. Isso mostra o custo real de uma contratação CLT contra o custo de uma NF PJ.</p>
+            
+            <a href="index.html" class="btn-voltar">Voltar para a Calculadora</a>
+        </div>
+    </div>
+</body>
+</html>
