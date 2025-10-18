@@ -3,103 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Salário Líquido PJ vs CLT [2025] - A Mais Completa</title>
-    <meta name="description" content="Descubra o que vale mais a pena: receber como CLT ou PJ. Calculadora completa com INSS, IRRF, Simples Nacional e Fator R.">
+    <title>Calculadora CLT vs PJ [PRECISA] - Otimizador de Pró-Labore</title>
+    <meta name="description" content="A calculadora mais precisa para comparar Salário Líquido CLT vs PJ. Inclui Alíquota Efetiva do Simples Nacional, MEI e otimização automática do Fator R.">
     
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header>
-        <h1>Calculadora CLT vs PJ</h1>
-        <p>Preencha os cenários e descubra qual modalidade é mais vantajosa financeiramente.</p>
+        <h1>Comparador Definitivo: CLT vs PJ</h1>
+        <p>Insira os valores nos cenários para descobrir a opção mais rentável.</p>
     </header>
 
     <main class="container">
-        
-        <section class="card" id="card-clt">
-            <h2>Cenário CLT</h2>
-            <div class="card-grid">
-                <div class="input-group">
-                    <label for="clt-bruto">Salário Bruto (CLT)</label>
-                    <input type="number" id="clt-bruto" placeholder="R$ 6.000,00">
+        <div class="calculadora-grid">
+            
+            <section class="card" id="card-clt">
+                <h2><span class="cor-clt">■</span> Cenário CLT</h2>
+                <div class="card-grid">
+                    <div class="input-group">
+                        <label for="clt-bruto">Salário Bruto</label>
+                        <input type="number" id="clt-bruto" placeholder="R$ 6.000">
+                    </div>
+                    <div class="input-group">
+                        <label for="clt-dependentes">Dependentes (IRRF)</label>
+                        <input type="number" id="clt-dependentes" placeholder="0" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="clt-vr">Vale Refeição (dia)</label>
+                        <input type="number" id="clt-vr" placeholder="R$ 30" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="clt-va">Vale Alimentação (mês)</label>
+                        <input type="number" id="clt-va" placeholder="R$ 500" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="clt-saude">Desconto Plano de Saúde</label>
+                        <input type="number" id="clt-saude" placeholder="R$ 150" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="clt-outros-descontos">Outros Descontos</label>
+                        <input type="number" id="clt-outros-descontos" placeholder="R$ 0" value="0">
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="clt-dependentes">Nº de Dependentes (IRRF)</label>
-                    <input type="number" id="clt-dependentes" placeholder="0" value="0">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="clt-incluir-fgts" checked>
+                    <label for="clt-incluir-fgts">Incluir FGTS (8%) no "pacote" total?</label>
                 </div>
-                <div class="input-group">
-                    <label for="clt-vr">Vale Refeição (por dia)</label>
-                    <input type="number" id="clt-vr" placeholder="R$ 30,00" value="0">
-                </div>
-                <div class="input-group">
-                    <label for="clt-va">Vale Alimentação (mensal)</label>
-                    <input type="number" id="clt-va" placeholder="R$ 500,00" value="0">
-                </div>
-                <div class="input-group">
-                    <label for="clt-saude">Desconto Plano de Saúde</label>
-                    <input type="number" id="clt-saude" placeholder="R$ 150,00" value="0">
-                </div>
-            </div>
-            <div class="checkbox-group">
-                <input type="checkbox" id="clt-incluir-fgts" checked>
-                <label for="clt-incluir-fgts">Incluir FGTS (8%) na comparação do "pacote" total?</label>
-            </div>
-        </section>
+            </section>
 
-        <section class="card" id="card-pj">
-            <h2>Cenário PJ (Simples Nacional)</h2>
-            <div class="card-grid">
+            <section class="card" id="card-pj">
+                <h2><span class="cor-pj">■</span> Cenário PJ</h2>
+                
                 <div class="input-group">
-                    <label for="pj-faturamento">Faturamento Bruto (PJ)</label>
-                    <input type="number" id="pj-faturamento" placeholder="R$ 10.000,00">
-                </div>
-                 <div class="input-group">
-                    <label for="pj-anexo">Anexo do Simples Nacional</label>
-                    <select id="pj-anexo">
-                        <option value="v">Anexo V (Alíquota inicial 15.5%)</option>
-                        <option value="iii">Anexo III (Alíquota inicial 6%)</option>
+                    <label for="pj-regime">Regime de Tributação</label>
+                    <select id="pj-regime">
+                        <option value="simples">Simples Nacional</option>
+                        <option value="mei">MEI (Microempreendedor)</option>
+                        <option value="manual">Manual (Inserir Alíquota)</option>
                     </select>
                 </div>
-                <div class="input-group">
-                    <label for="pj-prolabore">Pró-Labore (p/ Fator R)</label>
-                    <input type="number" id="pj-prolabore" placeholder="R$ 2.824,00">
+
+                <div class="pj-inputs" id="pj-simples-inputs">
+                    <div class="card-grid">
+                        <div class="input-group">
+                            <label for="pj-faturamento">Faturamento Bruto (mês)</label>
+                            <input type="number" id="pj-faturamento" placeholder="R$ 10.000">
+                        </div>
+                        <div class="input-group">
+                            <label for="pj-rbt12">Receita Bruta (Últimos 12 meses)</label>
+                            <input type="number" id="pj-rbt12" placeholder="R$ 120.000">
+                        </div>
+                        <div class="input-group">
+                            <label for="pj-anexo">Anexo do Simples</label>
+                            <select id="pj-anexo">
+                                <option value="v">Anexo V (Ex: Consultoria, Eng.)</option>
+                                <option value="iii">Anexo III (Ex: TI, Saúde)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="pj-estrategia-prolabore">Estratégia de Pró-Labore</label>
+                            <select id="pj-estrategia-prolabore">
+                                <option value="otimizar">Otimizar Fator R (Recomendado)</option>
+                                <option value="minimo">Usar Pró-labore Mínimo</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="pj-contabilidade">Contabilidade (mês)</label>
+                            <input type="number" id="pj-contabilidade" placeholder="R$ 150" value="0">
+                        </div>
+                        <div class="input-group">
+                            <label for="pj-outros">Custos Fixos (Saúde, VR, etc)</label>
+                            <input type="number" id="pj-outros" placeholder="R$ 700" value="0">
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="pj-contabilidade">Custo Contabilidade (mensal)</label>
-                    <input type="number" id="pj-contabilidade" placeholder="R$ 150,00" value="0">
+
+                <div class="pj-inputs" id="pj-mei-inputs" style="display: none;">
+                    <div class="card-grid">
+                        <div class="input-group">
+                            <label for="pj-faturamento-mei">Faturamento Bruto (mês)</label>
+                            <input type="number" id="pj-faturamento-mei" placeholder="R$ 6.000">
+                        </div>
+                        <div class="input-group">
+                            <label for="pj-custo-mei">Custo Fixo DAS-MEI (mês)</label>
+                            <input type="number" id="pj-custo-mei" placeholder="R$ 72">
+                        </div>
+                        <div class="input-group">
+                            <label for="pj-outros-mei">Custos Fixos (Saúde, VR, etc)</label>
+                            <input type="number" id="pj-outros-mei" placeholder="R$ 700" value="0">
+                        </div>
+                    </div>
+                     <small class="card-footer-note">Atenção: O faturamento máximo do MEI é R$ 81.000/ano (média de R$ 6.750/mês).</small>
                 </div>
-                <div class="input-group">
-                    <label for="pj-outros">Outros Custos PJ (Saúde, VR, etc)</label>
-                    <input type="number" id="pj-outros" placeholder="R$ 700,00" value="0">
+
+                <div class="pj-inputs" id="pj-manual-inputs" style="display: none;">
+                    <div class="card-grid">
+                        <div class="input-group">
+                            <label for="pj-faturamento-manual">Faturamento Bruto (mês)</label>
+                            <input type="number" id="pj-faturamento-manual" placeholder="R$ 10.000">
+                        </div>
+                        <div class="input-group">
+                            <label for="pj-taxa-manual">Alíquota de Imposto (%)</label>
+                            <input type="number" id="pj-taxa-manual" placeholder="10">
+                        </div>
+                        <div class="input-group">
+                            <label for="pj-custos-fixos-manual">Todos os Custos Fixos (mês)</label>
+                            <input type="number" id="pj-custos-fixos-manual" placeholder="R$ 850" value="0">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <small class="card-footer-note">Se atividade for Anexo V, um pró-labore > 28% do faturamento pode te migrar para o Anexo III (Fator R).</small>
-        </section>
+            </section>
+        </div>
 
         <button id="btn-calcular">Comparar Cenários</button>
 
-        <div id="resultado-container">
+        <div id="resultado-container" class="resultado-grid">
             </div>
 
-        <div id="anual-container">
+        <div id="anual-container" style="display: none;">
              </div>
 
-        <article class="conteudo-seo card">
-            <h2>Entenda a Comparação (Conteúdo de SEO)</h2>
-            <p>Ter um site apenas com uma calculadora não é o suficiente para o Google. Você precisa de conteúdo de qualidade que explique o que está sendo feito. É aqui que você vai escrever seus artigos de suporte.</p>
+        <article class="card conteudo-seo">
+            <h2>Como Usar a Calculadora</h2>
+            <p>Esta ferramenta foi desenhada para ser a mais precisa do mercado. Siga os passos para uma comparação correta:</p>
+            
+            <h3>1. Cenário CLT</h3>
+            <ul>
+                <li><strong>Provisão (13º + Férias):</strong> A calculadora já provisiona automaticamente 19.44% do seu bruto (13º + Férias + 1/3) no "Pacote Total". Isso é essencial para uma comparação justa com o PJ, que não tem esses benefícios.</li>
+                <li><strong>Incluir FGTS:</strong> O FGTS não cai na sua conta, mas é parte da sua remuneração. Marque esta caixa para incluí-lo no "pacote" total.</li>
+            </ul>
+
+            <h3>2. Cenário PJ</h3>
+            <ul>
+                <li><strong>Regime de Tributação:</strong> Escolha entre MEI (mais simples, com limite de R$ 81.000/ano), Simples Nacional (o mais comum) ou Manual (se você já sabe sua alíquota).</li>
+                <li><strong>Se escolher "Simples Nacional":</strong>
+                    <ul>
+                        <li><strong>Receita Bruta (Últimos 12 meses):</strong> O ponto-chave. A Receita Federal usa sua média de faturamento para calcular sua alíquota real (Alíquota Efetiva).</li>
+                        <li><strong>Anexo do Simples:</strong> Depende da sua atividade (CNAE). Softwares, consultoria e engenharia geralmente são Anexo V. TI, saúde e design podem ser Anexo III.</li>
+                        <li><strong>Estratégia de Pró-Labore (O Pulo do Gato):</strong>
+                            <ul>
+                                <li><strong>Otimizar Fator R (Recomendado):</strong> Se você for Anexo V, a calculadora simulará os dois cenários (pró-labore mínimo vs. pró-labore de 28%) e **escolherá automaticamente o que paga menos imposto**.</li>
+                                <li><strong>Usar Pró-labore Mínimo:</strong> Força a calculadora a usar apenas o salário mínimo como pró-labore.</li>
+                                <li>(Se você for Anexo III, a calculadora sempre usará o mínimo, pois o Fator R é irrelevante).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>Custos Fixos (PJ):</strong> Como PJ, você paga tudo. Some seu plano de saúde, contabilidade, VR/VA, aluguel de espaço, etc.</li>
+            </ul>
+        
+            <hr>
             
             <h3>O que é o Fator R?</h3>
             <p>O Fator R é um cálculo que define se uma empresa do Anexo V do Simples Nacional pode ser tributada pelas alíquotas do Anexo III, que são muito menores...</p>
 
-            </article>
+        </article>
     </main>
 
     <footer>
         <p>© 2025 - SeuSite.com.br - Esta é uma ferramenta de simulação. Consulte um contador.</p>
+        <p>Valores de INSS e IRRF baseados na legislação de 2024/2025 (MP 1.206/2024). Salário Mínimo: R$ 1.412,00.</p>
     </footer>
 
     <script src="script.js"></script>

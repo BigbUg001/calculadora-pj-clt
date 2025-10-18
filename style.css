@@ -1,24 +1,39 @@
 /* --- CSS Reset e Variáveis de Tema --- */
 :root {
-    --cor-fundo: #121212;
-    --cor-card: #1A1A1A;
-    --cor-texto: #E0E0E0;
-    --cor-texto-fraco: #888;
-    --cor-primaria: #00f0b5; /* Verde "Tech" */
-    --cor-primaria-texto: #121212; /* Texto para botões com fundo primário */
-    --cor-sucesso: #00f0b5; /* Usando a primária */
-    --cor-perigo: #FF4136;
-    --cor-borda: #333;
-    --sombra: 0 4px 12px rgba(0,0,0,0.2);
+    /* Identidade Visual: Cinza Avermelhado (Quente) */
+    --cor-fundo: #2a2727; /* Fundo principal */
+    --cor-card: #3a3636;  /* Fundo dos cards */
+    --cor-fundo-input: #4a4545; /* Fundo dos inputs */
+    --cor-borda: #504c4c;
+    
+    /* Cores de Texto */
+    --cor-texto: #f0f0f0;
+    --cor-texto-fraco: #a09c9c;
+
+    /* Cores de Destaque (CLT vs PJ) */
+    --cor-clt-primaria: #e06c75; /* Vermelho suave */
+    --cor-pj-primaria: #61afef;  /* Azul suave */
+    
+    /* Ação e Foco */
+    --cor-acao: #c678dd; /* Roxo/Púrpura para botões */
+    --cor-acao-texto: #2a2727;
+    
+    /* Status */
+    --cor-sucesso: #98c379; /* Verde */
+    --cor-perigo: var(--cor-clt-primaria);
+
+    --sombra: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* --- Layout Principal --- */
@@ -30,7 +45,7 @@ header {
 
 header h1 {
     margin: 0 0 0.5rem 0;
-    color: var(--cor-primaria);
+    color: #fff;
     font-weight: 700;
 }
 
@@ -38,12 +53,20 @@ header p {
     color: var(--cor-texto-fraco);
     max-width: 500px;
     margin: 0 auto;
+    font-size: 1.1rem;
 }
 
 .container {
-    max-width: 800px; /* Layout de coluna única mais enxuto */
+    max-width: 1200px; /* Mais largo para comportar 2 colunas */
     margin: 2rem auto;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
+}
+
+/* --- Grid Lado-a-Lado --- */
+.calculadora-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
 }
 
 /* --- Estilo dos Cards de Input --- */
@@ -51,7 +74,7 @@ header p {
     background-color: var(--cor-card);
     border: 1px solid var(--cor-borda);
     border-radius: 8px;
-    padding: 2rem;
+    padding: 1.5rem 2rem 2rem 2rem;
     box-shadow: var(--sombra);
     margin-bottom: 2rem;
 }
@@ -61,34 +84,45 @@ header p {
     border-bottom: 1px solid var(--cor-borda);
     padding-bottom: 1rem;
     color: #fff;
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
 }
+.card h2 span {
+    margin-right: 0.75rem;
+    font-size: 1rem;
+    line-height: 1;
+}
+.cor-clt { color: var(--cor-clt-primaria); }
+.cor-pj { color: var(--cor-pj-primaria); }
 
-/* Grid dentro dos cards */
+
+/* Grid dentro dos cards (reduzido) */
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
 }
 
 .input-group {
-    margin-bottom: 0; /* O gap do grid cuida do espaçamento */
+    margin-bottom: 0;
 }
 
 .input-group label {
     display: block;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
     color: var(--cor-texto-fraco);
 }
 
 .input-group input[type="number"],
 .input-group select {
     width: 100%;
-    padding: 0.9rem;
+    padding: 0.75rem; /* Reduzido */
     border: 1px solid var(--cor-borda);
-    background-color: #252525;
+    background-color: var(--cor-fundo-input);
     color: var(--cor-texto);
     border-radius: 6px;
     box-sizing: border-box;
@@ -99,8 +133,18 @@ header p {
 .input-group input[type="number"]:focus,
 .input-group select:focus {
     outline: none;
-    border-color: var(--cor-primaria);
-    box-shadow: 0 0 0 3px rgba(0, 240, 181, 0.2);
+    border-color: var(--cor-acao);
+    box-shadow: 0 0 0 3px rgba(198, 120, 221, 0.2);
+}
+
+/* Corrigindo aparência do Select no Firefox */
+.input-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23a09c9c' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1em;
+    padding-right: 2.5rem; /* Espaço para a seta */
 }
 
 .card-footer-note {
@@ -108,12 +152,15 @@ header p {
     margin-top: 1.5rem;
     font-size: 0.85rem;
     color: var(--cor-texto-fraco);
-    text-align: center;
+    text-align: left;
+    background-color: var(--cor-fundo);
+    padding: 0.75rem;
+    border-radius: 4px;
 }
 
-/* --- Checkbox (NOVO) --- */
+/* --- Checkbox --- */
 .checkbox-group {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--cor-borda);
     display: flex;
@@ -124,7 +171,7 @@ header p {
     height: 1.25em;
     width: 1.25em;
     margin-right: 0.75rem;
-    accent-color: var(--cor-primaria);
+    accent-color: var(--cor-acao);
     cursor: pointer;
 }
 
@@ -139,29 +186,29 @@ header p {
     display: block;
     width: 100%;
     padding: 1rem;
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    color: var(--cor-primaria-texto);
-    background-color: var(--cor-primaria);
+    color: var(--cor-acao-texto);
+    background-color: var(--cor-acao);
     border: none;
     border-radius: 8px;
     cursor: pointer;
     margin: 2rem 0;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: all 0.2s ease;
 }
 
 #btn-calcular:hover {
-    background-color: #00d4a3;
+    background-color: #d68bff;
     transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(198, 120, 221, 0.2);
 }
 
 /* --- Área de Resultado MENSAL --- */
-#resultado-container {
+.resultado-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
     margin-bottom: 2rem;
-    /* O conteúdo será preenchido via JS */
 }
 
 .resultado-col {
@@ -169,18 +216,21 @@ header p {
     border: 1px solid var(--cor-borda);
     border-radius: 8px;
     padding: 2rem;
-    /* Destaque sutil com borda lateral */
-    border-left: 4px solid var(--cor-borda);
+    border-left: 4px solid var(--cor-borda); /* Borda padrão */
 }
 
+/* Destaque sutil com borda lateral */
+.resultado-col.clt { border-left-color: var(--cor-clt-primaria); }
+.resultado-col.pj  { border-left-color: var(--cor-pj-primaria); }
 .resultado-col.vencedor {
-    border-left-color: var(--cor-sucesso);
+    /* Destaque mais forte para o vencedor */
+    box-shadow: 0 0 20px rgba(255,255,255,0.05);
 }
 
 .resultado-col h3 {
     margin-top: 0;
     color: #fff;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 .resultado-col ul {
@@ -191,40 +241,78 @@ header p {
 .resultado-col li {
     display: flex;
     justify-content: space-between;
-    padding: 0.75rem 0;
+    padding: 0.7rem 0;
     border-bottom: 1px solid var(--cor-borda);
     font-size: 0.95rem;
+    align-items: center;
 }
-.resultado-col li:last-child {
-    border-bottom: none;
-}
+.resultado-col li:last-child { border-bottom: none; }
 
 .resultado-col .desconto { color: var(--cor-perigo); }
 .resultado-col .provento { color: var(--cor-sucesso); }
-.resultado-col .sub-label { color: var(--cor-texto-fraco); }
+.resultado-col .sub-label { color: var(--cor-texto-fraco); font-size: 0.85rem; }
 .resultado-col .final {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid var(--cor-borda);
-    color: var(--cor-primaria);
+}
+.resultado-col.clt .final { color: var(--cor-clt-primaria); }
+.resultado-col.pj .final  { color: var(--cor-pj-primaria); }
+
+/* --- ÍCONE DE INFO (?) --- */
+.info-tooltip {
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 50%;
+    background-color: var(--cor-texto-fraco);
+    color: var(--cor-fundo);
+    text-align: center;
+    font-size: 0.8em;
+    line-height: 1.1em;
+    cursor: help;
+    position: relative;
+    top: -1px;
+    font-weight: 700;
+    margin-left: 5px;
+}
+/* Tooltip (dica) que aparece ao passar o mouse */
+.info-tooltip:hover::after {
+    content: attr(title); /* Pega o texto do atributo 'title' */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 140%; /* Aparece acima do ícone */
+    padding: 0.75rem;
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    color: var(--cor-texto);
+    font-size: 0.9rem;
+    font-weight: 400;
+    width: 280px;
+    z-index: 10;
+    text-align: left;
+    box-shadow: var(--sombra);
 }
 
-/* --- Área de Resultado ANUAL (NOVO) --- */
+
+/* --- Área de Resultado ANUAL --- */
 #anual-container {
     background-color: var(--cor-card);
-    border: 1px solid var(--cor-primaria);
+    border-top: 4px solid var(--cor-acao);
     border-radius: 8px;
-    padding: 2rem;
+    padding: 2.5rem;
     text-align: center;
-    display: none; /* Oculto até que o JS mostre */
+    display: none;
 }
 
 #anual-container h2 {
     margin-top: 0;
     color: #fff;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 .anual-grid {
@@ -239,7 +327,7 @@ header p {
 }
 
 .anual-col {
-    background-color: #252525;
+    background-color: var(--cor-fundo);
     padding: 1.5rem;
 }
 
@@ -251,13 +339,14 @@ header p {
 }
 
 .anual-col .valor-anual {
-    font-size: 1.75rem;
+    font-size: 2rem;
     font-weight: 700;
-    color: var(--cor-primaria);
 }
+.anual-col.clt .valor-anual { color: var(--cor-clt-primaria); }
+.anual-col.pj .valor-anual { color: var(--cor-pj-primaria); }
 
 #comparacao-anual-texto {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     color: var(--cor-texto);
     line-height: 1.7;
 }
@@ -267,12 +356,28 @@ header p {
     font-weight: 700;
 }
 
-/* --- Conteúdo de SEO e Footer --- */
+/* --- Conteúdo de SEO e Tutorial --- */
 .conteudo-seo {
     margin-top: 3rem;
-    /* Já usa a classe .card, então herda os estilos */
+}
+.conteudo-seo h3 {
+    color: var(--cor-acao);
+    margin-top: 2rem;
+}
+.conteudo-seo ul {
+    padding-left: 20px;
+}
+.conteudo-seo li {
+    margin-bottom: 0.5rem;
+}
+.conteudo-seo hr {
+    border: 0;
+    border-top: 1px solid var(--cor-borda);
+    margin: 2rem 0;
 }
 
+
+/* --- Footer --- */
 footer {
     text-align: center;
     padding: 2rem;
@@ -283,12 +388,22 @@ footer {
 }
 
 /* --- Responsividade --- */
+@media (max-width: 900px) {
+    .container {
+        padding: 0 1rem;
+    }
+    .calculadora-grid {
+        grid-template-columns: 1fr; /* Colunas empilhadas */
+    }
+    .resultado-grid {
+        grid-template-columns: 1fr; /* Colunas empilhadas */
+    }
+}
+
 @media (max-width: 600px) {
     .card-grid {
-        grid-template-columns: 1fr; /* Colunas empilhadas */
-        gap: 1rem;
+        grid-template-columns: 1fr; /* Colunas empilhadas dentro do card */
     }
-    
     .anual-grid {
         grid-template-columns: 1fr;
     }
