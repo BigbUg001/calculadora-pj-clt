@@ -1,0 +1,199 @@
+/* Reset Básico e Configuração de Fonte */
+:root {
+    --cor-primaria: #007bff;
+    --cor-sucesso: #28a745;
+    --cor-perigo: #dc3545;
+    --cor-fundo: #f8f9fa;
+    --cor-texto: #333;
+    --sombra: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Layout Principal */
+header {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: white;
+    border-bottom: 1px solid #eee;
+}
+
+header h1 {
+    margin: 0;
+    color: var(--cor-primaria);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.calculadora-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+/* Cards de Input */
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: var(--sombra);
+}
+
+.card h2 {
+    margin-top: 0;
+    border-bottom: 2px solid var(--cor-fundo);
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.card .emoji {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Importante para o padding não quebrar o layout */
+    font-size: 1rem;
+}
+
+.input-group small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #777;
+}
+
+/* Botão Principal */
+#btn-calcular {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    background-color: var(--cor-sucesso);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 2rem 0;
+    transition: background-color 0.2s ease;
+}
+
+#btn-calcular:hover {
+    background-color: #218838;
+}
+
+/* Área de Resultado */
+#resultado-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: var(--sombra);
+    margin-top: 2rem;
+    /* O conteúdo será preenchido via JS */
+}
+
+.resultado-header {
+    padding: 1rem 2rem;
+    background-color: var(--cor-primaria);
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+.resultado-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background-color: #eee;
+}
+
+.resultado-col {
+    padding: 2rem;
+    background-color: white;
+}
+
+.resultado-col h3 {
+    margin-top: 0;
+}
+
+.resultado-col ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.resultado-col li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.resultado-col .desconto { color: var(--cor-perigo); }
+.resultado-col .provento { color: var(--cor-sucesso); }
+.resultado-col .final {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    border-top: 2px solid var(--cor-texto);
+}
+
+.vencedor {
+    background-color: #f0fff4;
+    border: 2px solid var(--cor-sucesso);
+}
+
+/* Conteúdo de SEO */
+.conteudo-seo {
+    margin-top: 3rem;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: var(--sombra);
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    margin-top: 2rem;
+    color: #777;
+    border-top: 1px solid #eee;
+}
+
+/* Responsividade (Mobile-First) */
+@media (max-width: 900px) {
+    .calculadora-grid {
+        grid-template-columns: 1fr; /* Colunas empilhadas */
+    }
+}
+
+@media (max-width: 600px) {
+    .resultado-body {
+        grid-template-columns: 1fr; /* Colunas de resultado empilhadas */
+    }
+}

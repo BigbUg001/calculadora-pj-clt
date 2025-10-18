@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Salário Líquido PJ vs CLT [2025] - A Mais Completa</title>
+    <meta name="description" content="Descubra o que vale mais a pena: receber como CLT ou PJ. Calculadora completa com INSS, IRRF, Simples Nacional e Fator R.">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>Calculadora Definitiva: PJ vs CLT</h1>
+        <p>Preencha os campos abaixo e descubra qual modalidade é mais vantajosa para você.</p>
+    </header>
+
+    <main class="container">
+        <div class="calculadora-grid">
+            
+            <section class="card" id="card-clt">
+                <h2><span class="emoji">👨‍💼</span> Cenário CLT</h2>
+                <div class="input-group">
+                    <label for="clt-bruto">Salário Bruto (CLT)</label>
+                    <input type="number" id="clt-bruto" placeholder="R$ 6.000,00">
+                </div>
+                <div class="input-group">
+                    <label for="clt-vr">Vale Refeição (por dia)</label>
+                    <input type="number" id="clt-vr" placeholder="R$ 30,00" value="0">
+                </div>
+                <div class="input-group">
+                    <label for="clt-va">Vale Alimentação (mensal)</label>
+                    <input type="number" id="clt-va" placeholder="R$ 500,00" value="0">
+                </div>
+                <div class="input-group">
+                    <label for="clt-saude">Desconto Plano de Saúde (mensal)</label>
+                    <input type="number" id="clt-saude" placeholder="R$ 150,00" value="0">
+                </div>
+                <div class="input-group">
+                    <label for="clt-dependentes">Nº de Dependentes (para IRRF)</label>
+                    <input type="number" id="clt-dependentes" placeholder="0" value="0">
+                </div>
+            </section>
+
+            <section class="card" id="card-pj">
+                <h2><span class="emoji">🚀</span> Cenário PJ (Simples Nacional)</h2>
+                <div class="input-group">
+                    <label for="pj-faturamento">Faturamento Bruto (PJ)</label>
+                    <input type="number" id="pj-faturamento" placeholder="R$ 10.000,00">
+                </div>
+                <div class="input-group">
+                    <label for="pj-anexo">Anexo do Simples Nacional</label>
+                    <select id="pj-anexo">
+                        <option value="iii">Anexo III (Alíquota inicial 6%)</option>
+                        <option value="v">Anexo V (Alíquota inicial 15.5%)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="pj-prolabore">Valor do Pró-Labore</label>
+                    <input type="number" id="pj-prolabore" placeholder="R$ 2.824,00 (Sal. Mínimo)">
+                    <small>Se sua atividade é Anexo V, um pró-labore > 28% do faturamento pode te levar para o Anexo III (Fator R).</small>
+                </div>
+                <div class="input-group">
+                    <label for="pj-contabilidade">Custo Contabilidade (mensal)</label>
+                    <input type="number" id="pj-contabilidade" placeholder="R$ 150,00" value="0">
+                </div>
+                <div class="input-group">
+                    <label for="pj-outros">Outros Custos PJ (Plano de Saúde, VR, etc)</label>
+                    <input type="number" id="pj-outros" placeholder="R$ 700,00" value="0">
+                </div>
+            </section>
+
+        </div>
+
+        <button id="btn-calcular">Calcular Agora</button>
+
+        <div id="resultado-container">
+            </div>
+
+        <article class="conteudo-seo">
+            <h2>Entenda a Comparação (Conteúdo de SEO)</h2>
+            <p>Ter um site apenas com uma calculadora não é o suficiente para o Google. Você precisa de conteúdo de qualidade que explique o que está sendo feito. É aqui que você vai escrever seus artigos de suporte.</p>
+            
+            <h3>O que é o Fator R?</h3>
+            <p>O Fator R é um cálculo que define se uma empresa do Anexo V do Simples Nacional pode ser tributada pelas alíquotas do Anexo III, que são muito menores...</p>
+
+            <h3>Como calculamos o INSS 2025?</h3>
+            <p>O cálculo do INSS é progressivo e segue as faixas oficiais do governo...</p>
+
+            </article>
+    </main>
+
+    <footer>
+        <p>© 2025 - SeuSite.com.br - Esta é uma ferramenta de simulação. Consulte um contador.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
