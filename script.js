@@ -13,6 +13,7 @@ function calcularTudo() {
         cltVA: parseFloat(document.getElementById('clt-va').value) || 0,
         cltSaude: parseFloat(document.getElementById('clt-saude').value) || 0,
         cltDependentes: parseInt(document.getElementById('clt-dependentes').value) || 0,
+        cltIncluirFGTS: document.getElementById('clt-incluir-fgts').checked, // NOVO
         
         // PJ
         pjFaturamento: parseFloat(document.getElementById('pj-faturamento').value) || 0,
@@ -28,12 +29,13 @@ function calcularTudo() {
 
     // 3. Exibir os resultados na tela
     exibirResultados(resultadoCLT, resultadoPJ);
+    exibirResultadoAnual(resultadoCLT, resultadoPJ);
 }
 
 
 // --- CÁLCULOS CLT ---
 function calcularCLT(inputs) {
-    const { cltBruto, cltVR, cltVA, cltSaude, cltDependentes } = inputs;
+    const { cltBruto, cltVR, cltVA, cltSaude, cltDependentes, cltIncluirFGTS } = inputs;
     
     // Tabela INSS 2025 (Exemplo - VERIFIQUE OS VALORES ATUAIS)
     const inss = calcularINSS(cltBruto);
@@ -46,7 +48,8 @@ function calcularCLT(inputs) {
     const vrTotal = cltVR * 22; // 22 dias úteis
     const vaTotal = cltVA;
     const fgts = cltBruto * 0.08;
-    const provisaoFerias13 = cltBruto * 0.1111; // Provisão de 1/12 de férias + 1/3
+    // Provisão de 1/12 de férias + 1/3 sobre férias + 1/12 de 13º
+    const provisaoFerias13 = cltBruto * (1/12) + (cltBruto * (1/12) / 3) + (cltBruto / 12);
     
     // Descontos
     const descontosBeneficios = cltSaude; // Adicionar VT se houver
@@ -54,7 +57,8 @@ function calcularCLT(inputs) {
     const salarioLiquido = cltBruto - inss - irrf - descontosBeneficios;
     
     // "Pacote" Total que o funcionário recebe (líquido + benefícios)
-    const pacoteTotalCLT = salarioLiquido + vrTotal + vaTotal + fgts + provisaoFerias13;
+    let pacoteBase = salarioLiquido + vrTotal + vaTotal + provisaoFerias13;
+    let pacoteTotalCLT = cltIncluirFGTS ? pacoteBase + fgts : pacoteBase;
 
     return {
         bruto: cltBruto,
@@ -65,7 +69,8 @@ function calcularCLT(inputs) {
         fgts: fgts,
         provisaoFerias13: provisaoFerias13,
         liquido: salarioLiquido,
-        pacoteTotal: pacoteTotalCLT
+        pacoteTotal: pacoteTotalCLT,
+        incluiuFGTS: cltIncluirFGTS // Retorna a decisão
     };
 }
 
@@ -76,7 +81,7 @@ function calcularPJ(inputs) {
     // Fator R
     let anexoCalculado = pjAnexo;
     let fatorR = 0;
-    if (pjAnexo === 'v') {
+    if (pjFaturamento > 0 && pjAnexo === 'v') {
         fatorR = pjProlabore / pjFaturamento;
         if (fatorR >= 0.28) {
             anexoCalculado = 'iii'; // Caiu no Anexo III pelo Fator R
@@ -118,6 +123,10 @@ function calcularPJ(inputs) {
 // --- Funções Auxiliares de Cálculo (NECESSÁRIO ATUALIZAR ANUALMENTE) ---
 function calcularINSS(salario) {
     // Tabela 2024/2025 (EXEMPLO)
+    // Estas faixas são progressivas! O cálculo correto é mais complexo.
+    // Para simplificar a V1, usaremos alíquotas fixas (ERRADO, mas fácil de implementar)
+    // O CORRETO é (salario - teto_faixa_anterior) * aliquota + imposto_faixa_anterior
+    // Vou manter o cálculo progressivo simplificado da V1:
     if (salario <= 1412.00) return salario * 0.075;
     if (salario <= 2666.68) return (salario - 1412.00) * 0.09 + (1412.00 * 0.075);
     if (salario <= 4000.03) return (salario - 2666.68) * 0.12 + (2666.68 - 1412.00) * 0.09 + (1412.00 * 0.075);
@@ -135,47 +144,86 @@ function calcularIRRF(base) {
 }
 
 
-// --- FUNÇÃO PARA EXIBIR O RESULTADO ---
+// --- FUNÇÃO PARA EXIBIR O RESULTADO MENSAL ---
 function exibirResultados(clt, pj) {
     const container = document.getElementById('resultado-container');
-    
+    const formatBRL = (val) => (val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
     const vencedor = clt.pacoteTotal > pj.pacoteTotal ? 'CLT' : 'PJ';
     
-    const formatBRL = (val) => val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    // Nota sobre o FGTS
+    const fgtsNota = clt.incluiuFGTS 
+        ? `<span class="provento">(+ Incluído na comparação)</span>`
+        : `<span class="desconto"> (Não incluído na comparação)</span>`;
 
     container.innerHTML = `
-        <div class="resultado-header">
-            <h2>Resultado da Simulação</h2>
-            <p>O pacote mais vantajoso é: <strong>${vencedor}</strong></p>
+        <div class="resultado-col ${vencedor === 'CLT' ? 'vencedor' : ''}">
+            <h3>👨‍💼 Resumo Mensal CLT</h3>
+            <ul>
+                <li>Salário Bruto: <span>${formatBRL(clt.bruto)}</span></li>
+                <li>(-) INSS: <span class="desconto">${formatBRL(clt.inss)}</span></li>
+                <li>(-) IRRF: <span class="desconto">${formatBRL(clt.irrf)}</span></li>
+                <li>(-) Descontos (Saúde, etc): <span class="desconto">${formatBRL(clt.descontos)}</span></li>
+                <li><strong>Salário Líquido (em conta):</strong> <span>${formatBRL(clt.liquido)}</span></li>
+                <li class="separador"></li>
+                <li>(+) Benefícios (VR+VA): <span class="provento">${formatBRL(clt.beneficios)}</span></li>
+                <li>(+) Provisão (Férias+13º): <span class="provento">${formatBRL(clt.provisaoFerias13)}</span></li>
+                <li>(+) FGTS (8%): <span>${formatBRL(clt.fgts)} ${fgtsNota}</span></li>
+                <li class="final">"Pacote" Total CLT: <span>${formatBRL(clt.pacoteTotal)}</span></li>
+            </ul>
         </div>
-        <div class="resultado-body">
-            <div class="resultado-col ${vencedor === 'CLT' ? 'vencedor' : ''}">
-                <h3>👨‍💼 Resumo CLT</h3>
-                <ul>
-                    <li>Salário Bruto: <span>${formatBRL(clt.bruto)}</span></li>
-                    <li>(-) INSS: <span class="desconto">${formatBRL(clt.inss)}</span></li>
-                    <li>(-) IRRF: <span class="desconto">${formatBRL(clt.irrf)}</span></li>
-                    <li>(-) Descontos (Saúde, etc): <span class="desconto">${formatBRL(clt.descontos)}</span></li>
-                    <li><strong>Salário Líquido:</strong> <span>${formatBRL(clt.liquido)}</span></li>
-                    <li class="separador"></li>
-                    <li>(+) Benefícios (VR+VA): <span class="provento">${formatBRL(clt.beneficios)}</span></li>
-                    <li>(+) Provisão FGTS: <span class="provento">${formatBRL(clt.fgts)}</span></li>
-                    <li>(+) Provisão Férias+13º: <span class="provento">${formatBRL(clt.provisaoFerias13)}</span></li>
-                    <li class="final">Pacote Total CLT: <span>${formatBRL(clt.pacoteTotal)}</span></li>
-                </ul>
+        
+        <div class="resultado-col ${vencedor === 'PJ' ? 'vencedor' : ''}">
+            <h3>🚀 Resumo Mensal PJ</h3>
+            <ul>
+                <li>Faturamento Bruto: <span>${formatBRL(pj.faturamento)}</span></li>
+                <li>(-) Imposto Simples (${pj.anexoFinal.toUpperCase()}): <span class="desconto">${formatBRL(pj.impostoSimples)}</span></li>
+                <li>(-) INSS (Pró-Labore): <span class="desconto">${formatBRL(pj.inssProlabore)}</span></li>
+                <li>(-) Custos (Contador, Outros): <span class="desconto">${formatBRL(pj.custosFixos)}</span></li>
+                <li class="final">Líquido Total PJ: <span>${formatBRL(pj.liquido)}</span></li>
+            </ul>
+            <small class="sub-label">Fator R (se aplicável): ${(pj.fatorR * 100).toFixed(1)}%</small>
+        </div>
+    `;
+}
+
+// --- FUNÇÃO PARA EXIBIR O RESULTADO ANUAL (NOVA) ---
+function exibirResultadoAnual(clt, pj) {
+    const container = document.getElementById('anual-container');
+    if (!container) return; // Segurança
+
+    const formatBRL = (val) => (val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    const cltAnual = clt.pacoteTotal * 12;
+    const pjAnual = pj.pacoteTotal * 12;
+    const diferenca = Math.abs(cltAnual - pjAnual);
+    
+    let textoComparacao = '';
+    if (pjAnual > cltAnual) {
+        textoComparacao = `No cenário PJ, você teria uma renda anual <strong>${formatBRL(diferenca)}</strong> maior que no CLT.`;
+    } else if (cltAnual > pjAnual) {
+        textoComparacao = `No cenário CLT, seu "pacote" total anual seria <strong>${formatBRL(diferenca)}</strong> maior que o líquido PJ.`;
+    } else {
+        textoComparacao = `Os cenários se equivalem financeiramente ao longo do ano.`;
+    }
+    
+    // Mostra o container (que estava oculto)
+    container.style.display = 'block';
+
+    container.innerHTML = `
+        <h2>Comparação Anual</h2>
+        <div class="anual-grid">
+            <div class="anual-col">
+                <h4>Pacote Total CLT (Ano)</h4>
+                <div class="valor-anual">${formatBRL(cltAnual)}</div>
             </div>
-            
-            <div class="resultado-col ${vencedor === 'PJ' ? 'vencedor' : ''}">
-                <h3>🚀 Resumo PJ</h3>
-                <ul>
-                    <li>Faturamento Bruto: <span>${formatBRL(pj.faturamento)}</span></li>
-                    <li>(-) Imposto Simples (${pj.anexoFinal.toUpperCase()}): <span class="desconto">${formatBRL(pj.impostoSimples)}</span></li>
-                    <li>(-) INSS (Pró-Labore): <span class="desconto">${formatBRL(pj.inssProlabore)}</span></li>
-                    <li>(-) Custos (Contador, etc): <span class="desconto">${formatBRL(pj.custosFixos)}</span></li>
-                    <li class="final">Líquido Total PJ: <span>${formatBRL(pj.liquido)}</span></li>
-                </ul>
-                <small>Fator R (se aplicável): ${(pj.fatorR * 100).toFixed(2)}%</small>
+            <div class="anual-col">
+                <h4>Líquido Total PJ (Ano)</h4>
+                <div class="valor-anual">${formatBRL(pjAnual)}</div>
             </div>
         </div>
+        <p id="comparacao-anual-texto">
+            ${textoComparacao}
+        </p>
     `;
 }
