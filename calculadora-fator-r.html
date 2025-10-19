@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Fator R (Simples Nacional) - Saiba se é Anexo III ou V</title>
+    <meta name="description" content="Calcule rapidamente seu Fator R e descubra se sua empresa será tributada pelo Anexo III (6%) ou Anexo V (15.5%) do Simples Nacional.">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Pequeno ajuste de layout para a ferramenta */
+        .container-ferramenta {
+            max-width: 600px; /* Mais estreito, focado */
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        #resultado-fator-r {
+            background-color: var(--cor-fundo);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            display: none; /* Começa oculto */
+        }
+        .resultado-fator-r-valor {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .resultado-fator-r-anexo3 { color: var(--cor-sucesso); }
+        .resultado-fator-r-anexo5 { color: var(--cor-perigo); }
+        .resultado-fator-r-texto {
+            font-size: 1.15rem;
+            color: var(--cor-texto-fraco);
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-ferramenta">
+
+        <section class="card" style="margin-bottom: 2rem; text-align: center; padding: 1.5rem;">
+            <p style="margin: 0; font-size: 1rem;">Esta é uma ferramenta rápida. Procurando a comparação completa?</p>
+            <a href="index.html" class="btn-secundario" style="margin-top: 1rem; border-width: 2px; padding: 0.5rem 1rem; font-size: 1rem;">Ir para Calculadora CLT vs PJ</a>
+        </section>
+
+        <section class="card">
+            <h1 style="text-align: center; color: var(--cor-acao); margin-top: 0;">Calculadora de Fator R</h1>
+            <p style="text-align: center; color: var(--cor-texto-fraco); margin-top: -1rem; margin-bottom: 2rem;">
+                Descubra se sua empresa se enquadra no Anexo III ou V.
+            </p>
+            
+            <div class="input-group" style="margin-bottom: 1.5rem;">
+                <label for="faturamento-mensal">Faturamento Bruto (Mês)</label>
+                <input type="number" id="faturamento-mensal" placeholder="R$ 10.000">
+            </div>
+            <div class="input-group">
+                <label for="prolabore">Massa Salarial (Pró-labore + Salários) (Mês)</label>
+                <input type="number" id="prolabore" placeholder="R$ 2.800">
+            </div>
+            
+            <button id="btn-calcular-fator-r" class="botoes-container" style="margin: 2rem 0 0 0; width: 100%;">
+                Calcular
+            </button>
+            
+            <div id="resultado-fator-r">
+                </div>
+        </section>
+
+    </div><footer style="margin-top: 4rem;">
+        <p>
+            <a href="index.html">Calculadora Principal</a> | 
+            <a href="recursos.html">Mais Ferramentas</a> |
+            <a href="sobre.html">Sobre</a>
+        </p>
+        <p>© 2025 - SeuSite.com.br</p>
+    </footer>
+
+    <script src="fator-r.js"></script>
+
+</body>
+</html>
