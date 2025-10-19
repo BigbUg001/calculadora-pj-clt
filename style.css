@@ -396,3 +396,48 @@ footer a:hover {
     .botoes-container { flex-direction: column; }
     #btn-calcular, .btn-secundario { width: 100%; }
 }
+
+/* --- CORREÇÕES V6: ESPAÇAMENTO E BOTÕES (ADICIONADO) --- */
+
+/* 1. Corrige a sobreposição/espaçamento em TODAS as páginas "Spoke" */
+.container-ferramenta {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+.container-ferramenta-sm { /* Para o Fator R */
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+.card-link-separador {
+    margin-bottom: 3rem !important; /* Força a margem abaixo do card de link */
+    text-align: center;
+    padding: 1.5rem;
+}
+.container-recursos h2 {
+    margin-top: 4rem !important; /* Força a margem acima dos títulos H2 no recursos.html */
+}
+
+/* 2. Garante que os botões das mini-ferramentas tenham o estilo correto */
+/* Esta regra força QUALQUER botão dentro do .botoes-container a ter o estilo principal */
+.botoes-container button {
+    padding: 1rem 2rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--cor-acao-texto);
+    background-color: var(--cor-acao);
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.botoes-container button:hover {
+    background-color: #d68bff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(198, 120, 221, 0.2);
+}

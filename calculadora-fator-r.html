@@ -6,31 +6,23 @@
     <title>Calculadora de Fator R (Simples Nacional) - Saiba se é Anexo III ou V</title>
     <meta name="description" content="Calcule rapidamente seu Fator R e descubra se sua empresa será tributada pelo Anexo III ou V do Simples Nacional.">
     
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="style.css"> <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        .container-ferramenta { max-width: 600px; margin: 2rem auto; padding: 0 1.5rem; }
+        /* Estilos específicos do resultado, o resto vem do style.css */
         #resultado-fator-r { background-color: var(--cor-fundo); border-radius: 8px; padding: 1.5rem; margin-top: 2rem; text-align: center; display: none; }
         .resultado-fator-r-valor { font-size: 2.5rem; font-weight: 700; }
         .resultado-fator-r-anexo3 { color: var(--cor-sucesso); }
         .resultado-fator-r-anexo5 { color: var(--cor-perigo); }
         .resultado-fator-r-texto { font-size: 1.15rem; color: var(--cor-texto-fraco); margin-top: 0.5rem; }
         .resultado-fator-r-aviso { font-size: 0.9rem; color: var(--cor-texto-fraco); margin-top: 1rem; padding: 0.75rem; background-color: var(--cor-card); border-radius: 6px; }
-
-        /* --- CORREÇÃO DE ESPAÇAMENTO --- */
-        .card-link-separador {
-            margin-bottom: 3rem; /* Espaço ABAIXO do card de link (Resolve "grudado") */
-            text-align: center;
-            padding: 1.5rem;
-        }
     </style>
 </head>
 <body>
 
-    <div class="container-ferramenta">
+    <div class="container-ferramenta-sm"> 
 
         <section class="card card-link-separador">
             <p style="margin: 0; font-size: 1rem;">Esta é uma ferramenta rápida. Procurando a comparação completa?</p>
