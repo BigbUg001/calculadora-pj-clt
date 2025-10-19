@@ -1,10 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('btn-calcular-fator-r').addEventListener('click', calcularFatorR);
+    document.getElementById('btn-calcular-fator-r').addEventListener('click', handleCalculateClick);
 });
+
+function handleCalculateClick() {
+    const btn = document.getElementById('btn-calcular-fator-r');
+    const btnText = document.getElementById('btn-text');
+    const spinner = document.getElementById('btn-spinner');
+
+    btn.disabled = true;
+    btnText.style.display = 'none';
+    spinner.style.display = 'block';
+
+    setTimeout(() => {
+        calcularFatorR();
+        btn.disabled = false;
+        btnText.style.display = 'block';
+        spinner.style.display = 'none';
+    }, 50);
+}
 
 function calcularFatorR() {
     const faturamento = parseFloat(document.getElementById('faturamento-mensal').value) || 0;
-    const prolabore = parseFloat(document.getElementById('prolabore').value) || 0;
+    const massaSalarial = parseFloat(document.getElementById('massa-salarial').value) || 0;
     const resultadoDiv = document.getElementById('resultado-fator-r');
     
     if (faturamento <= 0) {
@@ -13,26 +30,31 @@ function calcularFatorR() {
         return;
     }
     
-    const fatorR = prolabore / faturamento;
+    const fatorR = massaSalarial / faturamento;
     const fatorRPercent = (fatorR * 100).toFixed(2).replace('.', ',');
     
     let htmlResultado = '';
     
+    // TEXTO DO RESULTADO CORRIGIDO PARA SER PRECISO
     if (fatorR >= 0.28) {
-        // Atingiu o Fator R
         htmlResultado = `
             <div class="resultado-fator-r-valor resultado-fator-r-anexo3">${fatorRPercent}%</div>
             <p class="resultado-fator-r-texto">
-                Parabéns! Com um Fator R de ${fatorRPercent}%, sua empresa se enquadra nas alíquotas do <strong>Anexo III</strong> (a partir de 6%).
+                Parabéns! Sua empresa se enquadra no <strong>Anexo III</strong> do Simples Nacional.
             </p>
+            <div class="resultado-fator-r-aviso">
+                As alíquotas do Anexo III variam de <strong>6% a 33%</strong>. Para saber sua alíquota efetiva exata, use nossa <a href="index.html">calculadora completa</a>, que considera seu faturamento dos últimos 12 meses.
+            </div>
         `;
     } else {
-        // Não atingiu
         htmlResultado = `
             <div class="resultado-fator-r-valor resultado-fator-r-anexo5">${fatorRPercent}%</div>
             <p class="resultado-fator-r-texto">
-                Atenção! Com um Fator R de ${fatorRPercent}%, sua empresa será tributada pelo <strong>Anexo V</strong> (a partir de 15.5%).
+                Atenção! Sua empresa será tributada pelo <strong>Anexo V</strong> do Simples Nacional.
             </p>
+            <div class="resultado-fator-r-aviso">
+                As alíquotas do Anexo V variam de <strong>15.5% a 30.5%</strong>. Para simular um Pró-Labore maior e tentar migrar para o Anexo III, use nossa <a href="index.html">calculadora completa com otimizador</a>.
+            </div>
         `;
     }
     

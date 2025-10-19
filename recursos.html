@@ -7,93 +7,25 @@
     <meta name="description" content="Explore nossos guias e calculadoras rápidas (Fator R, Líquido PJ) para tomar a melhor decisão financeira na sua carreira.">
     
     <link rel="stylesheet" href="style.css">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Estilos específicos para esta página de Recursos */
-        .container-recursos {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-        .recursos-header {
-            text-align: center;
-            margin: 2rem 0 3rem 0;
-        }
-        .recursos-header h1 {
-            color: var(--cor-acao);
-        }
-        .recursos-header p {
-            font-size: 1.15rem;
-            color: var(--cor-texto-fraco);
-            max-width: 600px;
-            margin: 1rem auto 0 auto;
-        }
-        
-        /* Layout dos cards */
-        .recursos-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-        
-        .recurso-card {
-            background-color: var(--cor-card);
-            border: 1px solid var(--cor-borda);
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: var(--sombra);
-            transition: all 0.2s ease-in-out;
-            display: flex;
-            flex-direction: column;
-        }
-        .recurso-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--cor-acao);
-        }
-        
-        .recurso-card .tipo {
-            font-size: 0.85rem;
-            font-weight: 700;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-        /* Cor azul (PJ) para ferramentas */
-        .tipo-ferramenta {
-            background-color: rgba(97, 175, 239, 0.2); 
-            color: var(--cor-pj-primaria);
-        }
-        /* Cor vermelha (CLT) para artigos */
-        .tipo-artigo {
-            background-color: rgba(224, 108, 117, 0.2); 
-            color: var(--cor-clt-primaria);
-        }
-        
-        .recurso-card h3 {
-            margin-top: 0;
-            margin-bottom: 0.75rem;
-            color: var(--cor-texto);
-        }
-        .recurso-card p {
-            color: var(--cor-texto-fraco);
-            margin-bottom: 1.5rem;
-            flex-grow: 1; /* Faz o parágrafo crescer e empurrar o link para baixo */
-        }
-        
-        .recurso-card a {
-            font-weight: 700;
-            color: var(--cor-acao);
-            text-decoration: none;
-            font-size: 1.05rem;
-        }
-        .recurso-card a:hover {
-            text-decoration: underline;
-        }
+        .container-recursos { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
+        .recursos-header { text-align: center; margin: 2rem 0 3rem 0; }
+        .recursos-header h1 { color: var(--cor-acao); }
+        .recursos-header p { font-size: 1.15rem; color: var(--cor-texto-fraco); max-width: 600px; margin: 1rem auto 0 auto; }
+        .recursos-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        .recurso-card { background-color: var(--cor-card); border: 1px solid var(--cor-borda); border-radius: 8px; padding: 2rem; box-shadow: var(--sombra); transition: all 0.2s ease-in-out; display: flex; flex-direction: column; }
+        .recurso-card:hover { transform: translateY(-5px); border-color: var(--cor-acao); }
+        .recurso-card .tipo { font-size: 0.85rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 20px; display: inline-block; margin-bottom: 1rem; }
+        .tipo-ferramenta { background-color: rgba(97, 175, 239, 0.2); color: var(--cor-pj-primaria); }
+        .tipo-artigo { background-color: rgba(224, 108, 117, 0.2); color: var(--cor-clt-primaria); }
+        .recurso-card h3 { margin-top: 0; margin-bottom: 0.75rem; color: var(--cor-texto); }
+        .recurso-card p { color: var(--cor-texto-fraco); margin-bottom: 1.5rem; flex-grow: 1; }
+        .recurso-card a { font-weight: 700; color: var(--cor-acao); text-decoration: none; font-size: 1.05rem; }
+        .recurso-card a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -105,14 +37,14 @@
             <p>Explore nossos guias e calculadoras rápidas para tomar a melhor decisão financeira na sua carreira.</p>
         </header>
 
-        <section class="card" style="margin-bottom: 2.5rem; text-align: center; border-left: 4px solid var(--cor-acao);">
+        <section class="card" style="margin-bottom: 3rem; text-align: center; border-left: 4px solid var(--cor-acao);">
             <p style="margin: 0; font-size: 1.1rem;">Procurando a ferramenta de comparação completa?</p>
             <a href="index.html" class="btn-secundario" style="margin-top: 1rem; border-width: 2px;">
                 Calculadora CLT vs PJ (Completa)
             </a>
         </section>
 
-        <h2>Mini-Ferramentas Ativas</h2>
+        <h2 style="margin-top: 3rem;">Mini-Ferramentas Ativas</h2>
         <div class="recursos-grid">
             
             <div class="recurso-card">
@@ -139,31 +71,19 @@
                 <p>Simule seu IRRF usando o método de dedução padrão vs. o novo desconto simplificado e veja qual paga menos imposto.</p>
                 <a href="#" style="color: var(--cor-texto-fraco); cursor: not-allowed;">(Em breve)</a>
             </div>
-
-            <div class="recurso-card">
-                <span class="tipo tipo-artigo">GUIA</span>
-                <h3>MEI estourou? Quando Vale a Pena Mudar para Simples Nacional (ME)</h3>
-                <p>O faturamento máximo do MEI não é mais suficiente? Entenda o custo da transição e o momento certo de virar uma ME.</p>
-                <a href="#" style="color: var(--cor-texto-fraco); cursor: not-allowed;">(Em breve)</a>
-            </div>
             
-            <div class="recurso-card">
-                <span class="tipo tipo-artigo">GUIA</span>
-                <h3>Custo Real de um Funcionário CLT para a Empresa (Visão do RH)</h3>
-                <p>Um guia para gestores. Detalhamos todos os encargos (INSS Patronal, RAT, Terceiros) que compõem o Custo Total de um CLT.</p>
-                <a href="#" style="color: var(--cor-texto-fraco); cursor: not-allowed;">(Em breve)</a>
             </div>
-        </div>
 
-    </div><footer>
+    </div>
+
+    <footer>
         <p>
             <a href="index.html">Calculadora Principal</a> | 
             <a href="recursos.html">Artigos e Ferramentas</a> |
             <a href="sobre.html">Sobre e Metodologia</a> | 
             <a href="#">Política de Privacidade</a>
         </p>
-        <p>© 2025 - SeuSite.com.br - Esta é uma ferramenta de simulação. Consulte um contador.</p>
-        <p id="footer-update">Valores e tabelas (INSS, IRRF, Simples) atualizados em: **Outubro de 2025**.</p>
+        <p>© 2025 - calculadoracltoupj.com.br</p>
     </footer>
 
 </body>

@@ -7,26 +7,19 @@
     <meta name="description" content="Calcule o salário líquido real de um PJ. Insira o faturamento e veja quanto sobra após impostos (Simples, MEI, INSS) e custos.">
     
     <link rel="stylesheet" href="style.css">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Ajuste de layout */
-        .container-ferramenta {
-            max-width: 800px; /* Um pouco mais largo que o Fator R */
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-        /* O resultado usará as classes de resultado existentes */
+        .container-ferramenta { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
     </style>
 </head>
 <body>
 
     <div class="container-ferramenta">
 
-        <section class="card" style="margin-bottom: 2rem; text-align: center; padding: 1.5rem;">
+        <section class="card" style="margin-bottom: 3rem; text-align: center; padding: 1.5rem;">
             <p style="margin: 0; font-size: 1rem;">Quer comparar este valor com um salário CLT?</p>
             <a href="index.html" class="btn-secundario" style="margin-top: 1rem; border-width: 2px; padding: 0.5rem 1rem; font-size: 1rem;">Usar a Calculadora Completa</a>
         </section>
@@ -42,7 +35,6 @@
                     <option value="manual">Manual (Inserir Alíquota)</option>
                 </select>
             </div>
-
             <div class="pj-inputs" id="pj-simples-inputs">
                 <div class="card-grid">
                     <div class="input-group"><label for="pj-faturamento">Faturamento Bruto (mês)</label><input type="number" id="pj-faturamento" placeholder="R$ 10.000"></div>
@@ -68,10 +60,12 @@
                 </div>
             </div>
             
-            <button id="btn-calcular-pj" class="botoes-container" style="margin: 2rem 0 0 0; width: 100%;">
-                <span id="btn-text">Calcular Líquido PJ</span>
-                <span id="btn-spinner" class="spinner" style="display: none;"></span>
-            </button>
+            <div class="botoes-container" style="margin: 2rem 0 0 0;">
+                <button id="btn-calcular-pj">
+                    <span id="btn-text">Calcular Líquido PJ</span>
+                    <span id="btn-spinner" class="spinner" style="display: none;"></span>
+                </button>
+            </div>
             
             <div id="resultado-container" class="resultado-grid" style="grid-template-columns: 1fr;">
                 <div class="resultado-col pj" id="resultado-pj-col" style="display: none;">
@@ -80,16 +74,17 @@
                         </ul>
                 </div>
             </div>
-            
         </section>
 
-    </div><footer style="margin-top: 4rem;">
+    </div>
+
+    <footer>
         <p>
             <a href="index.html">Calculadora Principal</a> | 
             <a href="recursos.html">Mais Ferramentas</a> |
             <a href="sobre.html">Sobre</a>
         </p>
-        <p>© 2025 - SeuSite.com.br</p>
+        <p>© 2025 - calculadoracltoupj.com.br</p>
     </footer>
 
     <script src="liquido-pj.js"></script>
