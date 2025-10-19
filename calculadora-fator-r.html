@@ -19,13 +19,20 @@
         .resultado-fator-r-anexo5 { color: var(--cor-perigo); }
         .resultado-fator-r-texto { font-size: 1.15rem; color: var(--cor-texto-fraco); margin-top: 0.5rem; }
         .resultado-fator-r-aviso { font-size: 0.9rem; color: var(--cor-texto-fraco); margin-top: 1rem; padding: 0.75rem; background-color: var(--cor-card); border-radius: 6px; }
+
+        /* --- CORREÇÃO DE ESPAÇAMENTO --- */
+        .card-link-separador {
+            margin-bottom: 3rem; /* Espaço ABAIXO do card de link (Resolve "grudado") */
+            text-align: center;
+            padding: 1.5rem;
+        }
     </style>
 </head>
 <body>
 
     <div class="container-ferramenta">
 
-        <section class="card" style="margin-bottom: 3rem; text-align: center; padding: 1.5rem;">
+        <section class="card card-link-separador">
             <p style="margin: 0; font-size: 1rem;">Esta é uma ferramenta rápida. Procurando a comparação completa?</p>
             <a href="index.html" class="btn-secundario" style="margin-top: 1rem; border-width: 2px; padding: 0.5rem 1rem; font-size: 1rem;">Ir para Calculadora CLT vs PJ</a>
         </section>

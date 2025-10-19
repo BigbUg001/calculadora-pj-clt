@@ -8,8 +8,8 @@
     
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display-swap" rel="stylesheet">
     
     <style>
         .container-recursos { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
@@ -26,6 +26,16 @@
         .recurso-card p { color: var(--cor-texto-fraco); margin-bottom: 1.5rem; flex-grow: 1; }
         .recurso-card a { font-weight: 700; color: var(--cor-acao); text-decoration: none; font-size: 1.05rem; }
         .recurso-card a:hover { text-decoration: underline; }
+        
+        /* --- CORREÇÃO DE ESPAÇAMENTO --- */
+        .card-link-separador {
+            margin-bottom: 3rem; /* Espaço ABAIXO do card de link */
+            text-align: center;
+            border-left: 4px solid var(--cor-acao);
+        }
+        .titulo-secao-separador {
+            margin-top: 4rem; /* Espaço ACIMA do título H2 (Resolve sobreposição) */
+        }
     </style>
 </head>
 <body>
@@ -37,14 +47,14 @@
             <p>Explore nossos guias e calculadoras rápidas para tomar a melhor decisão financeira na sua carreira.</p>
         </header>
 
-        <section class="card" style="margin-bottom: 3rem; text-align: center; border-left: 4px solid var(--cor-acao);">
+        <section class="card card-link-separador">
             <p style="margin: 0; font-size: 1.1rem;">Procurando a ferramenta de comparação completa?</p>
             <a href="index.html" class="btn-secundario" style="margin-top: 1rem; border-width: 2px;">
                 Calculadora CLT vs PJ (Completa)
             </a>
         </section>
 
-        <h2 style="margin-top: 3rem;">Mini-Ferramentas Ativas</h2>
+        <h2 class="titulo-secao-separador">Mini-Ferramentas Ativas</h2>
         <div class="recursos-grid">
             
             <div class="recurso-card">
@@ -62,7 +72,7 @@
             </div>
         </div>
 
-        <h2 style="margin-top: 3rem;">Próximos Guias e Artigos</h2>
+        <h2 class="titulo-secao-separador">Próximos Guias e Artigos</h2>
         <div class="recursos-grid">
             
             <div class="recurso-card">
