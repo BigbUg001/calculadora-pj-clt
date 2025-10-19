@@ -1,6 +1,6 @@
-// --- CONSTANTES DE IMPOSTO (COPIADO DO SCRIPT V5) ---
-const SALARIO_MINIMO = 1412.00; // 2024
-const TETO_INSS = 7786.02; // 2024
+// --- CONSTANTES DE IMPOSTO ATUALIZADAS PARA 2025 ---
+const SALARIO_MINIMO = 1518.00; // Salário mínimo 2025
+const TETO_INSS = 8157.41; // Teto previdenciário INSS 2025
 const ANEXO_III = [
     { teto: 180000, aliquota: 0.06, pd: 0 }, { teto: 360000, aliquota: 0.112, pd: 9360 }, { teto: 720000, aliquota: 0.135, pd: 17640 },
     { teto: 1800000, aliquota: 0.16, pd: 35640 }, { teto: 3600000, aliquota: 0.21, pd: 125640 }, { teto: 4800000, aliquota: 0.33, pd: 648000 }
@@ -14,13 +14,13 @@ const ANEXO_V = [
 
 // --- INICIALIZAÇÃO ---
 document.addEventListener('DOMContentLoaded', () => {
-    // O ID do botão agora é "btn-calcular" para pegar o estilo principal
     document.getElementById('btn-calcular').addEventListener('click', handleCalculateClick);
     document.getElementById('pj-regime').addEventListener('change', togglePJInputs);
-    togglePJInputs();
+    
+    togglePJInputs(); 
 });
 
-// --- FUNÇÃO DE UI (COPIADO DO SCRIPT V5) ---
+// --- FUNÇÃO DE UI (COMPLETA) ---
 function togglePJInputs() {
     const regime = document.getElementById('pj-regime').value;
     document.getElementById('pj-simples-inputs').style.display = (regime === 'simples') ? 'block' : 'none';
@@ -28,7 +28,7 @@ function togglePJInputs() {
     document.getElementById('pj-manual-inputs').style.display = (regime === 'manual') ? 'block' : 'none';
 }
 
-// --- FUNÇÃO PRINCIPAL DE "CLICK" ---
+// --- FUNÇÃO PRINCIPAL DE "CLICK" (COMPLETA, COM VALIDAÇÕES) ---
 function handleCalculateClick() {
     const btn = document.getElementById('btn-calcular');
     const btnText = document.getElementById('btn-text');
@@ -53,18 +53,22 @@ function handleCalculateClick() {
                     contabilidade: parseFloat(document.getElementById('pj-contabilidade').value) || 0,
                     outros: parseFloat(document.getElementById('pj-outros').value) || 0,
                 };
+                if (pjInputs.faturamento <= 0) throw new Error("Insira um faturamento válido maior que zero.");
+                if (pjInputs.rbt12 < pjInputs.faturamento) pjInputs.rbt12 = pjInputs.faturamento * 12; // Assumir se vazio
             } else if (pjRegime === 'mei') {
                 pjInputs = { ...pjInputs,
                     faturamento: parseFloat(document.getElementById('pj-faturamento-mei').value) || 0,
                     custoDAS: parseFloat(document.getElementById('pj-custo-mei').value) || 0,
                     outros: parseFloat(document.getElementById('pj-outros-mei').value) || 0,
                 };
+                if (pjInputs.faturamento <= 0) throw new Error("Insira um faturamento válido maior que zero.");
             } else if (pjRegime === 'manual') {
                 pjInputs = { ...pjInputs,
                     faturamento: parseFloat(document.getElementById('pj-faturamento-manual').value) || 0,
                     taxa: parseFloat(document.getElementById('pj-taxa-manual').value) || 0,
                     custosFixos: parseFloat(document.getElementById('pj-custos-fixos-manual').value) || 0,
                 };
+                if (pjInputs.faturamento <= 0) throw new Error("Insira um faturamento válido maior que zero.");
             }
             
             // 2. Calcular o cenário PJ
@@ -78,7 +82,7 @@ function handleCalculateClick() {
 
         } catch (e) {
             console.error(e);
-            alert("Ocorreu um erro no cálculo. Verifique os valores.");
+            alert(e.message || "Ocorreu um erro no cálculo. Verifique os valores.");
         }
         
         // 4. Restaurar o botão
@@ -91,47 +95,49 @@ function handleCalculateClick() {
 }
 
 
-// --- MÓDULOS DE CÁLCULO PJ (COPIADOS DO SCRIPT V5) ---
+// --- NOVA FUNÇÃO: CÁLCULO DE IRRF SOBRE PRÓ-LABORE (TABELA 2025) ---
+function calcularIRRF(base) { // Base = pró-labore - INSS
+    if (base <= 2259.20) return 0;
+    if (base <= 2826.65) return base * 0.075 - 169.44;
+    if (base <= 3751.05) return base * 0.15 - 381.44;
+    if (base <= 4664.68) return base * 0.225 - 662.94;
+    return base * 0.275 - 896.00;
+}
+
+// --- MÓDULOS DE CÁLCULO PJ (CORRIGIDOS) ---
 function calcularPJ_Colaborador(inputs) {
     const { faturamento, rbt12, anexo, estrategiaProlabore, contabilidade, outros } = inputs;
     
     let prolaboreDefinido = 0;
     let notaOtimizacao = "";
     let anexoCalculado = anexo;
+    const limiteSwitch = 61567.40; // Limite para otimização conforme referência
 
-    if (anexo === 'iii' || faturamento === 0) {
-        prolaboreDefinido = SALARIO_MINIMO;
-        notaOtimizacao = "Pró-labore Mínimo (Anexo III)";
-    } else {
-        const prolaboreMinimo = SALARIO_MINIMO;
-        const inssMinimo = prolaboreMinimo * 0.11;
-        const aliquotaV = calcularAliquotaEfetiva(rbt12, ANEXO_V);
-        const impostoV = faturamento * aliquotaV;
-        const custoTotalV = impostoV + inssMinimo;
-        
-        const prolaboreOtimizado = Math.max(faturamento * 0.28, SALARIO_MINIMO);
-        const inssOtimizado = prolaboreOtimizado * 0.11;
-        const aliquotaIII = calcularAliquotaEfetiva(rbt12, ANEXO_III);
-        const impostoIII = faturamento * aliquotaIII;
-        const custoTotalIII = impostoIII + inssOtimizado;
-        
-        if (estrategiaProlabore === 'otimizar' && custoTotalIII < custoTotalV) {
-            prolaboreDefinido = prolaboreOtimizado;
+    if (estrategiaProlabore === 'otimizar') {
+        // Otimização automática baseada no limite
+        if (faturamento <= limiteSwitch) {
             anexoCalculado = 'iii';
-            notaOtimizacao = `Otimizado (Migrou p/ Anexo III)`;
+            prolaboreDefinido = Math.max(faturamento * 0.28, SALARIO_MINIMO);
+            notaOtimizacao = "Pró-labore 28% (Anexo III - Otimizado para baixa carga)";
         } else {
-            prolaboreDefinido = prolaboreMinimo;
             anexoCalculado = 'v';
-            notaOtimizacao = `Mínimo (Otimização não vantajosa)`;
+            prolaboreDefinido = SALARIO_MINIMO;
+            notaOtimizacao = "Pró-labore Mínimo (Anexo V - Otimizado para minimizar IRRF)";
         }
+    } else {
+        // Estratégia mínima: Usa anexo input e pró-labore mínimo
+        prolaboreDefinido = SALARIO_MINIMO;
+        notaOtimizacao = "Pró-labore Mínimo (Sem Otimização Automática)";
     }
 
     const tabela = (anexoCalculado === 'iii') ? ANEXO_III : ANEXO_V;
     const aliquotaEfetiva = calcularAliquotaEfetiva(rbt12, tabela);
     const impostoSimples = faturamento * aliquotaEfetiva;
-    const inssProlabore = prolaboreDefinido * 0.11;
+    const inssProlabore = Math.min(prolaboreDefinido * 0.11, 0.11 * TETO_INSS); // Max R$ 897.32 em 2025
+    const baseIR = prolaboreDefinido - inssProlabore;
+    const irrf = calcularIRRF(baseIR);
     const custosFixos = contabilidade + outros;
-    const custosTotais = impostoSimples + inssProlabore + custosFixos;
+    const custosTotais = impostoSimples + inssProlabore + irrf + custosFixos;
     const liquidoPJ = faturamento - custosTotais;
     
     return {
@@ -141,16 +147,17 @@ function calcularPJ_Colaborador(inputs) {
             { label: "Faturamento Bruto", valor: faturamento, classe: 'provento' },
             { label: `(-) Imposto Simples (${formatPerc(aliquotaEfetiva)})`, valor: impostoSimples, classe: 'desconto' },
             { label: `(-) INSS (s/ Pró-Labore ${formatBRL(prolaboreDefinido)})`, valor: inssProlabore, classe: 'desconto' },
+            { label: `(-) IRRF sobre Pró-Labore`, valor: irrf, classe: 'desconto' },
             { label: `(-) Custos Fixos (Contador, etc)`, valor: custosFixos, classe: 'desconto' },
         ],
-        nota: `Pró-Labore: ${notaOtimizacao}`
+        nota: `${notaOtimizacao}. Consulte contador para validação.`
     };
 }
 
 function calcularPJ_MEI(inputs) {
     const { faturamento, custoDAS, outros } = inputs;
-    const limiteMEI = 6750; // 81.000 / 12
-    let aviso = (faturamento > limiteMEI) ? `Atenção: Faturamento excede o limite médio do MEI (${formatBRL(limiteMEI)}).` : "";
+    const limiteMEI = 7666.67; // Atualizado para 2025 (R$ 92.000 anual / 12)
+    let aviso = (faturamento > limiteMEI) ? `Atenção: Faturamento excede o limite médio do MEI 2025 (${formatBRL(limiteMEI)}). Considere migração para Simples.` : "";
     
     const custosTotais = custoDAS + outros;
     const liquidoPJ = faturamento - custosTotais;
@@ -184,11 +191,16 @@ function calcularPJ_Manual(inputs) {
 }
 
 
-// --- FUNÇÕES AUXILIARES DE CÁLCULO (COPIADAS DO SCRIPT V5) ---
+// --- FUNÇÕES AUXILIARES DE CÁLCULO (COMPLETAS) ---
 function calcularAliquotaEfetiva(rbt12, tabela) {
     if (rbt12 <= 0) return 0;
-    let faixaCorreta = tabela[0];
-    for (const faixa of tabela) { if (rbt12 <= faixa.teto) { faixaCorreta = faixa; break; } faixaCorreta = tabela[tabela.length - 1]; }
+    let faixaCorreta = tabela[tabela.length - 1]; // Última faixa por default
+    for (const faixa of tabela) {
+        if (rbt12 <= faixa.teto) {
+            faixaCorreta = faixa;
+            break;
+        }
+    }
     const { aliquota, pd } = faixaCorreta;
     const aliquotaEfetiva = ((rbt12 * aliquota) - pd) / rbt12;
     return aliquotaEfetiva > 0 ? aliquotaEfetiva : 0;
@@ -198,10 +210,10 @@ const formatBRL = (val) => (val || 0).toLocaleString('pt-BR', { style: 'currency
 const formatPerc = (val) => `${(val * 100).toFixed(2)}%`.replace('.', ',');
 
 
-// --- FUNÇÃO DE EXIBIÇÃO (DISPLAY) ---
+// --- FUNÇÃO DE EXIBIÇÃO (DISPLAY) (COMPLETA) ---
 function exibirResultadoPJ(pj) {
-    document.getElementById('pj-resultado-titulo').innerHTML = `<span class="cor-pj">■</span> ${pj.titulo}`;
-    const listaPJ = document.getElementById('pj-resultado-lista');
+    document.getElementById('resultado-pj-titulo').innerHTML = `<span class="cor-pj">■</span> ${pj.titulo}`;
+    const listaPJ = document.getElementById('resultado-pj-lista');
     listaPJ.innerHTML = ''; // Limpa a lista
     
     pj.breakdown.forEach(item => {

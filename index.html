@@ -62,9 +62,10 @@
                         <input type="number" id="clt-vt-gasto" placeholder="R$ 300" value="0">
                     </div>
                 </div>
-                <div class="checkbox-group vt-check">
-                    <input type="checkbox" id="clt-receber-vt">
-                    <label for="clt-receber-vt">Receber VT (com desconto de 6%)</label>
+                <!-- Removido o checkbox de VT -->
+                <div class="checkbox-group">
+                    <input type="checkbox" id="clt-incluir-provisao" checked>
+                    <label for="clt-incluir-provisao">Incluir Provisão (13º + Férias) no pacote total?</label>
                 </div>
                 <div class="checkbox-group">
                     <input type="checkbox" id="clt-incluir-fgts" checked>
@@ -117,12 +118,13 @@
                             <input type="number" id="pj-outros" placeholder="R$ 700" value="0">
                         </div>
                     </div>
+                    <p style="font-size: 0.9rem; color: var(--cor-texto-fraco); margin-top: 1rem;">Nota: Para serviços ao exterior, alíquota inicial pode ser 3,99%. Consulte contador.</p>
                 </div>
 
                 <div class="pj-inputs" id="pj-mei-inputs" style="display: none;">
                     <div class="card-grid">
                         <div class="input-group"><label for="pj-faturamento-mei">Faturamento Bruto (mês)</label><input type="number" id="pj-faturamento-mei" placeholder="R$ 6.000"></div>
-                        <div class="input-group"><label for="pj-custo-mei">Custo Fixo DAS-MEI (mês)</label><input type="number" id="pj-custo-mei" placeholder="R$ 72"></div>
+                        <div class="input-group"><label for="pj-custo-mei">Custo Fixo DAS-MEI (mês)</label><input type="number" id="pj-custo-mei" placeholder="R$ 72" value="72"></div>
                         <div class="input-group"><label for="pj-outros-mei">Custos Fixos (Saúde, VR, etc)</label><input type="number" id="pj-outros-mei" placeholder="R$ 700" value="0"></div>
                     </div>
                     <small class="card-footer-note">Atenção: O faturamento máximo do MEI é R$ 81.000/ano (média de R$ 6.750/mês).</small>
