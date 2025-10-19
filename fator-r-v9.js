@@ -48,7 +48,15 @@ function calcularFatorR() {
             </div>
         `;
     } else {
-        // ... (texto do Anexo V)
+        htmlResultado = `
+            <div class="resultado-fator-r-valor resultado-fator-r-anexo5">${fatorRPercent}%</div>
+            <p class="resultado-fator-r-texto">
+                Atenção! Sua empresa será tributada pelo <strong>Anexo V</strong> do Simples Nacional.
+            </p>
+            <div class="resultado-fator-r-aviso">
+                As alíquotas do Anexo V variam de <strong>15.5% a 30.5%</strong>. Para simular um Pró-Labore maior e tentar migrar para o Anexo III, use nossa <a href="index.html">calculadora completa com otimizador</a>.
+            </div>
+        `;
     }
     
     resultadoDiv.innerHTML = htmlResultado;
