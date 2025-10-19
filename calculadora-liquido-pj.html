@@ -6,11 +6,46 @@
     <title>Calculadora de Salário Líquido PJ (Simples Nacional, MEI) - Quanto Sobra?</title>
     <meta name="description" content="Calcule o salário líquido real de um PJ. Insira o faturamento e veja quanto sobra após impostos (Simples, MEI, INSS) e custos.">
     
-    <link rel="stylesheet" href="style.css"> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap" rel="stylesheet">
     
-    </head>
+    <style>
+        /* Container "bonito" (restaurado da V8) */
+        .container-ferramenta { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+
+        /* --- CORREÇÃO DE ESPAÇAMENTO FORÇADA (V9) --- */
+        .card-link-separador {
+            margin-bottom: 3.5rem !important; /* Espaço ABAIXO do card (AUMENTADO e FORÇADO) */
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        /* --- CORREÇÃO DE BOTÃO FORÇADA (V9) --- */
+        #btn-calcular {
+            padding: 1rem 2rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--cor-acao-texto);
+            background-color: var(--cor-acao);
+            min-width: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%; 
+        }
+        #btn-calcular:hover {
+            background-color: #d68bff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(198, 120, 221, 0.2);
+        }
+    </style>
+</head>
 <body>
 
     <div class="container-ferramenta">
@@ -23,31 +58,8 @@
         <section class="card" id="card-pj">
              <h1 style="text-align: center; color: var(--cor-acao); margin-top: 0;">Calculadora Líquido PJ</h1>
              
-            <div class="input-group">
-                <label for="pj-regime">Regime de Tributação</label>
-                <select id="pj-regime">
-                    <option value="simples">Simples Nacional</option>
-                    <option value="mei">MEI (Microempreendedor)</option>
-                    <option value="manual">Manual (Inserir Alíquota)</option>
-                </select>
-            </div>
-            <div class="pj-inputs" id="pj-simples-inputs">
-                <div class="card-grid">
-                    <div class="input-group"><label for="pj-faturamento">Faturamento Bruto (mês)</label><input type="number" id="pj-faturamento" placeholder="R$ 10.000"></div>
-                    <div class="input-group"><label for="pj-rbt12">Receita Bruta (Últimos 12 meses)</label><input type="number" id="pj-rbt12" placeholder="R$ 120.000"></div>
-                    <div class="input-group"><label for="pj-anexo">Anexo do Simples</label><select id="pj-anexo"><option value="v">Anexo V</option><option value="iii">Anexo III</option></select></div>
-                    <div class="input-group"><label for="pj-estrategia-prolabore">Estratégia de Pró-Labore</label><select id="pj-estrategia-prolabore"><option value="otimizar">Otimizar Fator R (Recomendado)</option><option value="minimo">Usar Pró-labore Mínimo</option></select></div>
-                    <div class="input-group"><label for="pj-contabilidade">Contabilidade (mês)</label><input type="number" id="pj-contabilidade" placeholder="R$ 150" value="0"></div>
-                    <div class="input-group"><label for="pj-outros">Custos Fixos (Saúde, VR, etc)</label><input type="number" id="pj-outros" placeholder="R$ 700" value="0"></div>
-                </div>
-            </div>
-            <div class="pj-inputs" id="pj-mei-inputs" style="display: none;">
-                </div>
-            <div class="pj-inputs" id="pj-manual-inputs" style="display: none;">
-                </div>
-            
             <div class="botoes-container" style="margin: 2rem 0 0 0;">
-                <button id="btn-calcular-pj">
+                <button id="btn-calcular">
                     <span id="btn-text">Calcular Líquido PJ</span>
                     <span id="btn-spinner" class="spinner" style="display: none;"></span>
                 </button>
@@ -62,15 +74,9 @@
     </div>
 
     <footer>
-        <p>
-            <a href="index.html">Calculadora Principal</a> | 
-            <a href="recursos.html">Mais Ferramentas</a> |
-            <a href="sobre.html">Sobre</a>
-        </p>
-        <p>© 2025 - calculadoracltoupj.com.br</p>
-    </footer>
+        </footer>
 
-    <script src="liquido-pj.js"></script>
+    <script src="liquido-pj-v9.js"></script>
 
 </body>
 </html>

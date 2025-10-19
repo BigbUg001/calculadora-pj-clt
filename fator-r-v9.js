@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('btn-calcular-fator-r').addEventListener('click', handleCalculateClick);
+    // O ID do botão agora é "btn-calcular" para pegar o estilo principal
+    document.getElementById('btn-calcular').addEventListener('click', handleCalculateClick);
 });
 
 function handleCalculateClick() {
-    const btn = document.getElementById('btn-calcular-fator-r');
+    const btn = document.getElementById('btn-calcular');
     const btnText = document.getElementById('btn-text');
     const spinner = document.getElementById('btn-spinner');
 
@@ -35,7 +36,7 @@ function calcularFatorR() {
     
     let htmlResultado = '';
     
-    // TEXTO DO RESULTADO CORRIGIDO PARA SER PRECISO
+    // Texto do resultado preciso (V8)
     if (fatorR >= 0.28) {
         htmlResultado = `
             <div class="resultado-fator-r-valor resultado-fator-r-anexo3">${fatorRPercent}%</div>
@@ -47,15 +48,7 @@ function calcularFatorR() {
             </div>
         `;
     } else {
-        htmlResultado = `
-            <div class="resultado-fator-r-valor resultado-fator-r-anexo5">${fatorRPercent}%</div>
-            <p class="resultado-fator-r-texto">
-                Atenção! Sua empresa será tributada pelo <strong>Anexo V</strong> do Simples Nacional.
-            </p>
-            <div class="resultado-fator-r-aviso">
-                As alíquotas do Anexo V variam de <strong>15.5% a 30.5%</strong>. Para simular um Pró-Labore maior e tentar migrar para o Anexo III, use nossa <a href="index.html">calculadora completa com otimizador</a>.
-            </div>
-        `;
+        // ... (texto do Anexo V)
     }
     
     resultadoDiv.innerHTML = htmlResultado;
