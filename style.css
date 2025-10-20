@@ -1,443 +1,1027 @@
-/* --- CSS Reset e Variáveis de Tema (Tema V4 Dark/Red) --- */
-:root {
-    --cor-fundo: #2a2727;
-    --cor-card: #3a3636;
-    --cor-fundo-input: #4a4545;
-    --cor-borda: #504c4c;
-    --cor-texto: #f0f0f0;
-    --cor-texto-fraco: #a09c9c;
-    --cor-clt-primaria: #e06c75;
-    --cor-pj-primaria: #61afef;
-    --cor-acao: #c678dd;
-    --cor-acao-texto: #2a2727;
-    --cor-sucesso: #98c379;
-    --cor-perigo: var(--cor-clt-primaria);
-    --sombra: 0 4px 12px rgba(0,0,0,0.3);
+html {
+    /* Define o tamanho base para 13px (aprox. 81% de 16px).
+      Como todos os 'rem' são baseados nisso, o site todo
+      será reduzido proporcionalmente.
+    */
+    font-size: 12px; 
 }
 
+/* --- Bloco: Variáveis de Tema (Calculex) --- */
+:root {
+    /* Cores */
+    --cor-fundo-dark: #120E1A;
+    --cor-fundo-page: #191426;
+    --cor-card-bg: #211C30;
+    --cor-card-bg-light: #2c2541;
+    --cor-borda: #3A3052;
+    --cor-borda-brilho: #4a3e6a;
+    
+    --cor-texto-principal: #F0F0F0;
+    --cor-texto-secundario: #A09CB0;
+    
+    /* Cores de Ação */
+    --cor-acao-principal: #8A4CFF;
+    --cor-acao-principal-hover: #A070FF;
+    --cor-acao-secundaria: #00D4C8; /* Teal (PJ Ganha) */
+    --cor-acao-secundaria-hover: #36E4DA;
+    
+    /* --- CORES CORRIGIDAS --- */
+    --cor-clt: #98c379; /* Verde (CLT) */
+    --cor-pj: #61AFEF; /* Azul (PJ) */
+    --cor-negativo: #E06C75; /* Vermelho (CLT Ganha / Desvantagem) */
+    
+    /* Efeito Glow */
+    --glow-principal: 0 0 15px rgba(138, 76, 255, 0.3), 0 0 5px rgba(138, 76, 255, 0.2);
+    --glow-secundario: 0 0 15px rgba(0, 212, 200, 0.3), 0 0 5px rgba(0, 212, 200, 0.2);
+    --glow-negativo: 0 0 15px rgba(224, 108, 117, 0.3); /* Glow Vermelho */
+    --glow-clt: 0 0 15px rgba(152, 195, 121, 0.3); /* Glow Verde */
+    --glow-card: 0 5px 20px rgba(0,0,0,0.3);
+
+    --font-principal: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* --- Bloco: Reset e Base --- */
 body {
-    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: var(--cor-fundo);
-    color: var(--cor-texto);
+    font-family: var(--font-principal);
+    background-color: var(--cor-fundo-page);
+    color: var(--cor-texto-principal);
     line-height: 1.6;
     margin: 0;
     padding: 0;
 }
+* { box-sizing: border-box; }
+svg { vertical-align: middle; }
 
-/* --- Layout Principal --- */
-header {
-    text-align: center;
-    padding: 2.5rem 1rem 2rem 1rem;
+/* --- Bloco: Navbar --- */
+.navbar {
+    background-color: var(--cor-card-bg);
     border-bottom: 1px solid var(--cor-borda);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
-header h1 { margin: 0 0 0.5rem 0; color: #fff; }
-header p { color: var(--cor-texto-fraco); max-width: 500px; margin: 0 auto; font-size: 1.1rem; }
-
-.container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-}
-
-/* --- NOVO: Toggle de Visão --- */
-.visao-container {
+.container-nav {
+    max-width: 1600px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
 }
-.visao-label {
-    font-size: 0.9rem;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    color: var(--cor-texto-fraco);
+    color: var(--cor-texto-principal);
+}
+.logo svg {
+    color: var(--cor-acao-secundaria);
+}
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+.nav-links a {
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     transition: color 0.2s ease;
 }
-#label-colaborador { color: var(--cor-texto); } /* Padrão ativo */
-
-.toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 28px;
+.nav-links a:hover {
+    color: var(--cor-texto-principal);
 }
-.toggle-switch input { opacity: 0; width: 0; height: 0; }
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--cor-fundo-input);
-    transition: .4s;
-    border-radius: 28px;
-    border: 1px solid var(--cor-borda);
+.nav-links a.active {
+    color: var(--cor-acao-secundaria);
 }
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    bottom: 3px;
-    background-color: var(--cor-texto-fraco);
-    transition: .4s;
-    border-radius: 50%;
-}
-input:checked + .slider {
-    background-color: var(--cor-acao);
-}
-input:checked + .slider:before {
-    transform: translateX(22px);
-    background-color: #fff;
-}
-
-
-/* --- Grid Lado-a-Lado --- */
-.calculadora-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-/* --- Estilo dos Cards de Input --- */
-.card {
-    background-color: var(--cor-card);
-    border: 1px solid var(--cor-borda);
-    border-radius: 8px;
-    padding: 1.5rem 2rem 2rem 2rem;
-    box-shadow: var(--sombra);
-    margin-bottom: 2rem;
-}
-.card h2 {
-    margin-top: 0;
-    border-bottom: 1px solid var(--cor-borda);
-    padding-bottom: 1rem;
+.btn-primary {
+    background: linear-gradient(90deg, var(--cor-acao-principal), var(--cor-acao-principal-hover));
     color: #fff;
-    font-weight: 700;
-    font-size: 1.3rem;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-family: var(--font-principal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.btn-primary:hover {
+    box-shadow: var(--glow-principal);
+    transform: translateY(-2px);
+}
+.btn-secondary {
+    background-color: transparent;
+    color: var(--cor-acao-secundaria);
+    border: 2px solid var(--cor-acao-secundaria);
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: var(--font-principal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
-.card h2 span { margin-right: 0.75rem; font-size: 1rem; line-height: 1; }
-.cor-clt { color: var(--cor-clt-primaria); }
-.cor-pj { color: var(--cor-pj-primaria); }
+.btn-secondary:hover {
+    background-color: var(--cor-acao-secundaria);
+    color: var(--cor-fundo-dark);
+    box-shadow: var(--glow-secundario);
+    transform: translateY(-2px);
+}
 
-/* Grid dentro dos cards */
-.card-grid {
+/* --- Bloco: Layout Principal (Grid Esquerda/Direita) --- */
+.calculator-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-}
-/* NOVO: Campo VT ocupando 2 colunas */
-.vt-group {
-    grid-column: 1 / -1;
+    grid-template-columns: 450px 1fr;
+    gap: 2.5rem;
+    max-width: 1600px;
+    margin: 2.5rem auto;
+    padding: 0 2rem;
 }
 
+/* --- Bloco: Painel de Inputs (Esquerda) ---
+*** MODIFICADO PARA ROLAGEM ***
+*/
+.input-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    scrollbar-width: none; /* Oculta a barra de rolagem no Firefox */
+}
+.input-panel::-webkit-scrollbar {
+    display: none; /* Oculta a barra de rolagem no Chrome, Safari, Edge */
+}
+
+
+.input-header h2 {
+    font-size: 1.75rem;
+    margin: 0 0 0.5rem 0;
+    color: #fff;
+}
+.input-header p {
+    font-size: 1rem;
+    color: var(--cor-texto-secundario);
+    margin: 0;
+}
+.card {
+    background-color: var(--cor-card-bg);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--glow-card);
+    transition: all 0.2s ease;
+}
+.card:focus-within {
+    border-color: var(--cor-borda-brilho);
+    box-shadow: var(--glow-principal), var(--glow-card);
+}
+.card-header {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--cor-borda);
+}
+.card-header svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.75rem;
+}
+.card-header.clt-header { color: var(--cor-clt); } /* Verde */
+.card-header.pj-header { color: var(--cor-pj); } /* Azul */
+.card-header-simple {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+
+.input-group { margin-bottom: 1rem; }
 .input-group label {
     display: block;
-    font-weight: 700;
-    margin-bottom: 0.4rem;
-    font-size: 0.85rem;
-    color: var(--cor-texto-fraco);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
 }
 .input-group input[type="number"],
 .input-group select {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.75rem 1rem;
     border: 1px solid var(--cor-borda);
-    background-color: var(--cor-fundo-input);
-    color: var(--cor-texto);
+    background-color: var(--cor-card-bg-light);
+    color: var(--cor-texto-principal);
     border-radius: 6px;
     box-sizing: border-box;
     font-size: 1rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: var(--font-principal);
+    transition: all 0.2s ease;
 }
 .input-group input[type="number"]:focus,
 .input-group select:focus {
     outline: none;
-    border-color: var(--cor-acao);
-    box-shadow: 0 0 0 3px rgba(198, 120, 221, 0.2);
-}
-.input-group select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23a09c9c' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 1em;
-    padding-right: 2.5rem;
+    border-color: var(--cor-acao-principal);
+    background-color: var(--cor-card-bg);
+    box-shadow: 0 0 0 3px rgba(138, 76, 255, 0.2);
 }
 
-/* --- Checkbox --- */
-.checkbox-group {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--cor-borda);
-    display: flex;
-    align-items: center;
-}
-/* NOVO: Checkbox VT sem borda */
-.checkbox-group.vt-check {
-    margin-top: 1.5rem;
-    padding-top: 0;
-    border-top: none;
-}
+.checkbox-group { display: flex; align-items: center; margin-top: 1.5rem; }
 .checkbox-group input[type="checkbox"] {
-    height: 1.25em;
-    width: 1.25em;
+    height: 1.15em; width: 1.15em;
     margin-right: 0.75rem;
-    accent-color: var(--cor-acao);
+    accent-color: var(--cor-acao-principal);
     cursor: pointer;
 }
-.checkbox-group label {
-    font-size: 0.9rem;
-    color: var(--cor-texto);
-    cursor: pointer;
-}
+.checkbox-group label { font-size: 0.9rem; color: var(--cor-texto-secundario); cursor: pointer; }
 
-/* --- Botões (Principal e Secundário) --- */
-.botoes-container {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: center;
-    margin: 2rem 0;
-    flex-wrap: wrap;
+/* Abas PJ */
+.pj-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
 }
-#btn-calcular, .btn-secundario {
-    padding: 1rem 2rem;
-    font-size: 1.15rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 8px;
+.pj-tab-btn {
+    padding: 0.75rem;
+    background-color: var(--cor-card-bg-light);
+    border: 1px solid var(--cor-borda);
+    color: var(--cor-texto-secundario);
+    font-family: var(--font-principal);
+    font-weight: 600;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
-#btn-calcular {
-    color: var(--cor-acao-texto);
-    background-color: var(--cor-acao);
-    min-width: 250px; /* Para manter tamanho durante o loading */
+.pj-tab-btn:hover { background-color: var(--cor-borda); color: #fff; }
+.pj-tab-btn.active {
+    background-color: var(--cor-acao-principal);
+    border-color: var(--cor-acao-principal);
+    color: #fff;
+    box-shadow: var(--glow-principal);
+}
+.pj-regime-group { display: none; } /* Oculta por padrão */
+.pj-regime-group.active { display: block; } /* JS controla isso */
+#pj-simples-inputs { display: block; } /* Mostra o primeiro */
+
+
+/* Botões Ação (Input Panel) */
+.botoes-acao-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.botoes-acao-panel .btn-secondary {
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-borda-brilho);
+    background-color: var(--cor-card-bg-light);
+}
+.botoes-acao-panel .btn-secondary:hover {
+    color: #fff;
+    border-color: var(--cor-acao-principal);
+    background-color: var(--cor-acao-principal);
+    box-shadow: var(--glow-principal);
+}
+.conexao-segura {
+    text-align: center;
+    color: var(--cor-texto-secundario);
+    font-size: 0.85rem;
+    margin-top: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-#btn-calcular:hover {
-    background-color: #d68bff;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(198, 120, 221, 0.2);
-}
-.btn-secundario {
-    color: var(--cor-acao);
-    background-color: transparent;
-    border: 2px solid var(--cor-acao);
-}
-.btn-secundario:hover {
-    color: var(--cor-acao-texto);
-    background-color: var(--cor-acao);
-    transform: translateY(-2px);
+    gap: 0.5rem;
 }
 
-/* Spinner do botão */
-.spinner {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(42, 39, 39, 0.3);
-    border-radius: 50%;
-    border-top-color: var(--cor-acao-texto);
-    animation: spin 1s ease-in-out infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* --- Área de Resultado MENSAL --- */
-.resultado-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-.resultado-col {
-    background-color: var(--cor-card);
-    border: 1px solid var(--cor-borda);
-    border-radius: 8px;
-    padding: 2rem;
-    border-left: 4px solid var(--cor-borda);
-}
-.resultado-col.clt { border-left-color: var(--cor-clt-primaria); }
-.resultado-col.pj  { border-left-color: var(--cor-pj-primaria); }
-.resultado-col.vencedor {
-    box-shadow: 0 0 20px rgba(255,255,255,0.05);
-}
-.resultado-col h3 {
-    margin-top: 0;
-    color: #fff;
-    font-weight: 700;
-}
-.resultado-col ul { list-style-type: none; padding: 0; }
-.resultado-col li {
+/* --- Bloco: Painel de Resultados (Direita) ---
+*** MODIFICADO PARA ROLAGEM ***
+*/
+.results-panel {
     display: flex;
-    justify-content: space-between;
-    padding: 0.7rem 0;
-    border-bottom: 1px solid var(--cor-borda);
-    font-size: 0.95rem;
+    flex-direction: column;
+    gap: 1.5rem;
+    /* Faz este painel rolar independentemente */
+    position: sticky; 
+    top: 100px; /* Altura da navbar */
+    padding-bottom: 2rem;
+    
+    /* --- Oculta a barra de rolagem --- */
+    scrollbar-width: none; /* Firefox */
+}
+.results-panel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+
+.result-card-principal {
+    text-align: left;
+    padding: 2rem;
+    /* Borda padrão é teal (PJ ganha) */
+    border-left: 4px solid var(--cor-acao-secundaria); 
+    box-shadow: var(--glow-secundario), var(--glow-card);
+    transition: all 0.3s ease;
+}
+/* CORREÇÃO DE COR: Estilo para quando CLT ganha (Verde) */
+.result-card-principal.clt-wins {
+    border-left-color: var(--cor-clt); /* Verde */
+    box-shadow: var(--glow-clt), var(--glow-card); /* Glow Verde */
+}
+
+.result-card-principal label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.valor-principal {
+    font-size: 2.75rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+.valor-secundario {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+    transition: color 0.3s ease;
+}
+/* Cores dinâmicas para Variação */
+.valor-principal.positivo, .valor-secundario.positivo { 
+    color: var(--cor-acao-secundaria); /* Teal (PJ Ganha) */
+}
+/* CORREÇÃO DE COR */
+.valor-principal.negativo, .valor-secundario.negativo { 
+    color: var(--cor-clt); /* Vermelho (CLT Ganha) */
+}
+
+
+.results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.result-card-comparativo { padding: 1.5rem; }
+.result-card-comparativo label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+    display: flex;
     align-items: center;
 }
-.resultado-col li:last-child { border-bottom: none; }
-.resultado-col .desconto { color: var(--cor-perigo); }
-.resultado-col .provento { color: var(--cor-sucesso); }
-.resultado-col .sub-label { color: var(--cor-texto-fraco); font-size: 0.85rem; }
-.resultado-col .final {
-    font-size: 1.6rem;
-    font-weight: 700;
+.valor-comparativo {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0.25rem 0 1rem 0;
+}
+.detalhe-comparativo {
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--cor-borda);
+}
+.detalhe-comparativo span:last-child {
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+}
+.detalhe-aliquota {
+    font-size: 0.85rem;
+    color: var(--cor-texto-secundario);
+    margin-top: 0.25rem;
+}
+
+/* Cores CLT vs PJ nos resultados */
+.clt { color: var(--cor-clt); } /* Verde */
+.pj { color: var(--cor-pj); } /* Azul */
+
+.anual-comparativo { display: flex; flex-direction: column; gap: 1rem; }
+.anual-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+}
+.anual-item span { color: var(--cor-texto-secundario); }
+.anual-item strong { font-size: 1.25rem; font-weight: 700; }
+.anual-diferenca {
+    color: var(--cor-acao-secundaria); /* Padrão Teal (PJ Ganha) */
+    font-weight: 600;
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid var(--cor-borda);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
-.resultado-col.clt .final { color: var(--cor-clt-primaria); }
-.resultado-col.pj .final  { color: var(--cor-pj-primaria); }
-
-/* Ícone de Info (?) */
-.info-tooltip {
-    display: inline-block;
-    width: 1.1em;
-    height: 1.1em;
-    border-radius: 50%;
-    background-color: var(--cor-texto-fraco);
-    color: var(--cor-fundo);
-    text-align: center;
-    font-size: 0.8em;
-    line-height: 1.1em;
-    cursor: help;
-    position: relative;
-    top: -1px;
-    font-weight: 700;
-    margin-left: 5px;
+/* CORREÇÃO DE COR */
+.anual-diferenca.negativo {
+    color: var(--cor-clt); /* Vermelho (CLT Ganha) */
 }
-.info-tooltip:hover::after {
-    content: attr(title);
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 140%;
-    padding: 0.75rem;
-    background-color: var(--cor-fundo);
-    border: 1px solid var(--cor-borda);
-    border-radius: 6px;
-    color: var(--cor-texto);
-    font-size: 0.9rem;
-    font-weight: 400;
-    width: 280px;
-    z-index: 10;
-    text-align: left;
-    box-shadow: var(--sombra);
+.anual-diferenca.negativo svg {
+    transform: rotate(180deg);
 }
 
-/* --- Área de Resultado ANUAL --- */
-#anual-container {
-    background-color: var(--cor-card);
-    border-top: 4px solid var(--cor-acao);
-    border-radius: 8px;
-    padding: 2.5rem;
-    text-align: center;
+.recommendation-card {
+    border-left: 4px solid var(--cor-acao-secundaria); /* Padrão Teal */
+    box-shadow: var(--glow-secundario), var(--glow-card);
+    transition: all 0.3s ease;
 }
-#anual-container h2 { margin-top: 0; color: #fff; font-weight: 700; }
-.anual-grid {
+/* CORREÇÃO DE COR: Estilo para quando CLT ganha (Vermelho) */
+.recommendation-card.negativo {
+    border-left-color: var(--cor-clt);
+    box-shadow: var(--glow-negativo), var(--glow-card);
+}
+.recommendation-card.negativo .card-header-simple {
+    color: var(--cor-clt);
+}
+
+.recommendation-card p {
+    color: var(--cor-texto-principal);
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.7;
+}
+.recommendation-card strong { color: #fff; font-weight: 700; }
+.btn-export { margin-top: 1rem; }
+
+/* --- Bloco: Novos Cards de Detalhamento Tributário (NOVO) --- */
+.tax-details-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background-color: var(--cor-borda);
-    margin: 2rem 0;
-    border: 1px solid var(--cor-borda);
-    border-radius: 6px;
-    overflow: hidden;
+    gap: 1.5rem;
 }
-.anual-col { background-color: var(--cor-fundo); padding: 1.5rem; }
-.anual-col h4 { margin: 0 0 0.5rem 0; font-size: 1rem; font-weight: 500; color: var(--cor-texto-fraco); }
-.anual-col .valor-anual { font-size: 2rem; font-weight: 700; }
-.anual-col.clt .valor-anual { color: var(--cor-clt-primaria); }
-.anual-col.pj .valor-anual { color: var(--cor-pj-primaria); }
-#comparacao-anual-texto { font-size: 1.25rem; color: var(--cor-texto); line-height: 1.7; }
-#comparacao-anual-texto strong { color: var(--cor-sucesso); font-weight: 700; }
-
-/* --- Conteúdo de SEO e Tutorial --- */
-.conteudo-seo { margin-top: 3rem; }
-.conteudo-seo h3 { color: var(--cor-acao); margin-top: 2rem; }
-.conteudo-seo ul { padding-left: 20px; }
-.conteudo-seo li { margin-bottom: 0.5rem; }
-
-/* --- Footer --- */
-footer {
-    text-align: center;
-    padding: 2rem;
-    margin-top: 2rem;
-    color: var(--cor-texto-fraco);
-    border-top: 1px solid var(--cor-borda);
-    font-size: 0.9rem;
-}
-footer p { margin: 0.5rem 0; }
-footer a {
-    color: var(--cor-acao);
-    text-decoration: none;
-    font-weight: 700;
-}
-footer a:hover {
-    text-decoration: underline;
-}
-#footer-update {
-    font-style: italic;
-    font-size: 0.85rem;
-}
-
-/* --- Responsividade --- */
-@media (max-width: 900px) {
-    .calculadora-grid, .resultado-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 600px) {
-    .card-grid { grid-template-columns: 1fr; }
-    .anual-grid { grid-template-columns: 1fr; }
-    .botoes-container { flex-direction: column; }
-    #btn-calcular, .btn-secundario { width: 100%; }
-}
-
-/* --- CORREÇÕES V6: ESPAÇAMENTO E BOTÕES (ADICIONADO) --- */
-
-/* 1. Corrige a sobreposição/espaçamento em TODAS as páginas "Spoke" */
-.container-ferramenta {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-}
-.container-ferramenta-sm { /* Para o Fator R */
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-}
-.card-link-separador {
-    margin-bottom: 3rem !important; /* Força a margem abaixo do card de link */
-    text-align: center;
+.tax-detail-card {
     padding: 1.5rem;
+    background-color: var(--cor-card-bg-light); /* Fundo um pouco mais claro */
 }
-.container-recursos h2 {
-    margin-top: 4rem !important; /* Força a margem acima dos títulos H2 no recursos.html */
+.tax-detail-card .card-header-simple {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--cor-borda);
+    /* Cores já definidas para .clt e .pj */
 }
+.tax-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.tax-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    color: var(--cor-texto-secundario);
+}
+.tax-item span:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.tax-item strong {
+    color: var(--cor-texto-principal);
+    font-weight: 600;
+}
+.tax-item .percentage {
+    font-size: 0.8rem;
+    color: var(--cor-texto-secundario);
+}
+.tax-item-total {
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px dashed var(--cor-borda);
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+/* Fim do Bloco de Detalhamento */
 
-/* 2. Garante que os botões das mini-ferramentas tenham o estilo correto */
-/* Esta regra força QUALQUER botão dentro do .botoes-container a ter o estilo principal */
-.botoes-container button {
-    padding: 1rem 2rem;
-    font-size: 1.15rem;
-    font-weight: 700;
-    border: none;
+
+/* --- Bloco: Ferramentas Complementares --- */
+.tools-container {
+    max-width: 1600px;
+    margin: 4rem auto 2rem auto;
+    padding: 2.5rem 2rem;
+    background-color: var(--cor-card-bg);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+}
+.tools-header { text-align: center; margin-bottom: 2rem; }
+.tools-header h3 { font-size: 1.5rem; margin: 0 0 0.5rem 0; color: #fff; }
+.tools-header p { color: var(--cor-texto-secundario); margin: 0; }
+.tools-grid {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+.tool-button {
+    background-color: var(--cor-card-bg-light);
+    border: 1px solid var(--cor-borda-brilho);
+    color: var(--cor-texto-principal);
+    padding: 1rem 1.5rem;
     border-radius: 8px;
+    font-family: var(--font-principal);
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    color: var(--cor-acao-texto);
-    background-color: var(--cor-acao);
-    min-width: 250px;
+}
+.tool-button:hover {
+    color: var(--cor-acao-principal);
+    border-color: var(--cor-acao-principal);
+    box-shadow: var(--glow-principal);
+}
+
+/* --- Bloco: FAQ (Perguntas Frequentes) --- */
+.faq-container {
+    max-width: 1600px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+.faq-container h2 {
+    font-size: 2rem;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+.faq-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
+.faq-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.faq-item {
+    padding: 1.25rem 1.5rem;
+    background-color: var(--cor-card-bg);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-principal);
+    font-size: 0.95rem;
+    color: var(--cor-texto-secundario);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.faq-item:hover { border-color: var(--cor-borda-brilho); color: #fff; }
+.faq-item.active {
+    background-color: var(--cor-card-bg-light);
+    border-left: 4px solid var(--cor-acao-principal);
+    color: #fff;
+    box-shadow: var(--glow-principal);
+}
+.badge.popular {
+    background-color: var(--cor-acao-principal);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+.faq-content { padding: 2rem; }
+.faq-content h3 { margin-top: 0; font-size: 1.5rem; color: #fff; }
+.faq-content p { color: var(--cor-texto-secundario); font-size: 1rem; line-height: 1.7; }
+.faq-content-panel { display: none; }
+.faq-content-panel.active { display: block; }
+
+/* --- Bloco: Footer (Rodapé) --- */
+.footer {
+    background-color: var(--cor-fundo-dark);
+    padding: 4rem 2rem 2rem 2rem;
+    margin-top: 4rem;
+    border-top: 1px solid var(--cor-borda);
+    /* --- CORREÇÃO DE LAYOUT --- */
+    /* Garante que o footer não seja afetado pela rolagem da página */
+    position: relative;
+    z-index: 50;
+}
+.footer-grid {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+}
+.footer-col .logo { margin-bottom: 1rem; }
+.footer-col p {
+    color: var(--cor-texto-secundario);
+    font-size: 0.9rem;
+    max-width: 300px;
+}
+.footer-tags { display: flex; gap: 0.75rem; margin-top: 1rem; }
+.footer-tags .tag {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    border: 1px solid var(--cor-borda-brilho);
+}
+.tag.secure { color: var(--cor-acao-secundaria); border-color: var(--cor-acao-secundaria); }
+.tag.crypto { color: var(--cor-texto-secundario); }
+
+.footer-col h4 {
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.footer-col a, .contact-item {
+    display: block;
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+.footer-col a:hover { color: var(--cor-acao-principal); }
+.contact-item { display: flex; align-items: center; gap: 0.75rem; }
+.contact-item svg { color: var(--cor-texto-secundario); }
+.social-links { display: flex; gap: 1rem; }
+.social-icon {
+    border: 1px solid var(--cor-borda);
+    padding: 0.75rem;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.botoes-container button:hover {
-    background-color: #d68bff;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(198, 120, 221, 0.2);
+.social-icon:hover {
+    border-color: var(--cor-acao-principal);
+    color: var(--cor-acao-principal);
+}
+
+.footer-bottom {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--cor-borda);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--cor-texto-secundario);
+    font-size: 0.9rem;
+}
+.status-badge {
+    color: var(--cor-acao-secundaria);
+    border: 1px solid var(--cor-acao-secundaria);
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: var(--glow-secundario);
+}
+
+/* --- Bloco: Responsividade --- */
+@media (max-width: 1200px) {
+    /* --- CORREÇÃO DE LAYOUT --- */
+    body { overflow-y: auto; } /* Restaura rolagem normal em telas menores */
+    .calculator-container {
+        grid-template-columns: 1fr; /* Coluna única em tablets */
+        height: auto; /* Desativa altura fixa */
+    }
+    .results-panel {
+        order: -1; /* Resultados aparecem PRIMEIRO */
+        position: relative; 
+        top: 0;
+        height: auto; /* Desativa altura fixa */
+        overflow-y: visible;
+        padding-right: 0;
+    }
+    .input-panel {
+        max-height: none; /* Desativa altura máxima */
+        overflow-y: visible;
+        padding-right: 0;
+    }
+}
+@media (max-width: 900px) {
+    .nav-links { display: none; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .tax-details-grid { grid-template-columns: 1fr; } /* Detalhes em coluna única */
+}
+@media (max-width: 600px) {
+    .container-nav .btn-primary { display: none; }
+    .calculator-container { padding: 0 1rem; margin-top: 1.5rem; gap: 1.5rem; }
+    .results-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 1rem; }
+    .tools-grid { flex-direction: column; }
+}
+
+/* --- NOVO: Bloco de Prefixo "R$" para Inputs --- */
+.input-group-prefix {
+    position: relative;
+}
+.input-group-prefix .prefix {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cor-texto-secundario);
+    font-weight: 500;
+    font-size: 1rem;
+    pointer-events: none; /* Permite clicar através dele */
+}
+.input-group-prefix input[type="number"] {
+    padding-left: 45px; /* Ajusta o texto do input para depois do "R$" */
+}
+
+/* --- NOVO: Bloco de Animações (Solicitação do Usuário) --- */
+
+/* 1. Animação de Foco no Input */
+.input-group input[type="number"]:focus,
+.input-group select:focus {
+    /* (Seu código :focus original já tem a transição, vamos apenas modificá-lo) */
+    border-color: #7fff7f; /* Verde-claro */
+    box-shadow: 0 0 6px #7fff7f, 0 0 0 3px rgba(127, 255, 127, 0.1);
+}
+
+/* 2. Animação de Atualização de Resultados (Fade-in + Slide-up) */
+@keyframes fade-in-up {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to   { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* 3. Fundo de Card Animado (Sutil) */
+@keyframes subtle-gradient {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Aplica o gradiente sutil ao card principal QUANDO NÃO FOR NEGATIVO */
+.result-card-principal:not(.negativo) {
+    /* Sobrepõe o fundo verde ao fundo do card, com opacidade */
+    background: 
+        linear-gradient(270deg, rgba(119, 255, 119, 0.1), rgba(153, 255, 170, 0.15), rgba(119, 255, 119, 0.1)),
+        var(--cor-card-bg);
+    background-size: 200% 200%;
+    animation: subtle-gradient 3s ease infinite;
+}
+
+/* 5. Animação de "is-updating" (a ser aplicada via JS) */
+.is-updating {
+    /* Força o re-flow e aplica a animação de fade-in-up */
+    animation: fade-in-up 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 7. Animação de Slide-in (para novos cards de detalhe) */
+@keyframes slide-in-left {
+    from { 
+        opacity: 0; 
+        transform: translateX(-15px); 
+    }
+    to   { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+/* Aplica o slide-in aos cards de detalhe com um atraso */
+.tax-detail-card {
+    animation: slide-in-left 0.3s ease-out;
+    animation-fill-mode: both; /* Garante que comece invisível */
+}
+.tax-detail-card:nth-child(1) { animation-delay: 0.1s; }
+.tax-detail-card:nth-child(2) { animation-delay: 0.2s; }
+
+
+/* 9. Animação de Troca de Abas (PJ) */
+@keyframes fade-in-scale {
+    from { 
+        opacity: 0; 
+        transform: scale(0.95); 
+    }
+    to   { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+/* Aplica a animação a qualquer grupo de regime que apareça */
+.pj-regime-group {
+    animation: fade-in-scale 0.25s ease-out;
+}
+
+/* --- NOVO: Deixa os valores de detalhe de imposto em vermelho --- */
+.tax-item strong, .tax-item-total strong {
+    color: var(--cor-negativo);
+}
+
+/* --- NOVO: Cor dos Benefícios (Proventos) nos Detalhes --- */
+.tax-item.provento strong, .tax-item-total.provento strong {
+    color: var(--cor-clt); /* Verde (cor da aba CLT) */
+}
+
+/* --- NOVO: Estilo para "Salário em Conta" (Req. Usuário) --- */
+.detalhe-salario-conta {
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem; /* Espaço antes do "Total de Impostos" */
+}
+.detalhe-salario-conta strong {
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    font-size: 1.05rem; /* Um pouco maior que o label */
+}
+
+/* --- NOVO: Corrigir cor "CLT Vantajoso" (verde) --- */
+
+/* "Variação Líquida" % texto */
+.valor-secundario.clt-wins {
+    color: var(--cor-clt); 
+}
+
+/* "Recomendação Rápida" texto */
+.recommendation-card.clt-wins p,
+.recommendation-card.clt-wins p strong {
+    color: var(--cor-clt);
+}
+
+/* Garante que a recomendação negativa (vermelha) só se aplique
+   quando PJ for o foco, mas CLT for melhor. 
+   Isso é substituído pela regra .clt-wins acima. */
+.recommendation-card.negativo p,
+.recommendation-card.negativo p strong {
+     color: var(--cor-negativo);
+}
+
+/* --- CORREÇÃO: Estilos de Impressão (PDF com Inputs e Resultados) --- */
+@media print {
+    /* Esconde toda a UI extra */
+    .navbar, 
+    .tools-container, 
+    .faq-container, 
+    .footer, 
+    #btn-export-pdf /* O próprio botão */
+    {
+        display: none !important;
+    }
+
+    /* Força o container principal e seus filhos a serem visíveis */
+    body {
+        font-size: 10pt !important; /* Reduz o tamanho para caber no PDF */
+        overflow: visible !important;
+    }
+    
+    .calculator-container {
+        display: block !important; /* Remove o grid */
+        grid-template-columns: 1fr !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        height: auto !important;
+    }
+
+    .input-panel,
+    .results-panel {
+        display: block !important;
+        position: static !important; /* Remove 'sticky' */
+        overflow: visible !important;
+        height: auto !important;
+        width: 100% !important; /* Garante que ocupe a largura total */
+        padding: 0 !important;
+        margin: 0 !important;
+        page-break-inside: avoid; /* Tenta não quebrar os painéis */
+    }
+    
+    .input-panel {
+        margin-bottom: 2rem !important; /* Espaço entre os painéis no PDF */
+    }
+
+    /* --- Estilos Gerais de Impressão (Limpeza) --- */
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        margin-bottom: 1rem;
+        -webkit-print-color-adjust: exact; /* Força cores no Chrome */
+        color-adjust: exact; /* Força cores */
+        page-break-inside: avoid;
+    }
+
+    /* Fundo branco, texto preto */
+    html, body {
+        background-color: #fff !important;
+        color: #000 !important;
+    }
+    .card, .tax-detail-card {
+        background-color: #fff !important;
+    }
+    
+    /* Estilos dos Inputs (para mostrar valores) */
+    .input-group input, .input-group select {
+        background-color: #f0f0f0 !important;
+        border: 1px solid #ccc !important;
+        color: #000 !important;
+    }
+    .input-group-prefix .prefix {
+        color: #555 !important;
+    }
+    .checkbox-group {
+        display: none; /* Esconde checkboxes */
+    }
+    .pj-tabs {
+        display: none; /* Esconde abas PJ */
+    }
+    .conexao-segura {
+        display: none !important;
+    }
+
+    /* Converte todos os textos para preto */
+    .valor-principal, .valor-comparativo, .card-header-simple,
+    .tax-item strong, .tax-item-total strong, .anual-item span,
+    .detalhe-comparativo span, .detalhe-aliquota, .anual-item strong,
+    .tax-item, .tax-item span, .tax-item .percentage,
+    .recommendation-card p, .input-header p, .recommendation-card p strong,
+    .valor-secundario, .anual-diferenca, .detalhe-salario-conta,
+    .detalhe-salario-conta strong, .input-header h2, .card-header,
+    label, .logo,
+    /* --- CORREÇÃO ADICIONADA AQUI --- */
+    .equivalency-card p,
+    .equivalency-card strong,
+    .equivalency-card .equivalencia-valor {
+        color: #000 !important;
+    }
+
+    /* Recria cores importantes (CLT, PJ, Negativo, Positivo) */
+    .clt, .tax-item.provento strong, .tax-item-total.provento strong,
+    .card-header.clt-header { 
+        color: var(--cor-clt) !important; 
+    }
+    .pj, .card-header.pj-header { 
+        color: var(--cor-pj) !important; 
+    }
+    /* Itens de desconto e recomendação negativa (vermelho) */
+    .tax-item strong, 
+    .tax-item-total strong, 
+    .recommendation-card.negativo p, 
+    .recommendation-card.negativo p strong,
+    .valor-secundario.negativo { 
+        color: var(--cor-negativo) !important; 
+    }
+
+    /* CORREÇÃO: Diferença anual quando CLT ganha (verde) */
+    .anual-diferenca.negativo {
+        color: var(--cor-clt) !important;
+    }
+    .positivo, .anual-diferenca.positivo, .valor-principal.positivo, 
+    .valor-secundario.positivo { 
+        color: var(--cor-acao-secundaria) !important; /* Teal */
+    }
+
+    /* Garante bordas */
+    .anual-diferenca { border-top: 1px solid #ccc !important; }
+    .detalhe-comparativo { border-top: 1px solid #ccc !important; }
+    .tax-item-total { border-top: 1px dashed #ccc !important; }
+    .card-header-simple, .card-header { border-bottom: 1px solid #ccc !important; }
+    .result-card-principal { border-left: 4px solid #ccc !important; }
+    .result-card-principal.clt-wins { border-left-color: var(--cor-clt) !important; }
+    .result-card-principal:not(.clt-wins) { border-left-color: var(--cor-acao-secundaria) !important; }
+}
+
+/* --- NOVO: Estilo Card Equivalência --- */
+.equivalency-card {
+    border-left: 4px solid var(--cor-borda-brilho);
+    transition: all 0.3s ease;
+}
+.equivalency-card p {
+    color: var(--cor-texto-secundario);
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.7;
+}
+.equivalency-card strong {
+    color: var(--cor-texto-principal);
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+/* Estilo para o span do valor (ex: "R$ 7.936,26") */
+.equivalency-card .equivalencia-valor {
+    color: #fff; /* Cor branca para destaque */
+    font-weight: 700;
 }

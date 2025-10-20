@@ -3,199 +3,421 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora CLT vs PJ [V5] - Otimizador e Custo Empresa</title>
-    <meta name="description" content="A calculadora mais precisa para comparar Salário (CLT) vs Líquido (PJ). Inclui otimização de Fator R, Vale-Transporte e a visão de Custo para Empresa.">
+    <title>Calculex - Comparador CLT vs PJ em Tempo Real</title>
+    <meta name="description" content="Simule em tempo real seu salário líquido CLT contra o faturamento PJ e descubra a opção mais rentável.">
     
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Comparador Definitivo: CLT vs PJ</h1>
-        <p>Insira os valores nos cenários para descobrir a opção mais rentável.</p>
-        
-        <div class="visao-container">
-            <label class="visao-label" id="label-colaborador">Visão Colaborador</label>
-            <label class="toggle-switch">
-                <input type="checkbox" id="visao-toggle">
-                <span class="slider"></span>
-            </label>
-            <label class="visao-label" id="label-empresa">Visão Empresa</label>
+    <nav class="navbar">
+        <div class="container-nav">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2H17C18.1046 2 19 2.89543 19 4V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V4C5 2.89543 5.89543 2 7 2Z" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 6H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 10H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18H10" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Calculex
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM0 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4H0zm3 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm4 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm4 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-8 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm4 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm4 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/></svg> Calculadora CLT x PJ</a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-1.057 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/></svg> Sobre</a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.002 1.518.32 2.074.878l.848.85c.52.52.827 1.22.827 2.01v.089c0 .822-.32 1.518-.878 2.074l-.85.848c-.52.52-1.22.827-2.01.827h-.089c-.822-.002-1.518-.32-2.074-.878l-.848-.85c-.52-.52-.827-1.22-.827-2.01v-.089c0-.822.32-1.518.878-2.074l.85-.848c.52-.52 1.22-.827 2.01-.827zM11 9.5v-1H9.5V11H11zM11.125 10.125a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM11 5.5v1H9.5V5H11zM11.125 6.125a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM5.5 11v-1H5v1.5H6.5v-1zM4.875 10.125a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM5.5 6.5v-1H5V7H6.5v-1zM4.875 6.125a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM9.5 5.5v-1H11v-1H9.5V3H8v1.5H9.5v1zm-.625.625a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM6.5 9.5v-1H8v-1H6.5V6H5v1.5H6.5v1zM6.125 8.875a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM8 11v-1H6.5V11H8V13H9.5v-1.5H8zM8.875 11.125a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0z"/></svg> Como Funciona</a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/></svg> Contato</a>
+            </div>
+            <button class="btn-primary">Calcular Agora</button>
         </div>
-    </header>
+    </nav>
 
-    <main class="container">
-        <div class="calculadora-grid">
-            
-            <section class="card" id="card-clt">
-                <h2><span class="cor-clt">■</span> Cenário CLT</h2>
-                <div class="card-grid">
-                    <div class="input-group">
-                        <label for="clt-bruto">Salário Bruto</label>
-                        <input type="number" id="clt-bruto" placeholder="R$ 6.000">
-                    </div>
-                    <div class="input-group">
-                        <label for="clt-dependentes">Dependentes (IRRF)</label>
-                        <input type="number" id="clt-dependentes" placeholder="0" value="0">
-                    </div>
-                    <div class="input-group">
-                        <label for="clt-vr">Vale Refeição (dia)</label>
-                        <input type="number" id="clt-vr" placeholder="R$ 30" value="0">
-                    </div>
-                    <div class="input-group">
-                        <label for="clt-va">Vale Alimentação (mês)</label>
-                        <input type="number" id="clt-va" placeholder="R$ 500" value="0">
-                    </div>
-                    <div class="input-group">
-                        <label for="clt-saude">Desconto Plano de Saúde</label>
-                        <input type="number" id="clt-saude" placeholder="R$ 150" value="0">
-                    </div>
-                    <div class="input-group">
-                        <label for="clt-outros-descontos">Outros Descontos</label>
-                        <input type="number" id="clt-outros-descontos" placeholder="R$ 0" value="0">
-                    </div>
-                    <div class="input-group vt-group">
-                        <label for="clt-vt-gasto">Gasto com Transporte (mês)</label>
-                        <input type="number" id="clt-vt-gasto" placeholder="R$ 300" value="0">
-                    </div>
-                </div>
-                <!-- Removido o checkbox de VT -->
-                <div class="checkbox-group">
-                    <input type="checkbox" id="clt-incluir-provisao" checked>
-                    <label for="clt-incluir-provisao">Incluir Provisão (13º + Férias) no pacote total?</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="clt-incluir-fgts" checked>
-                    <label for="clt-incluir-fgts">Incluir FGTS (8%) no "pacote" total?</label>
-                </div>
-            </section>
+    <main class="calculator-container">
+        
+<section class="input-panel">
+            <header class="input-header">
+                <h2>Insira seu salário ou valor PJ</h2>
+                <p>Simule em tempo real: resultados atualizados enquanto você digita.</p>
+            </header>
 
-            <section class="card" id="card-pj">
-                 <h2><span class="cor-pj">■</span> Cenário PJ</h2>
+            <div class="card">
+                <div class="card-header clt-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-3V4c0-1.11-.89-2-2-2H9c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM9 4h6v2H9V4zm11 15H4V8h16v11z"></path><path d="M10 12H8v-2h2v2zm4 0h-2v-2h2v2zm-4 4H8v-2h2v2zm4 0h-2v-2h2v2z"></path></svg>
+                    Dados CLT
+                </div>
                 
                 <div class="input-group">
-                    <label for="pj-regime">Regime de Tributação</label>
-                    <select id="pj-regime">
-                        <option value="simples">Simples Nacional</option>
-                        <option value="mei">MEI (Microempreendedor)</option>
-                        <option value="manual">Manual (Inserir Alíquota)</option>
-                    </select>
-                </div>
-
-                <div class="pj-inputs" id="pj-simples-inputs">
-                    <div class="card-grid">
-                        <div class="input-group">
-                            <label for="pj-faturamento">Faturamento Bruto (mês)</label>
-                            <input type="number" id="pj-faturamento" placeholder="R$ 10.000">
-                        </div>
-                        <div class="input-group">
-                            <label for="pj-rbt12">Receita Bruta (Últimos 12 meses)</label>
-                            <input type="number" id="pj-rbt12" placeholder="R$ 120.000">
-                        </div>
-                        <div class="input-group">
-                            <label for="pj-anexo">Anexo do Simples</label>
-                            <select id="pj-anexo">
-                                <option value="v">Anexo V (Ex: Consultoria)</option>
-                                <option value="iii">Anexo III (Ex: TI, Saúde)</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label for="pj-estrategia-prolabore">Estratégia de Pró-Labore</label>
-                            <select id="pj-estrategia-prolabore">
-                                <option value="otimizar">Otimizar Fator R (Recomendado)</option>
-                                <option value="minimo">Usar Pró-labore Mínimo</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label for="pj-contabilidade">Contabilidade (mês)</label>
-                            <input type="number" id="pj-contabilidade" placeholder="R$ 150" value="0">
-                        </div>
-                        <div class="input-group">
-                            <label for="pj-outros">Custos Fixos (Saúde, VR, etc)</label>
-                            <input type="number" id="pj-outros" placeholder="R$ 700" value="0">
-                        </div>
-                    </div>
-                    <p style="font-size: 0.9rem; color: var(--cor-texto-fraco); margin-top: 1rem;">Nota: Para serviços ao exterior, alíquota inicial pode ser 3,99%. Consulte contador.</p>
-                </div>
-
-                <div class="pj-inputs" id="pj-mei-inputs" style="display: none;">
-                    <div class="card-grid">
-                        <div class="input-group"><label for="pj-faturamento-mei">Faturamento Bruto (mês)</label><input type="number" id="pj-faturamento-mei" placeholder="R$ 6.000"></div>
-                        <div class="input-group"><label for="pj-custo-mei">Custo Fixo DAS-MEI (mês)</label><input type="number" id="pj-custo-mei" placeholder="R$ 72" value="72"></div>
-                        <div class="input-group"><label for="pj-outros-mei">Custos Fixos (Saúde, VR, etc)</label><input type="number" id="pj-outros-mei" placeholder="R$ 700" value="0"></div>
-                    </div>
-                    <small class="card-footer-note">Atenção: O faturamento máximo do MEI é R$ 81.000/ano (média de R$ 6.750/mês).</small>
-                </div>
-                <div class="pj-inputs" id="pj-manual-inputs" style="display: none;">
-                    <div class="card-grid">
-                        <div class="input-group"><label for="pj-faturamento-manual">Faturamento Bruto (mês)</label><input type="number" id="pj-faturamento-manual" placeholder="R$ 10.000"></div>
-                        <div class="input-group"><label for="pj-taxa-manual">Alíquota de Imposto (%)</label><input type="number" id="pj-taxa-manual" placeholder="10"></div>
-                        <div class="input-group"><label for="pj-custos-fixos-manual">Todos os Custos Fixos (mês)</label><input type="number" id="pj-custos-fixos-manual" placeholder="R$ 850" value="0"></div>
+                    <label for="clt-bruto">Salário Bruto Mensal</label>
+                    <div class="input-group-prefix">
+                        <span class="prefix">R$</span>
+                        <input type="number" id="clt-bruto" placeholder="5.000">
                     </div>
                 </div>
-            </section>
-        </div>
 
-        <div class="botoes-container">
-            <button id="btn-calcular">
-                <span id="btn-text">Comparar Cenários</span>
-                <span id="btn-spinner" class="spinner" style="display: none;"></span>
+                <div class="input-group">
+                    <label for="clt-dependentes">Número de Dependentes</label>
+                    <input type="number" id="clt-dependentes" value="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="clt-beneficios">Benefícios (VT, VR, Plano)</label>
+                    <div class="input-group-prefix">
+                        <span class="prefix">R$</span>
+                        <input type="number" id="clt-beneficios" value="0" placeholder="800">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="clt-descontos">Outros Descontos (Plano, VT)</label>
+                    <div class="input-group-prefix">
+                        <span class="prefix">R$</span>
+                        <input type="number" id="clt-descontos" value="0" placeholder="300">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="clt-plr-anual">PLR (Provisão Anual)</label>
+                    <div class="input-group-prefix">
+                        <span class="prefix">R$</span>
+                     <input type="number" id="clt-plr-anual" value="0" placeholder="2.000">
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="clt-incluir-provisao" checked>
+                    <label for="clt-incluir-provisao">Incluir 13º e Férias no "Pacote"?</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="clt-incluir-fgts" checked>
+                    <label for="clt-incluir-fgts">Incluir FGTS (8%) no "Pacote"?</label>
+                 </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header pj-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.99 8c0-.55-.45-1-1-1h-1V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h1c.55 0 1-.45 1-1v-7c0-.55-.45-1-1-1zM19 19H5V5h14v14z"></path><path d"M15 11H9v2h6v-2zm-3-4H9v2h3V7z"></path></svg>
+                    Dados PJ
+                </div>
+
+                <div class="pj-tabs">
+                    <button class="pj-tab-btn active" data-regime="simples">Simples</button>
+                    <button class="pj-tab-btn" data-regime="mei">MEI</button>
+                    <button class="pj-tab-btn" data-regime="manual">Manual</button>
+                </div>
+
+                <div id="pj-simples-inputs" class="pj-regime-group">
+                    <div class="input-group">
+                        <label for="pj-faturamento">Faturamento Bruto Mensal</label>
+                        <div class="input-group-prefix">
+                            <span class="prefix">R$</span>
+                            <input type="number" id="pj-faturamento" placeholder="8.000">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="pj-rbt12">Receita Bruta (12 meses)</label>
+                        <div class="input-group-prefix">
+                            <span class="prefix">R$</span>
+                            <input type="number" id="pj-rbt12" placeholder="96.000">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="pj-anexo">Anexo do Simples</label>
+                        <select id="pj-anexo">
+                            <option value="v">Anexo V (Otimizar Fator R)</option>
+                            <option value="iii">Anexo III</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="pj-contabilidade">Custos Contábeis (mês)</label>
+                        <div class="input-group-prefix">
+                            <span class="prefix">R$</span>
+                            <input type="number" id="pj-contabilidade" value="100">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="pj-outros">Outros Custos (Saúde, etc)</label>
+                        <div class="input-group-prefix">
+                            <span class="prefix">R$</span>
+                            <input type="number" id="pj-outros" value="0" placeholder="800">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pj-mei-inputs" class="pj-regime-group" style="display: none;">
+                    <div class="input-group">
+                        <label for="pj-faturamento-mei">Faturamento Bruto (mês)</label>
+                        <div class="input-group-prefix">
+                            <span class="prefix">R$</span>
+                            <input type="number" id="pj-faturamento-mei" placeholder="6.000">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="pj-custo-mei">Custo Fixo DAS-MEI (mês)</label>
+                        <div class="input-group-prefix">
+                            <span class="prefix">R$</span>
+                            <input type="number" id="pj-custo-mei" value="72">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="pj-outros-mei">Outros Custos (Saúde, etc)</label>
+                        <div class="input-group-prefix">
+                            <span class="prefix">R$</span>
+                            <input type="number" id="pj-outros-mei" value="0" placeholder="800">
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="pj-manual-inputs" class="pj-regime-group" style="display: none;">
+                    <div class="input-group">
+                        <label for="pj-faturamento-manual">Faturamento Bruto (mês)</label>
+                        <div class="input-group-prefix">
+                            <span class="prefix">R$</span>
+                            <input type="number" id="pj-faturamento-manual" placeholder="8.000">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="pj-taxa-manual">Alíquota Total de Imposto (%)</label>
+                        <input type="number" id="pj-taxa-manual" placeholder="10">
+                    </div>
+                    <div class="input-group">
+                        <label for="pj-custos-fixos-manual">Custos Fixos Totais (mês)</label>
+                        <div class="input-group-prefix">
+                            <span class="prefix">R$</span>
+                            <input type="number" id="pj-custos-fixos-manual" value="0" placeholder="900">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="conexao-segura">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 9a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V9z"/></svg>
+                Conexões encriptadas e confidencialidade dos dados.
+            </div>
+        </section>
+
+        <section class="results-panel">
+
+            <div class="result-card-principal card">
+                <label>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M3.5 13.5a.5.5 0 0 1-1 0V2.707L1.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L3.5 2.707V13.5zm9.354-11.354a.5.5 0 0 1 0 .708L11.707 4H13.5a.5.5 0 0 1 0 1H11.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 0 1 .708 0z"/></svg>
+                    Variação Líquida (PJ vs CLT)
+                </label>
+                <div class="valor-principal" id="res-variacao-abs">R$ 0,00</div>
+                <div class="valor-secundario" id="res-variacao-perc">Preencha os dados</div>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-card-comparativo card">
+                    <label>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="margin-right: 4px;"><path d="M20 6h-3V4c0-1.11-.89-2-2-2H9c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM9 4h6v2H9V4zm11 15H4V8h16v11z"></path></svg>
+                        Pacote Líquido CLT
+                    </label>
+                    <div class="valor-comparativo clt" id="res-clt-liquido">R$ 0,00</div>
+                    <div class="detalhe-salario-conta">
+                        <span>Salário em Conta (mês)</span>
+                        <strong id="res-clt-salario-em-conta">R$ 0,00</strong>
+                    </div>
+                    <div class="detalhe-comparativo">
+                        <span id="res-clt-impostos-label">Total de impostos</span>
+                        <span id="res-clt-impostos">R$ 0,00</span>
+                    </div>
+                    <div class="detalhe-aliquota">
+                        <span id="res-clt-aliquota">0,0% do bruto</span>
+                    </div>
+                </div>
+                <div class="result-card-comparativo card">
+                    <label>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="margin-right: 4px;"><path d="M21.99 8c0-.55-.45-1-1-1h-1V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h1c.55 0 1-.45 1-1v-7c0-.55-.45-1-1-1zM19 19H5V5h14v14z"></path></svg>
+                        Líquido Total PJ
+                    </label>
+                    <div class="valor-comparativo pj" id="res-pj-liquido">R$ 0,00</div>
+                    <div class="detalhe-comparativo">
+                        <span id="res-pj-impostos-label">Total impostos/custos</span>
+                        <span id="res-pj-impostos">R$ 0,00</span>
+                    </div>
+                    <div class="detalhe-aliquota">
+                        <span id="res-pj-aliquota">0,0% da receita</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="impacto-anual-card">
+                <div class="card-header-simple">Impacto anual projetado</div>
+                <div class="anual-comparativo">
+                    <div class="anual-item">
+                        <span>CLT (12 meses)</span>
+                        <strong class="clt" id="res-clt-anual">R$ 0,00</strong>
+                    </div>
+                    <div class="anual-item">
+                        <span>PJ (12 meses)</span>
+                        <strong class="pj" id="res-pj-anual">R$ 0,00</strong>
+                    </div>
+                </div>
+                <div class="anual-diferenca" id="res-anual-diferenca-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/></svg>
+                    <span id="res-anual-diferenca-valor">+R$ 0,00</span>
+                    <span id="res-anual-diferenca-label">/ano</span>
+                </div>
+            </div>
+            
+            <div class="recommendation-card card">
+                <div class="card-header-simple" style="color: var(--cor-acao-secundaria);">Recomendação Rápida</div>
+                <p id="res-recomendacao-texto">Preencha os valores para ver a recomendação.</p>
+            </div>
+
+            <div class="equivalency-card card" id="equivalency-card">
+                <div class="card-header-simple">Equivalência Salarial</div>
+                <p id="res-equivalencia-texto">Aguardando cálculo...</p>
+            </div>
+
+            <div class="tax-details-grid">
+                <div class="card tax-detail-card">
+                    <div class="card-header-simple clt">Detalhes CLT</div>
+                    <div id="tax-details-clt" class="tax-items">
+                        <div class="tax-item"><span>Nenhum dado</span></div>
+                    </div>
+                </div>
+                <div class="card tax-detail-card">
+                    <div class="card-header-simple pj">Detalhes PJ</div>
+                    <div id="tax-details-pj" class="tax-items">
+                        <div class="tax-item"><span>Nenhum dado</span></div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-secondary btn-export" id="btn-export-pdf">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+                Exportar relatório em PDF
             </button>
-            <button id="btn-share" class="btn-secundario">Compartilhar Simulação</button>
-        </div>
+        </section>
 
-        <div id="resultado-container" class="resultado-grid">
-            <div class="resultado-col clt" id="resultado-clt-col" style="display: none;">
-                <h3 id="clt-resultado-titulo"><span class="cor-clt">■</span> Resumo Mensal CLT</h3>
-                <ul id="clt-resultado-lista">
-                    </ul>
-            </div>
-            
-            <div class="resultado-col pj" id="resultado-pj-col" style="display: none;">
-                <h3 id="pj-resultado-titulo"><span class="cor-pj">■</span> Resumo Mensal PJ</h3>
-                <ul id="pj-resultado-lista">
-                    </ul>
-            </div>
-        </div>
-
-        <div id="anual-container" style="display: none;">
-             </div>
-
-        <article class="card conteudo-seo">
-            <h2>Como Usar a Calculadora (Metodologia)</h2>
-            <p>Esta ferramenta foi desenhada para ser a mais precisa do mercado. Siga os passos para uma comparação correta:</p>
-            
-            <h3>1. Escolha sua Visão (Colaborador ou Empresa)</h3>
-            <p>Use o botão no topo da página. A "Visão Colaborador" foca no seu salário/pacote líquido. A "Visão Empresa" calcula o custo total que uma empresa tem para te contratar em cada modalidade.</p>
-
-            <h3>2. Cenário CLT</h3>
-            <ul>
-                <li><strong>Vale-Transporte (VT):</strong> Adicione seu gasto mensal e marque a caixa se você recebe o benefício. A calculadora aplicará o desconto correto de 6% (limitado ao seu gasto).</li>
-                <li><strong>Provisão (13º + Férias):</strong> A calculadora já provisiona automaticamente 19.44% do seu bruto no "Pacote Total". Isso é essencial para uma comparação justa com o PJ.</li>
-            </ul>
-
-            <h3>3. Cenário PJ</h3>
-            <ul>
-                <li><strong>Otimizador de Pró-Labore:</strong> No Simples Nacional (Anexo V), não se preocupe em adivinhar o pró-labore. Apenas escolha "Otimizar Fator R" e a calculadora simulará o cenário mais barato para você.</li>
-            </ul>
-
-            <h3>4. Compartilhe</h3>
-            <p>Use o botão "Compartilhar Simulação" para gerar um link único com todos os seus dados. Perfeito para enviar para seu contador, RH ou sócio.</p>
-        </article>
     </main>
 
-    <footer>
-        <p>
-            <a href="recursos.html">Artigos e Ferramentas</a> |
-            <a href="sobre.html">Sobre e Metodologia</a> | 
-            <a href="#">Política de Privacidade</a>
-        </p>
-        <p>© 2025 - calculadoracltoupj.com.br - Esta é uma ferramenta de simulação. Consulte um contador.</p>
-        <p id="footer-update">Valores e tabelas (INSS, IRRF, Simples) atualizados em: **Outubro de 2025**.</p>
-        <p>Dúvidas sobre a calculadora: bigbusin7@gmail.com</p>
+    <script src="https://unpkg.com/countup.js@2.8.0/dist/countUp.min.js"></script>
+
+    <script src="script.js"></script>
+
+    <section class="tools-container">
+        <div class="tools-header">
+            <h3>Ferramentas complementares</h3>
+            <p>Links rápidos para exportar resultados, simular contracheques e gerar planilhas.</p>
+        </div>
+        <div class="tools-grid">
+            <button class="tool-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+                Exportar resultados
+            </button>
+            <button class="tool-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM0 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4H0zm3 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/></svg>
+                Simular contracheques
+            </button>
+            <button class="tool-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 0a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zM3 2.25a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM6 2.25a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM2.5 5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.KA.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-9 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.M13.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zM13 3.75a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm12 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm12 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM.5 13a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.M1.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM4.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM7.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM10.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM13.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/></svg>
+                Gerar planilhas
+            </button>
+        </div>
+    </section>
+
+    <section class="faq-container">
+        <h2>Perguntas Frequentes</h2>
+        <div class="faq-grid">
+            <div class="faq-list">
+                <button class="faq-item active" data-faq="1">
+                    Como funciona a comparação CLT vs PJ?
+                    <span class="badge popular">POPULAR</span>
+                </button>
+                <button class="faq-item" data-faq="2">
+                    Posso confiar nos resultados?
+                    <span class="badge popular">POPULAR</span>
+                </button>
+                <button class="faq-item" data-faq="3">Quais dados devo inserir?</button>
+                <button class="faq-item" data-faq="4">Como a calculadora trata tributos?</button>
+                <button class="faq-item" data-faq="5">Considera benefícios da CLT?</button>
+                <button class="faq-item" data-faq="6">Simular diferentes cenários?</button>
+            </div>
+            <div class="faq-content card">
+                <div id="faq-1" class="faq-content-panel active">
+                    <h3>Como funciona a comparação CLT vs PJ nesta calculadora?</h3>
+                    <p>Nossa ferramenta processa os dados que você informa (salário, benefícios, faturamento, alíquota) e simula cenários precisos para CLT e PJ, exibindo salário líquido, impostos detalhados e custos patronais.</p>
+                    <p>O cálculo é baseado em regras fiscais atuais e em modelos de tributação comuns. Todas as fórmulas são transparentes e auditáveis.</p>
+                </div>
+                <div id="faq-2" class="faq-content-panel">
+                    <h3>Posso confiar nos resultados?</h3>
+                    <p>Sim. Usamos as tabelas oficiais mais recentes (INSS 2025, IRRF 2025) e as regras do Simples Nacional. No entanto, esta é uma ferramenta de simulação. Cenários fiscais complexos devem sempre ser validados por um contador profissional.</p>
+                </div>
+                <div id="faq-3" class="faq-content-panel">
+                    <h3>Quais dados devo inserir?</h3>
+                    <p>Para CLT, insira seu salário bruto, benefícios (VR, VA) e descontos (Plano de Saúde, VT). Para PJ, seu faturamento mensal, receita dos últimos 12 meses e custos (contador, etc.).</p>
+                </div>
+                <div id="faq-4" class="faq-content-panel">
+                    <h3>Como a calculadora trata tributos?</h3>
+                    <p>Calculamos o INSS de forma progressiva (faixa a faixa) e o IRRF usando o modelo de desconto simplificado ou por dependentes (o que for mais vantajoso). O Simples Nacional usa a alíquota efetiva baseada no seu RBT12 e Fator R.</p>
+                </div>
+                <div id="faq-5" class="faq-content-panel">
+                    <h3>Considera benefícios da CLT?</h3>
+                    <p>Sim. O "Pacote Líquido CLT" inclui seu salário líquido (após impostos), benefícios (VR, VA) e, crucialmente, as provisões de 13º e Férias (1/3), que são salvas compulsoriamente. Isso permite uma comparação justa com o PJ, que precisa guardar esse dinheiro por conta própria.</p>
+                </div>
+                <div id="faq-6" class="faq-content-panel">
+                    <h3>Simular diferentes cenários?</h3>
+                    <p>Absolutamente. Você pode alterar qualquer valor (salário, faturamento, custos) e os resultados na barra lateral são atualizados instantaneamente, permitindo que você encontre o "ponto de equilíbrio" ideal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2H17C18.1046 2 19 2.89543 19 4V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V4C5 2.89543 5.89543 2 7 2Z" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 6H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 10H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18H10" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Calculex
+                </div>
+                <p>Comparação inteligente entre CLT e PJ. Análise completa de tributos e recomendações personalizadas para sua carreira.</p>
+                <div class="footer-tags">
+                    <span class="tag secure">Dados Seguros</span>
+                    <span class="tag crypto">Criptografado</span>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>NAVEGAÇÃO</h4>
+                <a href="#">Calculadora CLT x PJ</a>
+                <a href="#">Sobre Nós</a>
+                <a href="#">Recursos</a>
+                <a href="#">Contato</a>
+            </div>
+            <div class="footer-col">
+                <h4>LEGAL</h4>
+                <a href="#">Política de Privacidade</a>
+                <a href="#">Termos de Uso</a>
+                <a href="#">Política de Cookies</a>
+                <a href="#">Conformidade LGPD</a>
+            </div>
+            <div class="footer-col">
+                <h4>CONTATO</h4>
+                <div class="contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/></svg>
+                    <span>contato@calculex.com.br</span>
+                </div>
+                <div class="contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03.002-2.137.702-2.877L1.885.511z"/></svg>
+                    <span>+55 (11) 9 9999-9999</span>
+                </div>
+                <h4>CONECTE-SE</h4>
+                <div class="social-links">
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-1.48.057 3.284 3.284 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .792 13.58a6.56 6.56 0 0 1-.708-.042A9.334 9.334 0 0 0 5.026 15z"/></svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.917 3.917 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.703.01 5.556 0 5.829 0 8s.01 2.444.048 3.297c.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.556 15.99 5.829 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372.526-.205.972-.478 1.417-.923.445-.444.719-.89 1.923-1.416.198-.51.333-1.09.372-1.942C15.99 10.444 16 10.171 16 8s-.01-2.444-.048-3.297c-.04-.852-.174-1.433-.372-1.942C15.39 2.29 15.117 1.844 14.67 1.4.972.972.478.89.719.526.478.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C10.444.01 10.171 0 8 0zm0 1.442c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.282.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.389-.009-3.232-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.282-.24-.705-.275-1.485-.038-.843-.047-1.096-.047-3.231s.009-2.389.047-3.232c.036-.78.166-1.204.275-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705.24 1.485-.276.843-.038 1.096-.047 3.232-.047zM8 3.882a4.118 4.118 0 1 0 0 8.236 4.118 4.118 0 0 0 0-8.236zm0 6.793a2.675 2.675 0 1 1 0-5.35 2.675 2.675 0 0 1 0 5.35zm4.398-6.848a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2025 Calculex. Todos os direitos reservados.</span>
+            <span class="status-badge">SISTEMA ONLINE</span>
+        </div>
     </footer>
 
     <script src="script.js"></script>
