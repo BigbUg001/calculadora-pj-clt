@@ -85,8 +85,8 @@ const ANEXO_V = [
 /* --- Bloco: IDs dos Inputs e Helpers de Formato --- */
 const todosInputIDs = [
     'clt-bruto', 'clt-dependentes', 'clt-beneficios', 'clt-descontos', 'clt-incluir-provisao', 
-    'clt-plr-anual', 'clt-incluir-fgts', // <-- ADICIONADO AQUI
-    'pj-faturamento', 'pj-rbt12', 'pj-anexo', 'pj-contabilidade', 'pj-outros',
+    'clt-plr-anual', 'clt-incluir-fgts', 
+    'pj-faturamento', 'pj-rbt12', 'pj-atividade', 'pj-contabilidade', 'pj-outros', // <-- CORRIGIDO
     'pj-faturamento-mei', 'pj-custo-mei', 'pj-outros-mei',
     'pj-faturamento-manual', 'pj-taxa-manual', 'pj-custos-fixos-manual'
 ];
@@ -102,66 +102,73 @@ const setHTML = (id, val) => {
 };
 
 /* --- Bloco: INICIALIZAÇÃO (UX em Tempo Real) --- */
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Adiciona listener 'input' (tempo real) a TODOS os campos
-    todosInputIDs.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('input', calcularEAtualizarUI);
-        }
-    });
-
-    // 2. Adiciona listeners para as ABAS PJ
-    const pjTabs = document.querySelectorAll('.pj-tab-btn');
-    pjTabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            pjTabs.forEach(t => t.classList.remove('active'));
-            e.currentTarget.classList.add('active');
+if (typeof window !== 'undefined') { // <-- ADICIONADO AQUI
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Adiciona listeners (tempo real) a TODOS os campos
+        todosInputIDs.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                // Verifica o tipo de elemento para usar o evento correto
+                // <select> e <input type="checkbox"> usam 'change'
+                // <input type="number"> usa 'input'
+                const eventType = (el.tagName === 'SELECT' || el.type === 'checkbox') ? 'change' : 'input';
             
-            const regime = e.currentTarget.dataset.regime;
-            document.querySelectorAll('.pj-regime-group').forEach(group => {
-                group.style.display = (group.id === `pj-${regime}-inputs`) ? 'block' : 'none';
-            });
-            
-            calcularEAtualizarUI();
+                el.addEventListener(eventType, calcularEAtualizarUI);
+            }
         });
-    });
 
-    // 3. Adiciona listeners para o FAQ
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            const faqId = e.currentTarget.dataset.faq;
+        // 2. Adiciona listeners para as ABAS PJ
+        const pjTabs = document.querySelectorAll('.pj-tab-btn');
+        pjTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                pjTabs.forEach(t => t.classList.remove('active'));
+                e.currentTarget.classList.add('active');
             
-            // Fecha todos os itens
-            faqItems.forEach(i => i.classList.remove('active'));
-            // Abre o item clicado
-            e.currentTarget.classList.add('active');
-
-            // Esconde todos os painéis
-            document.querySelectorAll('.faq-content-panel').forEach(panel => {
-                panel.classList.remove('active');
-                if (panel.id === `faq-${faqId}`) {
-                    // Mostra o painel correto
-                    panel.classList.add('active');
-                }
+                const regime = e.currentTarget.dataset.regime;
+                document.querySelectorAll('.pj-regime-group').forEach(group => {
+                    group.style.display = (group.id === `pj-${regime}-inputs`) ? 'block' : 'none';
+                });
+            
+                calcularEAtualizarUI();
             });
         });
-    });
 
-    // NOVO: Adiciona listener para o botão Exportar PDF
-    const btnExport = document.getElementById('btn-export-pdf');
-    if (btnExport) {
-        btnExport.addEventListener('click', () => {
-            window.print(); // Aciona a impressão do navegador
+        // 3. Adiciona listeners para o FAQ
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const faqId = e.currentTarget.dataset.faq;
+            
+                // Fecha todos os itens
+                faqItems.forEach(i => i.classList.remove('active'));
+                // Abre o item clicado
+                e.currentTarget.classList.add('active');
+
+                // Esconde todos os painéis
+                document.querySelectorAll('.faq-content-panel').forEach(panel => {
+                    panel.classList.remove('active');
+                    if (panel.id === `faq-${faqId}`) {
+                        // Mostra o painel correto
+                        panel.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // NOVO: Adiciona listener para o botão Exportar PDF
+        const btnExport = document.getElementById('btn-export-pdf');
+        if (btnExport) {
+            btnExport.addEventListener('click', () => {
+                window.print(); // Aciona a impressão do navegador
+        });
+    }
+
+        initAnimadores();
+
+        // 4. Calcula uma vez no load (para zerar os campos)
+        calcularEAtualizarUI();
     });
 }
-
-    initAnimadores();
-
-    // 4. Calcula uma vez no load (para zerar os campos)
-    calcularEAtualizarUI();
-});
 
 /* --- Bloco: Função Mestra (Chamada a cada 'input') --- */
 function calcularEAtualizarUI() {
@@ -187,7 +194,7 @@ function calcularEAtualizarUI() {
             inputsPJ = { ...inputsPJ,
                 faturamento: faturamentoPJ,
                 rbt12: getFloat('pj-rbt12') || (faturamentoPJ * 12),
-                anexo: document.getElementById('pj-anexo').value,
+                anexo: (document.getElementById('pj-atividade').value === 'fator_r') ? 'v' : 'iii',
                 contabilidade: getFloat('pj-contabilidade'),
                 outros: getFloat('pj-outros'),
             };
@@ -446,6 +453,7 @@ function atualizarResultados(clt, pj, inputsCLT, inputsPJ) {
     }
 
     // 6. Detalhamento de Tributos (PJ)
+    setHTML('pj-detalhe-titulo', `Detalhes PJ (${pj.titulo || 'Simples'})`); // <-- LINHA ADICIONADA
     const taxDetailsPjEl = document.getElementById('tax-details-pj');
     let pjHtml = '';
     let pjTotalCustos = 0;
@@ -780,3 +788,31 @@ function calcularEquivalentePJ(targetNetCLT, inputsPJBase) {
     return (minFat + maxFat) / 2;
 }
 /* --- FIM Bloco de Equivalência --- */
+
+// --- Bloco de Exportação para Testes (VERSÃO CORRIGIDA) ---
+if (typeof module !== 'undefined' && module.exports) {
+    
+    // Disponibiliza as funções PURAS de cálculo e constantes
+    module.exports = {
+        // Funções Principais de Cálculo
+        calcularCLT_Colaborador,
+        calcularPJ_Colaborador,
+        calcularPJ_MEI,
+        calcularPJ_Manual,
+
+        // Funções Auxiliares
+        calcularINSS_Progressivo,
+        calcularIRRF_Preciso,
+        calcularIRRF_PelaTabela,
+        calcularAliquotaEfetiva,
+        
+        // Constantes (para referência nos testes)
+        SALARIO_MINIMO,
+        TETO_INSS,
+        FAIXAS_INSS,
+        FAIXAS_IRRF,
+        ANEXO_III,
+        ANEXO_V
+    };
+}
+// --- Fim do Bloco de Exportação ---
