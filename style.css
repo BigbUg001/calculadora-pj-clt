@@ -747,6 +747,43 @@ svg { vertical-align: middle; }
     .custo-empresa-container {
         grid-template-columns: 1fr !important; /* Força coluna única */
     }
+
+    /* --- INÍCIO DA CORREÇÃO DE ALINHAMENTO MÓVEL --- */
+    
+    /* 1. Impede a barra de rolagem horizontal e o "deslocamento" */
+    body {
+        overflow-x: hidden;
+    }
+
+    /* 2. Remove o 'max-width' e 'margin: auto' de todos 
+       os containers principais, fazendo-os ocupar a largura total */
+    .container-nav,
+    .calculator-container,
+    .custo-empresa-container,
+    .tools-container,
+    .faq-container,
+    .footer-grid {
+        max-width: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* 3. Padroniza o espaçamento lateral de todos os containers 
+       para 1rem (12px) no celular */
+    .navbar,
+    .calculator-container,
+    .custo-empresa-container,
+    .faq-container,
+    .footer {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    .tools-container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    /* --- FIM DA CORREÇÃO DE ALINHAMENTO MÓVEL --- */
 }
 @media (max-width: 600px) {
     .container-nav .btn-primary { display: none; }
