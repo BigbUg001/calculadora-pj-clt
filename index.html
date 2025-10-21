@@ -15,6 +15,8 @@
 <body>
 
     <nav class="navbar">
+
+    <nav class="navbar">
         <div class="container-nav">
             <div class="logo">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2H17C18.1046 2 19 2.89543 19 4V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V4C5 2.89543 5.89543 2 7 2Z" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 6H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 10H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18H10" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -38,7 +40,7 @@
                 <p>Simule em tempo real: resultados atualizados enquanto você digita.</p>
             </header>
 
-            <div class="card">
+            <div class="card" id="clt-input-card">
                 <div class="card-header clt-header">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-3V4c0-1.11-.89-2-2-2H9c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM9 4h6v2H9V4zm11 15H4V8h16v11z"></path><path d="M10 12H8v-2h2v2zm4 0h-2v-2h2v2zm-4 4H8v-2h2v2zm4 0h-2v-2h2v2z"></path></svg>
                     Dados CLT
@@ -92,7 +94,7 @@
                  </div>
             </div>
 
-            <div class="card">
+            <div class="card" id="pj-input-card">
                 <div class="card-header pj-header">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.99 8c0-.55-.45-1-1-1h-1V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h1c.55 0 1-.45 1-1v-7c0-.55-.45-1-1-1zM19 19H5V5h14v14z"></path><path d"M15 11H9v2h6v-2zm-3-4H9v2h3V7z"></path></svg>
                     Dados PJ
@@ -196,22 +198,30 @@
 
         <section class="results-panel">
 
-            <div class="result-card-principal card">
-                <label>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M3.5 13.5a.5.5 0 0 1-1 0V2.707L1.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L3.5 2.707V13.5zm9.354-11.354a.5.5 0 0 1 0 .708L11.707 4H13.5a.5.5 0 0 1 0 1H11.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 0 1 .708 0z"/></svg>
-                    Variação Líquida (PJ vs CLT)
-                </label>
-                <div class="valor-principal" id="res-variacao-abs">R$ 0,00</div>
+    <div class="result-card-principal card" id="variacao-card">
+        <label>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M3.5 13.5a.5.5 0 0 1-1 0V2.707L1.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L3.5 2.707V13.5zm9.354-11.354a.5.5 0 0 1 0 .708L11.707 4H13.5a.5.5 0 0 1 0 1H11.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 0 1 .708 0z"/></svg>
+            Variação Líquida (PJ vs CLT)
+        </label>
+
+        <div class="variacao-chart-container">
+            <div class="chart-wrapper">
+                <canvas id="main-bar-chart"></canvas>
+            </div>
+            <div class="variacao-valor-wrapper">
+                <div class="valor-principal" id="res-variacao-abs" aria-live="polite">R$ 0,00</div>
                 <div class="valor-secundario" id="res-variacao-perc">Preencha os dados</div>
             </div>
+        </div>
+    </div>
 
-            <div class="results-grid">
+            <div class="results-grid" id="pacote-grid">
                 <div class="result-card-comparativo card">
                     <label>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="margin-right: 4px;"><path d="M20 6h-3V4c0-1.11-.89-2-2-2H9c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM9 4h6v2H9V4zm11 15H4V8h16v11z"></path></svg>
                         Pacote Líquido CLT
                     </label>
-                    <div class="valor-comparativo clt" id="res-clt-liquido">R$ 0,00</div>
+                    <div class="valor-comparativo clt" id="res-clt-liquido" aria-live="polite">R$ 0,00</div>
                     <div class="detalhe-salario-conta">
                         <span>Salário em Conta (mês)</span>
                         <strong id="res-clt-salario-em-conta">R$ 0,00</strong>
@@ -229,7 +239,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="margin-right: 4px;"><path d="M21.99 8c0-.55-.45-1-1-1h-1V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h1c.55 0 1-.45 1-1v-7c0-.55-.45-1-1-1zM19 19H5V5h14v14z"></path></svg>
                         Líquido Total PJ
                     </label>
-                    <div class="valor-comparativo pj" id="res-pj-liquido">R$ 0,00</div>
+                    <div class="valor-comparativo pj" id="res-pj-liquido" aria-live="polite">R$ 0,00</div>
                     <div class="detalhe-comparativo">
                         <span id="res-pj-impostos-label">Total impostos/custos</span>
                         <span id="res-pj-impostos">R$ 0,00</span>
@@ -242,6 +252,10 @@
 
             <div class="card" id="impacto-anual-card">
                 <div class="card-header-simple">Impacto anual projetado</div>
+
+                <div class="sparkline-wrapper">
+                    <canvas id="impacto-anual-chart"></canvas>
+                </div>
                 <div class="anual-comparativo">
                     <div class="anual-item">
                         <span>CLT (12 meses)</span>
@@ -261,26 +275,44 @@
             
             <div class="recommendation-card card">
                 <div class="card-header-simple" style="color: var(--cor-acao-secundaria);">Recomendação Rápida</div>
-                <p id="res-recomendacao-texto">Preencha os valores para ver a recomendação.</p>
+                <p id="res-recomendacao-texto" aria-live="polite">Preencha os valores para ver a recomendação.</p>
             </div>
 
             <div class="equivalency-card card" id="equivalency-card">
                 <div class="card-header-simple">Equivalência Salarial</div>
-                <p id="res-equivalencia-texto">Aguardando cálculo...</p>
+                <p id="res-equivalencia-texto" aria-live="polite">Aguardando cálculo...</p>
             </div>
 
-            <div class="tax-details-grid">
-                <div class="card tax-detail-card">
-                    <div class="card-header-simple clt">Detalhes CLT</div>
-                    <div id="tax-details-clt" class="tax-items">
-                        <div class="tax-item"><span>Nenhum dado</span></div>
+            <div class="tax-details-grid" id="tax-details-grid">
+                <div class="card tax-detail-card accordion-item">
+                    <button class="card-header-simple clt accordion-button">
+                        <span>Detalhes CLT</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+                    </button>
+
+                    <div class="accordion-content">
+                        <div class="donut-chart-wrapper">
+                            <canvas id="clt-donut-chart"></canvas>
+                        </div>
+                        <div id="tax-details-clt" class="tax-items">
+                            <div class="tax-item"><span>Nenhum dado</span></div>
+                        </div>
                     </div>
                 </div>
-                <div class="card tax-detail-card">
-                    <div class="card-header-simple pj" id="pj-detalhe-titulo">Detalhes PJ</div>
-                    <div id="tax-details-pj" class="tax-items">
-                        <div class="tax-item"><span>Nenhum dado</span></div>
-                    </div>
+                <div class="card tax-detail-card accordion-item">
+                    <button class="card-header-simple pj accordion-button">
+                        <span id="pj-detalhe-titulo">Detalhes PJ</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+                    </button>
+
+                    <div class="accordion-content">
+                        <div class="donut-chart-wrapper">
+                            <canvas id="pj-donut-chart"></canvas>
+                        </div>
+                        <div id="tax-details-pj" class="tax-items">
+                            <div class="tax-item"><span>Nenhum dado</span></div>
+                        </div>
+                     </div>
                 </div>
             </div>
             <button class="btn-secondary btn-export" id="btn-export-pdf">
@@ -291,9 +323,31 @@
 
     </main>
 
-    <script src="https://unpkg.com/countup.js@2.8.0/dist/countUp.min.js"></script>
+    <section class="custo-empresa-container">
+        <div class="card custo-empresa-card" id="custo-empresa-card">
+            <div class="card-header-simple">Custo Total de Contratação (Visão Empresa)</div>
 
-    <script src="script.js"></script>
+            <div class="custo-chart-wrapper">
+                <canvas id="custo-empresa-chart"></canvas>
+            </div>
+
+            <div class="custo-empresa-total-wrapper">
+                <span>Custo Mensal Real (Empresa)</span>
+                <strong id="custo-empresa-total">R$ 0,00</strong>
+            </div>
+        </div>
+
+        <div class="card economia-empresa-card" id="economia-empresa-card">
+            <div class="card-header-simple">Economia da Empresa (ao optar por PJ)</div>
+            <p id="res-economia-empresa-texto" class="economia-empresa-texto">
+                Preencha o salário CLT e o faturamento PJ para ver a economia.
+            </p>
+
+            <button class="btn-primary btn-negociacao" id="btn-gerar-relatorio" style="display: none;">
+                   Gerar Relatório de Negociação
+            </button>
+            </div>
+    </section>
 
     <section class="tools-container">
         <div class="tools-header">
@@ -303,15 +357,15 @@
         <div class="tools-grid">
             <button class="tool-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
-                Exportar resultados
+                Em breve
             </button>
-            <button class="tool-button">
+            <button class="tool-button" id="btn-modal-contracheque">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM0 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4H0zm3 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/></svg>
                 Simular contracheques
             </button>
             <button class="tool-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 0a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zM3 2.25a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM6 2.25a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM2.5 5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.KA.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-9 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.M13.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zM13 3.75a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm12 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm12 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM.5 13a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.M1.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM4.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM7.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM10.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM13.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/></svg>
-                Gerar planilhas
+                Em breve
             </button>
         </div>
     </section>
@@ -420,6 +474,101 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+<div class="modal-overlay" id="modal-contracheque">
+    <div class="modal-content">
+        <button class="modal-close" id="modal-contracheque-close">&times;</button>
+        <h3 class="modal-title">Simulador de Contracheque (Holerite)</h3>
+
+        <p class="modal-description">
+            Este é um demonstrativo de como seu salário líquido é calculado.
+        </p>
+
+        <table class="holerite-table">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Proventos</th>
+                    <th>Descontos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Salário Bruto</td>
+                    <td id="modal-salario-bruto" class="holerite-provento">R$ 0,00</td> <td>-</td>
+                </tr>
+                <tr>
+                    <td>INSS (Alíquota Efetiva: <span id="modal-inss-aliquota">0.00</span>%)</td>
+                    <td>-</td>
+                    <td id="modal-inss" class="holerite-desconto">R$ 0,00</td> </tr>
+                <tr>
+                    <td>IRRF (Alíquota Efetiva: <span id="modal-irrf-aliquota">0.00</span>%)</td>
+                    <td>-</td>
+                    <td id="modal-irrf" class="holerite-desconto">R$ 0,00</td> </tr>
+                <tr>
+                    <td>Outros Descontos</td>
+                    <td>-</td>
+                    <td id="modal-outros-descontos" class="holerite-desconto">R$ 0,00</td> </tr>
+            </tbody>
+            <tfoot>
+                <tr class="holerite-total">
+                    <td>Totais</td>
+                    <td id="modal-total-proventos">R$ 0,00</td>
+                    <td id="modal-total-descontos">R$ 0,00</td>
+                </tr>
+                <tr class="holerite-liquido">
+                    <td colspan="2">Líquido a Receber</td>
+                    <td id="modal-liquido">R$ 0,00</td> </tr>
+            </tfoot>
+        </table>
+
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-negociacao">
+    <div class="modal-content modal-lg"> <button class="modal-close" id="modal-negociacao-close">&times;</button>
+        <h3 class="modal-title">Relatório para Negociação</h3>
+
+        <p class="modal-description">
+            Use o texto abaixo para enviar ao seu RH ou cliente. Você pode copiá-lo ou gerá-lo em PDF.
+        </p>
+
+        <div class="report-document" id="report-text-content">
+            <p><strong>Assunto:</strong> Análise Comparativa de Custo de Contratação (CLT vs. PJ)</p>
+            <p>Prezado(a) Gestor(a) / Equipe de RH,</p>
+            <p>Com o objetivo de alinhar nossas expectativas e encontrar o modelo de contratação mais vantajoso para ambas as partes, realizei uma simulação detalhada comparando o custo total de um profissional CLT com o faturamento de um profissional PJ.</p>
+
+            <p>A análise mostra que, para um salário bruto CLT de <strong id="report-clt-bruto" class="report-value">R$ 0,00</strong>, o custo total mensal para a empresa (incluindo todos os encargos, provisões e benefícios) é de aproximadamente <strong id="report-custo-total" class="report-value">R$ 0,00</strong>.</p>
+
+            <p>Atualmente, meu faturamento bruto como PJ é de <strong id="report-pj-faturamento" class="report-value">R$ 0,00</strong>.</p>
+
+            <p>Isso demonstra que o modelo de contratação PJ, mesmo com este faturamento, ainda representa uma economia direta para a empresa de <strong id="report-economia" class="report-value">R$ 0,00</strong> por mês.</p>
+
+            <p id="report-texto-negativo" style="display:none;">Neste cenário, o faturamento PJ é <strong id="report-custo-excedente" class="report-value-negativo">R$ 0,00</strong> superior ao custo total do CLT, indicando que um reajuste no valor do contrato CLT seria necessário para equiparação.</p>
+
+            <p>Estou à disposição para discutir como podemos utilizar essa eficiência para estruturar uma proposta que seja benéfica para ambos no longo prazo.</p>
+
+
+        </div>
+
+        <div class="report-actions">
+            <button class="btn-secondary" id="btn-copiar-relatorio">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V4a2 2 0 0 0-2-2 2 2 0 0 0-2-2zM2 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4z"/><path d="M15 2H9a1 1 0 0 1-1-1V.5a.5.5 0 0 1 1 0V1h5a1 1 0 0 1 1 1v10a.5.5 0 0 1-1 0V2z"/></svg>
+                Copiar Texto
+            </button>
+            <button class="btn-primary" id="btn-imprimir-relatorio">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+                Imprimir Relatório (PDF)
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://unpkg.com/countup.js@2.8.0/dist/countUp.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>

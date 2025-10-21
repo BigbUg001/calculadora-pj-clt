@@ -710,6 +710,11 @@ svg { vertical-align: middle; }
         overflow-y: visible;
         padding-right: 0;
     }
+    .custo-empresa-container {
+        grid-template-columns: 1fr; /* Coluna única em tablets */
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
 }
 @media (max-width: 900px) {
     .nav-links { display: none; }
@@ -872,137 +877,10 @@ svg { vertical-align: middle; }
      color: var(--cor-negativo);
 }
 
-/* --- CORREÇÃO: Estilos de Impressão (PDF com Inputs e Resultados) --- */
-@media print {
-    /* Esconde toda a UI extra */
-    .navbar, 
-    .tools-container, 
-    .faq-container, 
-    .footer, 
-    #btn-export-pdf /* O próprio botão */
-    {
-        display: none !important;
-    }
+/* --- INÍCIO: Estilos Cabeçalho de Impressão (Passo 7) --- */
 
-    /* Força o container principal e seus filhos a serem visíveis */
-    body {
-        font-size: 10pt !important; /* Reduz o tamanho para caber no PDF */
-        overflow: visible !important;
-    }
-    
-    .calculator-container {
-        display: block !important; /* Remove o grid */
-        grid-template-columns: 1fr !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        height: auto !important;
-    }
+/* --- FIM: Estilos Cabeçalho de Impressão --- */
 
-    .input-panel,
-    .results-panel {
-        display: block !important;
-        position: static !important; /* Remove 'sticky' */
-        overflow: visible !important;
-        height: auto !important;
-        width: 100% !important; /* Garante que ocupe a largura total */
-        padding: 0 !important;
-        margin: 0 !important;
-        page-break-inside: avoid; /* Tenta não quebrar os painéis */
-    }
-    
-    .input-panel {
-        margin-bottom: 2rem !important; /* Espaço entre os painéis no PDF */
-    }
-
-    /* --- Estilos Gerais de Impressão (Limpeza) --- */
-    .card {
-        box-shadow: none !important;
-        border: 1px solid #ccc !important;
-        margin-bottom: 1rem;
-        -webkit-print-color-adjust: exact; /* Força cores no Chrome */
-        color-adjust: exact; /* Força cores */
-        page-break-inside: avoid;
-    }
-
-    /* Fundo branco, texto preto */
-    html, body {
-        background-color: #fff !important;
-        color: #000 !important;
-    }
-    .card, .tax-detail-card {
-        background-color: #fff !important;
-    }
-    
-    /* Estilos dos Inputs (para mostrar valores) */
-    .input-group input, .input-group select {
-        background-color: #f0f0f0 !important;
-        border: 1px solid #ccc !important;
-        color: #000 !important;
-    }
-    .input-group-prefix .prefix {
-        color: #555 !important;
-    }
-    .checkbox-group {
-        display: none; /* Esconde checkboxes */
-    }
-    .pj-tabs {
-        display: none; /* Esconde abas PJ */
-    }
-    .conexao-segura {
-        display: none !important;
-    }
-
-    /* Converte todos os textos para preto */
-    .valor-principal, .valor-comparativo, .card-header-simple,
-    .tax-item strong, .tax-item-total strong, .anual-item span,
-    .detalhe-comparativo span, .detalhe-aliquota, .anual-item strong,
-    .tax-item, .tax-item span, .tax-item .percentage,
-    .recommendation-card p, .input-header p, .recommendation-card p strong,
-    .valor-secundario, .anual-diferenca, .detalhe-salario-conta,
-    .detalhe-salario-conta strong, .input-header h2, .card-header,
-    label, .logo,
-    /* --- CORREÇÃO ADICIONADA AQUI --- */
-    .equivalency-card p,
-    .equivalency-card strong,
-    .equivalency-card .equivalencia-valor {
-        color: #000 !important;
-    }
-
-    /* Recria cores importantes (CLT, PJ, Negativo, Positivo) */
-    .clt, .tax-item.provento strong, .tax-item-total.provento strong,
-    .card-header.clt-header { 
-        color: var(--cor-clt) !important; 
-    }
-    .pj, .card-header.pj-header { 
-        color: var(--cor-pj) !important; 
-    }
-    /* Itens de desconto e recomendação negativa (vermelho) */
-    .tax-item strong, 
-    .tax-item-total strong, 
-    .recommendation-card.negativo p, 
-    .recommendation-card.negativo p strong,
-    .valor-secundario.negativo { 
-        color: var(--cor-negativo) !important; 
-    }
-
-    /* CORREÇÃO: Diferença anual quando CLT ganha (verde) */
-    .anual-diferenca.negativo {
-        color: var(--cor-clt) !important;
-    }
-    .positivo, .anual-diferenca.positivo, .valor-principal.positivo, 
-    .valor-secundario.positivo { 
-        color: var(--cor-acao-secundaria) !important; /* Teal */
-    }
-
-    /* Garante bordas */
-    .anual-diferenca { border-top: 1px solid #ccc !important; }
-    .detalhe-comparativo { border-top: 1px solid #ccc !important; }
-    .tax-item-total { border-top: 1px dashed #ccc !important; }
-    .card-header-simple, .card-header { border-bottom: 1px solid #ccc !important; }
-    .result-card-principal { border-left: 4px solid #ccc !important; }
-    .result-card-principal.clt-wins { border-left-color: var(--cor-clt) !important; }
-    .result-card-principal:not(.clt-wins) { border-left-color: var(--cor-acao-secundaria) !important; }
-}
 
 /* --- NOVO: Estilo Card Equivalência --- */
 .equivalency-card {
@@ -1024,4 +902,451 @@ svg { vertical-align: middle; }
 .equivalency-card .equivalencia-valor {
     color: #fff; /* Cor branca para destaque */
     font-weight: 700;
+}
+
+/* --- INÍCIO: Estilos do Modal Contracheque --- */
+
+.modal-overlay {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro semi-transparente */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    /* Adicionado para centralizar o .modal-content */
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--cor-card-bg-light); /* Reutiliza cor do tema */
+    color: var(--cor-texto-principal);
+    margin: auto; /* Centralizado */
+    padding: 2.5rem;
+    border: 1px solid var(--cor-borda-brilho);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px; /* Largura máxima */
+    position: relative;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close {
+    color: var(--cor-texto-secundario);
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: var(--cor-texto-principal);
+    text-decoration: none;
+}
+
+.modal-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.modal-description {
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 2rem;
+}
+
+/* Tabela do Holerite */
+.holerite-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.1rem;
+}
+
+.holerite-table th,
+.holerite-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.holerite-table th {
+    font-weight: 600;
+    color: var(--cor-texto-secundario);
+}
+
+.holerite-table td {
+    color: var(--cor-texto-principal);
+}
+
+/* Alinha colunas 2 e 3 (valores) à direita */
+.holerite-table th:nth-child(2), 
+.holerite-table td:nth-child(2),
+.holerite-table th:nth-child(3),
+.holerite-table td:nth-child(3) {
+    text-align: right;
+    font-family: 'Poppins', monospace; /* Fonte mono para números */
+}
+
+.holerite-provento {
+    color: var(--cor-clt) !important; /* Verde (cor da aba CLT) */
+}
+
+.holerite-desconto {
+    color: var(--cor-negativo) !important; /* Vermelho (cor de desvantagem) */
+}
+
+.holerite-table tfoot tr:first-child td {
+    border-top: 2px solid var(--cor-borda-brilho);
+}
+
+.holerite-total td {
+    font-weight: 600;
+}
+
+.holerite-liquido {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.holerite-liquido td {
+    border-bottom: none;
+    padding-top: 15px;
+}
+
+.holerite-liquido td:last-child {
+    color: var(--cor-texto-principal);
+    background-color: var(--cor-fundo-page);
+    border-radius: 6px;
+}
+/* --- FIM: Estilos do Modal Contracheque --- */
+
+/* --- INÍCIO: Estilos Funcionalidade 2 (Custo Empresa) --- */
+
+/* Container da nova seção (para alinhar com o layout) */
+.custo-empresa-container {
+    max-width: 1600px;
+    margin: 2.5rem auto 0 auto; /* Espaço acima, alinhado */
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 colunas */
+    gap: 2.5rem; /* Mesmo gap do .calculator-container */
+}
+
+.custo-empresa-card,
+.economia-empresa-card {
+    border-left: 4px solid var(--cor-borda-brilho);
+    transition: all 0.3s ease;
+    background-color: var(--cor-card-bg-light); /* Fundo um pouco mais claro */
+}
+
+/* O card Custo Empresa usa os estilos .tax-item, mas 
+   forçamos a cor dos valores para verde (provento) 
+   pois são ADIÇÕES ao custo. */
+.custo-empresa-card .tax-item.provento strong {
+    color: var(--cor-clt); /* Verde */
+}
+
+.custo-empresa-card .tax-item-total strong {
+    font-size: 1.25rem;
+    color: var(--cor-clt); /* Verde */
+}
+
+.economia-empresa-texto {
+    color: var(--cor-texto-secundario);
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.7;
+}
+
+.economia-empresa-texto strong {
+    color: var(--cor-acao-secundaria); /* Teal (cor de vantagem PJ) */
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.economia-empresa-texto strong.negativo {
+     color: var(--cor-negativo); /* Vermelho */
+}
+/* --- FIM: Estilos Funcionalidade 2 (Custo Empresa) --- */
+
+/* --- INÍCIO: Estilos Gráfico Principal (Func. 3) --- */
+.variacao-chart-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Gráfico | Valor */
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.chart-wrapper {
+    position: relative;
+    height: 100px; /* Altura do gráfico */
+}
+
+.variacao-valor-wrapper {
+    text-align: right;
+}
+
+.variacao-valor-wrapper .valor-principal {
+    margin: 0;
+}
+
+/* Em telas pequenas, coloca o valor abaixo do gráfico */
+@media (max-width: 450px) {
+    .variacao-chart-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .variacao-valor-wrapper {
+        text-align: left;
+    }
+    .chart-wrapper {
+        height: 80px; /* Altura menor no mobile */
+    }
+}
+/* --- FIM: Estilos Gráfico Principal --- */
+
+/* --- INÍCIO: Estilos Accordion (Func. 3 / Passo 2) --- */
+
+/* Remove o padding padrão do card, pois o conteúdo agora colapsa */
+.card.tax-detail-card.accordion-item {
+    padding: 0;
+}
+
+.accordion-button {
+    /* Reseta o estilo de botão */
+    background: none;
+    border: none;
+
+    /* Estilos do cabeçalho original */
+    font-family: var(--font-principal);
+    font-size: 1.1rem;
+    font-weight: 600;
+
+    /* Layout flexível para o ícone */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+
+    /* Recria o padding do cabeçalho */
+    padding: 1.5rem;
+
+    /* Garante que as cores de span (clt/pj) funcionem */
+    color: inherit; 
+}
+
+.accordion-button.clt span { color: var(--cor-clt); }
+.accordion-button.pj span { color: var(--cor-pj); }
+
+.accordion-button:hover {
+    background-color: var(--cor-fundo-page); /* Efeito hover sutil */
+}
+
+.accordion-icon {
+    color: var(--cor-texto-secundario);
+    transition: transform 0.3s ease-out;
+}
+
+/* Gira o ícone quando o botão está ativo */
+.accordion-button.active .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    max-height: 0; /* Começa fechado */
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+
+    /* Adiciona borda interna para separar do cabeçalho */
+    border-top: 1px solid var(--cor-borda);
+}
+
+/* O .tax-items original agora tem padding interno */
+.accordion-content .tax-items {
+     padding: 1.5rem;
+}
+
+/* --- FIM: Estilos Accordion --- */
+
+/* --- INÍCIO: Estilos Gráficos Donut (Func. 3 / Passo 3) --- */
+
+.donut-chart-wrapper {
+    position: relative;
+    max-height: 220px; /* Altura máxima do gráfico */
+    padding: 1rem; /* Espaçamento interno */
+    margin: 0 auto; /* Centraliza */
+    max-width: 220px; /* Largura máxima */
+    border-bottom: 1px solid var(--cor-borda); /* Separa do .tax-items */
+}
+
+/* No Passo 2, demos 1.5rem de padding total ao .tax-items.
+   Agora que o gráfico está acima, removemos o padding-top 
+   para que ele fique colado na borda do gráfico.
+*/
+.accordion-content .tax-items {
+     padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+/* --- FIM: Estilos Gráficos Donut --- */
+
+/* --- INÍCIO: Estilos Custo Empresa Gráfico (Func. 3 / Passo 4) --- */
+
+.custo-chart-wrapper {
+    position: relative;
+    height: 60px; /* Altura da barra empilhada */
+    margin: 1.5rem 0;
+}
+
+.custo-empresa-total-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--cor-borda);
+
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+}
+
+.custo-empresa-total-wrapper strong {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cor-clt); /* Verde */
+}
+
+/* --- FIM: Estilos Custo Empresa Gráfico --- */
+
+/* --- INÍCIO: Estilos Sparkline (Func. 3 / Passo 5 - CORRIGIDO) --- */
+
+.sparkline-wrapper {
+    position: relative;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--cor-borda);
+    padding-bottom: 1.5rem;
+    /* Remove a altura fixa do wrapper */
+    overflow: visible;
+}
+
+/* (NOVO) Adiciona a altura diretamente ao canvas */
+#impacto-anual-chart {
+    height: 70px !important; /* Define a altura do gráfico */
+    width: 100% !important;  /* Garante que ocupe a largura */
+}
+
+/* --- FIM: Estilos Sparkline --- */
+
+/* --- INÍCIO: Estilos CTA Negociação (Func. 3 / Passo 6) --- */
+
+.btn-negociacao {
+    width: 100%; /* Ocupa a largura total */
+    margin-top: 1.5rem; /* Espaço do texto */
+    font-size: 1rem;
+    display: flex; /* (Para o JS poder usar 'flex' para mostrar) */
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+}
+
+/* --- FIM: Estilos CTA Negociação --- */
+
+/* --- INÍCIO: Estilos Modal Relatório (Passo 6.5) --- */
+
+/* Modificador para modal mais largo */
+.modal-content.modal-lg {
+    max-width: 800px; /* Mais largo que o modal padrão de 600px */
+}
+
+.report-document {
+    background-color: var(--cor-fundo-page);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 2rem;
+    color: var(--cor-texto-secundario);
+    line-height: 1.8;
+}
+
+.report-document p {
+    margin-bottom: 1.5rem;
+}
+
+.report-document strong {
+    color: var(--cor-texto-principal);
+    font-weight: 600;
+}
+
+.report-document .report-value {
+    color: var(--cor-acao-secundaria); /* Teal (Vantagem) */
+}
+
+.report-document .report-value-negativo {
+    color: var(--cor-negativo); /* Vermelho (Desvantagem) */
+}
+
+.report-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.report-actions .btn-secondary {
+    background-color: var(--cor-card-bg-light);
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-borda-brilho);
+}
+
+.report-actions .btn-secondary:hover {
+    background-color: var(--cor-borda-brilho);
+    border-color: var(--cor-texto-principal);
+}
+
+/* --- FIM: Estilos Modal Relatório --- */
+
+/* --- NOVO: Bloco de Helper para Impressão PDF --- */
+
+/* Força os accordions a ficarem abertos quando a classe
+   .force-print-open for adicionada ao container */
+.force-print-open .accordion-content {
+    max-height: none !important; /* Remove o limite de altura */
+    overflow: visible !important; /* Garante que o conteúdo não seja cortado */
+}
+
+/* Esconde o ícone de "seta" do accordion, pois ele é inútil no PDF */
+.force-print-open .accordion-icon {
+    display: none !important;
 }
