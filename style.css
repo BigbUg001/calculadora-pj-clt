@@ -698,7 +698,7 @@ svg { vertical-align: middle; }
         height: auto; /* Desativa altura fixa */
     }
     .results-panel {
-        order: -1; /* Resultados aparecem PRIMEIRO */
+        /* order: -1;  Resultados aparecem PRIMEIRO */
         position: relative; 
         top: 0;
         height: auto; /* Desativa altura fixa */
