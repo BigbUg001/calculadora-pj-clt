@@ -721,6 +721,9 @@ svg { vertical-align: middle; }
     .faq-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .tax-details-grid { grid-template-columns: 1fr; } /* Detalhes em coluna única */
+    .custo-empresa-container {
+        grid-template-columns: 1fr !important; /* Força coluna única */
+    }
 }
 @media (max-width: 600px) {
     .container-nav .btn-primary { display: none; }
