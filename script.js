@@ -204,6 +204,8 @@ if (typeof window !== 'undefined') {
 
     document.addEventListener('DOMContentLoaded', () => {
 
+        lerDadosDaURL();
+
         const bodyEl = document.body;
         
         // 1. Adiciona listeners (tempo real) a TODOS os campos
@@ -373,136 +375,37 @@ function atualizarAlturasAccordions() {
             });
         });
 
-    // NOVO: Adiciona listener para o botão Exportar PDF (COM LAYOUT CORRIGIDO)
-    const btnExport = document.getElementById('btn-export-pdf');
-    if (btnExport) {
-        btnExport.addEventListener('click', () => {
+        // NOVO: Listener para o botão de Compartilhar Link
+    const btnShare = document.getElementById('btn-share-link');
+    if (btnShare) {
+        btnShare.addEventListener('click', () => {
+            const queryString = gerarQueryString();
+            const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${queryString}`;
             
-            // 0. Feedback
-            btnExport.textContent = 'Gerando PDF...';
-            btnExport.disabled = true;
-
-            // 1. Preparar Gráficos (Seu código original, está correto)
-            const allCharts = [mainBarChart, cltDonutChart, pjDonutChart, custoEmpresaChart, impactoAnualChart];
-            allCharts.forEach(chart => {
-                if (chart) {
-                    chart.options.animation = false;
-                    chart.update('none');
-                }
-            });
-
-            // 2. (NOVO - Problema 1) Força os accordions a abrirem
-            const taxGrid = document.getElementById('tax-details-grid');
-            if (taxGrid) taxGrid.classList.add('force-print-open');
-
-            // 3. Lista de IDs para "fotografar" (A mesma lista correta de antes)
-            const cardIds = [
-                'clt-input-card',   // Card "Dados CLT"
-                'pj-input-card',    // Card "Dados PJ"
-                'variacao-card',    // Card "Variação Líquida"
-                'pacote-grid',      // O <div> "results-grid"
-                'impacto-anual-card',
-                'equivalency-card',
-                'tax-details-grid'  // O <div> "tax-details-grid"
-            ];
-            
-            const promises = cardIds
-                .map(id => document.getElementById(id))
-                .filter(el => el) 
-                .map(el => html2canvas(el, { 
-                    scale: 2, 
-                    useCORS: true,
-                    backgroundColor: '#211C30', // Fundo escuro (cor do seu card)
-                    width: 800 // <-- ADICIONE ISSO (Força a largura de renderização)
-                }));
-
-            // 4. Processa as "fotos"
-            Promise.all(promises).then((canvases) => {
-                
-                // 5. Cria o PDF
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF('p', 'mm', 'a4'); // Retrato, milímetros, A4
-                const pdfWidth = doc.internal.pageSize.getWidth();
-                const pdfHeight = doc.internal.pageSize.getHeight();
-                const margin = 10;
-                
-                // 6. Adiciona o Cabeçalho
-                const headerHeight = addPdfHeader(doc); // Presume que a função addPdfHeader() existe
-                let currentY = headerHeight + 5; // Posição Y inicial
-
-                // 7. (NOVO - Problema 2) Loop de Layout Personalizado
-                let canvasIndex = 0;
-                while (canvasIndex < canvases.length) {
-                    
-                    // Função helper para checar quebra de página
-                    const checkPageBreak = (height) => {
-                        if (currentY + height + margin > pdfHeight) {
-                            doc.addPage();
-                            currentY = headerHeight + 5; // Reinicia Y
-                        }
-                    };
-
-                    // GRUPO 1: Input Cards (Índice 0 e 1) -> Lado a Lado
-                    if (canvasIndex === 0 && canvases.length > 1) {
-                        const canvas1 = canvases[0]; // CLT Input
-                        const canvas2 = canvases[1]; // PJ Input
-
-                        const gap = 5; // 5mm de espaço entre os cards
-                        const halfWidth = (pdfWidth - (margin * 2) - gap) / 2;
-                        
-                        // Calcula a altura proporcional
-                        const h1 = canvas1.height * halfWidth / canvas1.width;
-                        const h2 = canvas2.height * halfWidth / canvas2.width;
-                        const maxHeight = Math.max(h1, h2); // Pega a maior altura
-                        
-                        checkPageBreak(maxHeight); // Checa se a altura máxima cabe
-
-                        // Adiciona Imagem 1 (CLT)
-                        doc.addImage(canvas1.toDataURL('image/png'), 'PNG', margin, currentY, halfWidth, h1);
-                        // Adiciona Imagem 2 (PJ)
-                        doc.addImage(canvas2.toDataURL('image/png'), 'PNG', margin + halfWidth + gap, currentY, halfWidth, h2);
-                        
-                        currentY += maxHeight + 5; // Move Y (5mm de padding-bottom)
-                        canvasIndex += 2; // Processamos 2 canvases
-                    } 
-                    // GRUPO 2: Todos os outros cards -> Largura Total
-                    else {
-                        const canvas = canvases[canvasIndex];
-                        if (!canvas) { // Proteção
-                            canvasIndex++;
-                            continue;
-                        }
-                        
-                        const imgWidth = pdfWidth - (margin * 2);
-                        const imgHeight = canvas.height * imgWidth / canvas.width;
-
-                        checkPageBreak(imgHeight); // Checa se cabe
-
-                        doc.addImage(canvas.toDataURL('image/png'), 'PNG', margin, currentY, imgWidth, imgHeight);
-                        currentY += imgHeight + 5; // Move Y
-                        canvasIndex += 1; // Processamos 1 canvas
-                    }
-                } // Fim do while loop
-
-                // 8. Salva o PDF
-                doc.save('Relatorio-Calculex-CLTxPJ.pdf');
-
-            }).finally(() => {
-                // 9. (NOVO - Problema 1) Limpa a classe dos accordions
-                if (taxGrid) taxGrid.classList.remove('force-print-open');
-
-                // 10. Limpeza (Reabilita botão e animações)
-                btnExport.textContent = 'Exportar relatório em PDF';
-                btnExport.disabled = false;
-                allCharts.forEach(chart => {
-                    if (chart) chart.options.animation = true;
+            // Tenta usar a API de Compartilhamento (Mobile)
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Simulação Calculex: CLT vs PJ',
+                    text: 'Veja esta simulação que fiz no comparador Calculex:',
+                    url: newUrl,
+                })
+                .catch(console.error);
+            } else {
+                // Fallback para Copiar (Desktop)
+                navigator.clipboard.writeText(newUrl).then(() => {
+                    // Feedback temporário
+                    const originalText = btnShare.innerHTML;
+                    btnShare.innerHTML = 'Link Copiado!';
+                    setTimeout(() => {
+                        btnShare.innerHTML = originalText;
+                    }, 2000);
+                }, (err) => {
+                    alert('Erro ao copiar link.');
                 });
-            });
+            }
         });
     }
-
-
- 
+    
         /* --- Bloco: Popula o Cache de Seletores DOM --- */
         elResVariacaoAbs = document.getElementById('res-variacao-abs');
         elResVariacaoPerc = document.getElementById('res-variacao-perc');
@@ -573,7 +476,6 @@ function atualizarAlturasAccordions() {
                 html2canvas(sourceElement, { 
                     scale: 2,
                     backgroundColor: null,
-                    width: 700 // <-- ADICIONE ISSO (Largura boa para uma "carta")
                 }).then((canvas) => {
                 
                     // 3. Cria o PDF
@@ -1892,4 +1794,93 @@ function addPdfHeader(doc) {
     }
 
     return headerHeight; // Retorna a altura para sabermos onde começar o conteúdo
+}
+
+/**
+ * Pega todos os valores dos inputs e gera uma string de URL.
+ */
+function gerarQueryString() {
+    const params = new URLSearchParams();
+
+    // Pega o regime PJ ativo
+    const regimePJ = document.querySelector('.pj-tab-btn.active').dataset.regime;
+    params.set('regime', regimePJ);
+
+    // Adiciona todos os inputs CLT
+    params.set('clt_bruto', getFloat('clt-bruto'));
+    params.set('clt_dep', getFloat('clt-dependentes'));
+    params.set('clt_ben', getFloat('clt-beneficios'));
+    params.set('clt_desc', getFloat('clt-descontos'));
+    params.set('clt_plr', getFloat('clt-plr-anual'));
+    params.set('clt_prov', getChecked('clt-incluir-provisao') ? '1' : '0');
+    params.set('clt_fgts', getChecked('clt-incluir-fgts') ? '1' : '0');
+
+    // Adiciona todos os inputs PJ (Simples, MEI, Manual)
+    params.set('pj_fat_s', getFloat('pj-faturamento'));
+    params.set('pj_rbt12', getFloat('pj-rbt12'));
+    params.set('pj_ativ', document.getElementById('pj-atividade').value);
+    params.set('pj_cont', getFloat('pj-contabilidade'));
+    params.set('pj_outros_s', getFloat('pj-outros'));
+    
+    params.set('pj_fat_mei', getFloat('pj-faturamento-mei'));
+    params.set('pj_das', getFloat('pj-custo-mei'));
+    params.set('pj_outros_mei', getFloat('pj-outros-mei'));
+
+    params.set('pj_fat_m', getFloat('pj-faturamento-manual'));
+    params.set('pj_taxa_m', getFloat('pj-taxa-manual'));
+    params.set('pj_custos_m', getFloat('pj-custos-fixos-manual'));
+
+    return params.toString();
+}
+
+/**
+ * Lê os dados da URL quando a página carrega e preenche os campos.
+ */
+function lerDadosDaURL() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.size === 0) return; // Nenhum parâmetro, não faz nada
+
+    try {
+        // Restaura o regime PJ
+        const regime = params.get('regime');
+        if (regime) {
+            document.querySelectorAll('.pj-tab-btn').forEach(tab => {
+                const isActive = tab.dataset.regime === regime;
+                tab.classList.toggle('active', isActive);
+            });
+            document.querySelectorAll('.pj-regime-group').forEach(group => {
+                group.style.display = (group.id === `pj-${regime}-inputs`) ? 'block' : 'none';
+            });
+        }
+
+        // Restaura inputs CLT
+        document.getElementById('clt-bruto').value = params.get('clt_bruto') || '';
+        document.getElementById('clt-dependentes').value = params.get('clt_dep') || '0';
+        document.getElementById('clt-beneficios').value = params.get('clt_ben') || '';
+        document.getElementById('clt-descontos').value = params.get('clt_desc') || '';
+        document.getElementById('clt-plr-anual').value = params.get('clt_plr') || '';
+        document.getElementById('clt-incluir-provisao').checked = params.get('clt_prov') === '1';
+        document.getElementById('clt-incluir-fgts').checked = params.get('clt_fgts') === '1';
+
+        // Restaura inputs PJ
+        document.getElementById('pj-faturamento').value = params.get('pj_fat_s') || '';
+        document.getElementById('pj-rbt12').value = params.get('pj_rbt12') || '';
+        document.getElementById('pj-atividade').value = params.get('pj_ativ') || 'fator_r';
+        document.getElementById('pj-contabilidade').value = params.get('pj_cont') || '';
+        document.getElementById('pj-outros').value = params.get('pj_outros_s') || '';
+        
+        document.getElementById('pj-faturamento-mei').value = params.get('pj_fat_mei') || '';
+        document.getElementById('pj-custo-mei').value = params.get('pj_das') || '';
+        document.getElementById('pj-outros-mei').value = params.get('pj_outros_mei') || '';
+
+        document.getElementById('pj-faturamento-manual').value = params.get('pj_fat_m') || '';
+        document.getElementById('pj-taxa-manual').value = params.get('pj_taxa_m') || '';
+        document.getElementById('pj-custos-fixos-manual').value = params.get('pj_custos_m') || '';
+
+        // Calcula os resultados com os dados da URL
+        calcularEAtualizarUI();
+
+    } catch (e) {
+        console.error("Erro ao ler dados da URL:", e);
+    }
 }
