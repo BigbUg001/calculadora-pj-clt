@@ -412,7 +412,8 @@ function atualizarAlturasAccordions() {
                 .map(el => html2canvas(el, { 
                     scale: 2, 
                     useCORS: true,
-                    backgroundColor: '#211C30' // Fundo escuro (cor do seu card)
+                    backgroundColor: '#211C30', // Fundo escuro (cor do seu card)
+                    width: 800 // <-- ADICIONE ISSO (Força a largura de renderização)
                 }));
 
             // 4. Processa as "fotos"
@@ -570,8 +571,9 @@ function atualizarAlturasAccordions() {
             
                 // 2. "Fotografa" o elemento
                 html2canvas(sourceElement, { 
-                    scale: 2, // Boa qualidade
-                    backgroundColor: null // Usa o fundo do elemento
+                    scale: 2,
+                    backgroundColor: null,
+                    width: 700 // <-- ADICIONE ISSO (Largura boa para uma "carta")
                 }).then((canvas) => {
                 
                     // 3. Cria o PDF

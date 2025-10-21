@@ -693,27 +693,50 @@ svg { vertical-align: middle; }
 @media (max-width: 1200px) {
     /* --- CORREÇÃO DE LAYOUT --- */
     body { overflow-y: auto; } /* Restaura rolagem normal em telas menores */
+    
     .calculator-container {
-        grid-template-columns: 1fr; /* Coluna única em tablets */
-        height: auto; /* Desativa altura fixa */
+        grid-template-columns: 1fr; /* Coluna única */
+        height: auto;
+        padding: 0 1rem; /* Padding de 1rem nas laterais */
+        margin: 1.5rem 0 0 0; /* Remove margin 'auto' do desktop */
+        max-width: none; /* Remove max-width do desktop */
+        width: 100%; /* Garante que ocupe a tela */
+        box-sizing: border-box; /* Garante que o padding não estoure a tela */
     }
+
     .results-panel {
-        /* order: -1;  Resultados aparecem PRIMEIRO */
         position: relative; 
         top: 0;
-        height: auto; /* Desativa altura fixa */
+        height: auto;
         overflow-y: visible;
         padding-right: 0;
+        
+        /* NOVO: Força a ocupar a coluna inteira do grid */
+        width: 100%; 
+        grid-column: 1 / -1; /* Ocupa todas as colunas (do início ao fim) */
     }
+
     .input-panel {
-        max-height: none; /* Desativa altura máxima */
+        max-height: none;
         overflow-y: visible;
         padding-right: 0;
+        
+        /* NOVO: Força a ocupar a coluna inteira do grid */
+        width: 100%; 
+        grid-column: 1 / -1; /* Ocupa todas as colunas (do início ao fim) */
     }
+
     .custo-empresa-container {
-        grid-template-columns: 1fr; /* Coluna única em tablets */
+        grid-template-columns: 1fr; /* Coluna única em tablets (já estava) */
         gap: 1.5rem;
         margin-top: 1.5rem;
+        
+        /* NOVO: Garante que este container também não tenha margin 'auto' */
+        margin-left: 0;
+        margin-right: 0;
+        max-width: none;
+        width: 100%;
+        box-sizing: border-box; /* Garante que o padding não estoure a tela */
     }
 }
 @media (max-width: 900px) {
@@ -727,7 +750,12 @@ svg { vertical-align: middle; }
 }
 @media (max-width: 600px) {
     .container-nav .btn-primary { display: none; }
-    .calculator-container { padding: 0 1rem; margin-top: 1.5rem; gap: 1.5rem; }
+    .calculator-container { 
+        padding: 0 1rem; /* Mantém 1rem de padding nas laterais */
+        margin: 1.5rem 0 0 0; /* Remove o 'margin: auto' do desktop */
+        max-width: none; /* Remove o 'max-width: 1600px' */
+        gap: 1.5rem; 
+    }
     .results-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
     .footer-bottom { flex-direction: column; gap: 1rem; }
