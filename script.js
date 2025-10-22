@@ -434,7 +434,6 @@ function atualizarAlturasAccordions() {
         const modalNegociacao = document.getElementById('modal-negociacao');
         const modalNegociacaoClose = document.getElementById('modal-negociacao-close');
         const btnCopiarRelatorio = document.getElementById('btn-copiar-relatorio');
-        const btnImprimirRelatorio = document.getElementById('btn-imprimir-relatorio');
         elTaxDetailsClt = document.getElementById('tax-details-clt');
         elTaxDetailsPj = document.getElementById('tax-details-pj');
         elPjDetalheTitulo = document.getElementById('pj-detalhe-titulo');
@@ -458,49 +457,6 @@ function atualizarAlturasAccordions() {
         if (modalNegociacaoClose) {
             modalNegociacaoClose.addEventListener('click', () => {
             modalNegociacao.style.display = 'none';
-            });
-        }
-
-        // 3. Botão de Imprimir o Relatório (COM jsPDF + html2canvas)
-        if (btnImprimirRelatorio) {
-            btnImprimirRelatorio.addEventListener('click', () => {
-
-                // 0. Feedback (Opcional)
-                btnImprimirRelatorio.textContent = 'Gerando...';
-                btnImprimirRelatorio.disabled = true;
-
-                // 1. Pega o elemento do texto
-                const sourceElement = document.getElementById('report-text-content');
-            
-                // 2. "Fotografa" o elemento
-                html2canvas(sourceElement, { 
-                    scale: 2,
-                    backgroundColor: null,
-                }).then((canvas) => {
-                
-                    // 3. Cria o PDF
-                    const { jsPDF } = window.jspdf;
-                    const doc = new jsPDF('p', 'mm', 'a4');
-                    const pdfWidth = doc.internal.pageSize.getWidth();
-                    const margin = 15; // Margem maior para formato de "carta"
-                
-                    // 4. Adiciona Cabeçalho
-                    const headerHeight = addPdfHeader(doc);
-                
-                    // 5. Adiciona a imagem da carta
-                    const imgData = canvas.toDataURL('image/png');
-                    const imgWidth = pdfWidth - (margin * 2);
-                    const imgHeight = canvas.height * imgWidth / canvas.width;
-
-                    doc.addImage(imgData, 'PNG', margin, headerHeight + 10, imgWidth, imgHeight);
-                
-                    // 6. Salva o PDF
-                    doc.save('Relatorio-Negociacao-Calculex.pdf');
-
-                    // 7. Limpeza
-                    btnImprimirRelatorio.textContent = 'Imprimir Relatório (PDF)';
-                    btnImprimirRelatorio.disabled = false;
-                });
             });
         }
 
