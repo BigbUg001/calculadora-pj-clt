@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculex - Comparador CLT vs PJ em Tempo Real</title>
-    <meta name="description" content="Simule em tempo real seu salário líquido CLT contra o faturamento PJ e descubra a opção mais rentável.">
+    <title>Calculadora CLT ou PJ (2025) - Simples, MEI e Fator R</title>
+    <meta name="description" content="Simule seu salário líquido CLT vs. PJ em tempo real. Nossa calculadora compara impostos (INSS, IRRF, Simples Nacional, Fator R) e mostra a opção mais rentável.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,27 +16,42 @@
 
     <nav class="navbar">
 
-    <nav class="navbar">
-        <div class="container-nav">
+    <div class="container-nav">
             <div class="logo">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2H17C18.1046 2 19 2.89543 19 4V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V4C5 2.89543 5.89543 2 7 2Z" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 6H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 10H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18H10" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Calculex
+                Calculadora Salarial
             </div>
-            <div class="nav-links">
-                <a href="#" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM0 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4H0zm3 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm4 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm4 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-8 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm4 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm4 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/></svg> Calculadora CLT x PJ</a>
-                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-1.057 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/></svg> Sobre</a>
-                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.002 1.518.32 2.074.878l.848.85c.52.52.827 1.22.827 2.01v.089c0 .822-.32 1.518-.878 2.074l-.85.848c-.52.52-1.22.827-2.01.827h-.089c-.822-.002-1.518-.32-2.074-.878l-.848-.85c-.52-.52-.827-1.22-.827-2.01v-.089c0-.822.32-1.518.878-2.074l.85-.848c.52-.52 1.22-.827 2.01-.827zM11 9.5v-1H9.5V11H11zM11.125 10.125a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM11 5.5v1H9.5V5H11zM11.125 6.125a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM5.5 11v-1H5v1.5H6.5v-1zM4.875 10.125a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM5.5 6.5v-1H5V7H6.5v-1zM4.875 6.125a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM9.5 5.5v-1H11v-1H9.5V3H8v1.5H9.5v1zm-.625.625a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM6.5 9.5v-1H8v-1H6.5V6H5v1.5H6.5v1zM6.125 8.875a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0zM8 11v-1H6.5V11H8V13H9.5v-1.5H8zM8.875 11.125a.125.125 0 1 1-.25 0 .125.125 0 0 1 .25 0z"/></svg> Como Funciona</a>
-                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/></svg> Contato</a>
+            
+            <div class="nav-links"> <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6 1v3H1V1h5zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm14 12v3H1V12h14zM1 11a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H1zm5-6v3H1V6h5zM1 5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H1z"/></svg>
+                        Ferramentas
+                    </a>
+                    
+                    <div class="nav-dropdown-content">
+                        <a href="/index.html" class="active">Calculadora CLT x PJ</a>
+                        <a href="/calculadora-salario-clt">Calculadora Salário Líquido CLT</a>
+                        <a href="/calculadora-ferias">Calculadora de Férias</a>
+                        <a href="/calculadora-rescisao">Calculadora de Rescisão</a>
+                        
+                        <div class="nav-dropdown-divider"></div>
+                        <a href="/artigos.html" class="nav-dropdown-recursos">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11 0H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1H5V1zm6 14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3h8v12z"/>
+                                <path d="M7.5 4a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5zm2.5 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5zm-5 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                            Artigos e Guias
+                        </a>
+                    </div>
+                </div>
             </div>
-            <button class="btn-primary">Calcular Agora</button>
         </div>
-    </nav>
 
     <main class="calculator-container">
         
 <section class="input-panel">
             <header class="input-header">
-                <h2>Insira seu salário ou valor PJ</h2>
+                <h1>Calculadora CLT ou PJ: Descubra seu Salário Líquido</h1>
                 <p>Simule em tempo real: resultados atualizados enquanto você digita.</p>
             </header>
 
@@ -233,6 +248,7 @@
                     <div class="detalhe-aliquota">
                         <span id="res-clt-aliquota">0,0% do bruto</span>
                     </div>
+                    
                 </div>
                 <div class="result-card-comparativo card">
                     <label>
@@ -297,6 +313,12 @@
                         <div id="tax-details-clt" class="tax-items">
                             <div class="tax-item"><span>Nenhum dado</span></div>
                         </div>
+
+                        <button class="btn-link-detalhe" id="btn-modal-contracheque">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM0 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4H0zm3 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/></svg>
+                            Simular contracheque (holerite)
+                        </button>
+
                     </div>
                 </div>
                 <div class="card tax-detail-card accordion-item">
@@ -325,7 +347,7 @@
 
     <section class="custo-empresa-container">
         <div class="card custo-empresa-card" id="custo-empresa-card">
-            <div class="card-header-simple">Custo Total de Contratação (Visão Empresa)</div>
+            <h2 class="card-header-simple">Custo Total de Contratação (Visão Empresa)</h2>
 
             <div class="custo-chart-wrapper">
                 <canvas id="custo-empresa-chart"></canvas>
@@ -347,27 +369,6 @@
                    Gerar Relatório de Negociação
             </button>
             </div>
-    </section>
-
-    <section class="tools-container">
-        <div class="tools-header">
-            <h3>Ferramentas complementares</h3>
-            <p>Links rápidos para exportar resultados, simular contracheques e gerar planilhas.</p>
-        </div>
-        <div class="tools-grid">
-            <button class="tool-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
-                Em breve
-            </button>
-            <button class="tool-button" id="btn-modal-contracheque">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM0 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4H0zm3 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/></svg>
-                Simular contracheques
-            </button>
-            <button class="tool-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 0a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zM3 2.25a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM6 2.25a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM2.5 5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.KA.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-9 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.M13.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zM13 3.75a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm12 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm12 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM.5 13a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.M1.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM4.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM7.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM10.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM13.5 15a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/></svg>
-                Em breve
-            </button>
-        </div>
     </section>
 
     <section class="faq-container">
@@ -417,12 +418,43 @@
         </div>
     </section>
 
+    <section class="artigos-container">
+        <div class="artigos-header">
+            <h3>Artigos e Guias</h3>
+            <p>Aprenda mais sobre o mundo CLT, PJ e gestão financeira.</p>
+        </div>
+        <div class="artigos-grid">
+            
+            <a href="/artigos/quanto-cobrar-como-pj.html" class="artigo-card card">
+                <div class="artigo-card-header">Conversão de Carreira</div>
+                <h4>Quanto cobrar como PJ? O Guia para converter seu Salário CLT</h4>
+                <p>Recebeu uma proposta PJ? Aprenda a calcular o valor justo para não sair no prejuízo.</p>
+                <span class="artigo-card-link">Ler artigo</span>
+            </a>
+            
+            <a href="/artigos/clt-ou-pj-vantagens.html" class="artigo-card card">
+                <div class="artigo-card-header">Comparativo</div>
+                <h4>CLT ou PJ em 2025: Vantagens e Desvantagens</h4>
+                <p>Analisamos os dois regimes para você tomar a melhor decisão para sua carreira.</p>
+                <span class="artigo-card-link">Ler artigo</span>
+            </a>
+            
+            <a href="/artigos/o-que-e-fator-r.html" class="artigo-card card">
+                <div class="artigo-card-header">Guia de Impostos</div>
+                <h4>O que é o Fator R? O Guia que pode Reduzir seu Imposto PJ</h4>
+                <p>Entenda como o Fator R pode reduzir seu imposto no Simples Nacional do Anexo V para o III.</p>
+                <span class="artigo-card-link">Ler artigo</span>
+            </a>
+
+        </div>
+    </section>
+
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-col">
                 <div class="logo">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2H17C18.1046 2 19 2.89543 19 4V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V4C5 2.89543 5.89543 2 7 2Z" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 6H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 10H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18H10" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Calculex
+                    Calculadora Salarial
                 </div>
                 <p>Comparação inteligente entre CLT e PJ. Análise completa de tributos e recomendações personalizadas para sua carreira.</p>
                 <div class="footer-tags">
@@ -432,44 +464,39 @@
             </div>
             <div class="footer-col">
                 <h4>NAVEGAÇÃO</h4>
-                <a href="#">Calculadora CLT x PJ</a>
-                <a href="#">Sobre Nós</a>
-                <a href="#">Recursos</a>
-                <a href="#">Contato</a>
+                <a href="/index.html">Calculadora CLT x PJ</a>
+                <a href="/calculadora-salario-clt">Calculadora Salário Líquido CLT</a>
+                <a href="/calculadora-ferias">Calculadora de Férias</a>
+                <a href="/calculadora-rescisao">Calculadora de Rescisão</a>
+                <a href="/artigos.html">Artigos e Guias</a>
+                <a href="/sobre.html">Sobre Nós</a>
             </div>
             <div class="footer-col">
                 <h4>LEGAL</h4>
-                <a href="#">Política de Privacidade</a>
-                <a href="#">Termos de Uso</a>
-                <a href="#">Política de Cookies</a>
-                <a href="#">Conformidade LGPD</a>
+                <a href="/politica-de-privacidade.html">Política de Privacidade</a>
+                <a href="/termos-de-uso.html">Termos de Uso</a>
+                <a href="/lgpd.html">Conformidade LGPD</a>
             </div>
             <div class="footer-col">
                 <h4>CONTATO</h4>
                 <div class="contact-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/></svg>
-                    <span>contato@calculex.com.br</span>
+                    <span>salarialcalculadora@gmail.com</span>
                 </div>
                 <div class="contact-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03.002-2.137.702-2.877L1.885.511z"/></svg>
                     <span>+55 (11) 9 9999-9999</span>
                 </div>
-                <h4>CONECTE-SE</h4>
+               <h4>CONECTE-SE</h4>
                 <div class="social-links">
                     <a href="#" class="social-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-1.48.057 3.284 3.284 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .792 13.58a6.56 6.56 0 0 1-.708-.042A9.334 9.334 0 0 0 5.026 15z"/></svg>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.917 3.917 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.703.01 5.556 0 5.829 0 8s.01 2.444.048 3.297c.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.556 15.99 5.829 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372.526-.205.972-.478 1.417-.923.445-.444.719-.89 1.923-1.416.198-.51.333-1.09.372-1.942C15.99 10.444 16 10.171 16 8s-.01-2.444-.048-3.297c-.04-.852-.174-1.433-.372-1.942C15.39 2.29 15.117 1.844 14.67 1.4.972.972.478.89.719.526.478.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C10.444.01 10.171 0 8 0zm0 1.442c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.282.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.389-.009-3.232-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.282-.24-.705-.275-1.485-.038-.843-.047-1.096-.047-3.231s.009-2.389.047-3.232c.036-.78.166-1.204.275-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705.24 1.485-.276.843-.038 1.096-.047 3.232-.047zM8 3.882a4.118 4.118 0 1 0 0 8.236 4.118 4.118 0 0 0 0-8.236zm0 6.793a2.675 2.675 0 1 1 0-5.35 2.675 2.675 0 0 1 0 5.35zm4.398-6.848a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.269.087 3.85.048 4.703.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.95.923 1.417.444.47.864.742 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372a3.917 3.917 0 0 0 1.417-.923 3.927 3.927 0 0 0 .923-1.417c.198-.51.333-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.298c-.04-.852-.174-1.433-.372-1.942a3.917 3.917 0 0 0-.923-1.417A3.927 3.927 0 0 0 13.24 0.42c-.51-.198-1.09-.333-1.942-.372C10.445.01 10.173 0 8 0zm0 2.16c2.11 0 2.37.009 3.2.047.78.035 1.2.166 1.48.27.34.13.67.31.91.55.24.25.42.58.55.91.104.28.235.7.27 1.48.038.83.047 1.09.047 3.2s-.009 2.37-.047 3.2c-.035.78-.166 1.2-.27 1.48a2.608 2.608 0 0 1-.55.91c-.25.24-.58.42-.91.55-.28.104-.7.235-1.48.27-.83.038-1.09.047-3.2.047s-2.37-.009-3.2-.047c-.78-.035-1.2-.166-1.48-.27a2.608 2.608 0 0 1-.91-.55c-.24-.25-.42-.58-.55-.91-.104-.28-.235-.7-.27-1.48-.038-.83-.047-1.09-.047-3.2s.009-2.37.047-3.2c.035-.78.166-1.2.27-1.48a2.608 2.608 0 0 1 .55-.91c.25-.24.58-.42.91-.55.28-.104.7-.235 1.48-.27.83-.038 1.09-.047 3.2-.047zM8 5.835a2.165 2.165 0 1 0 0 4.33 2.165 2.165 0 0 0 0-4.33zm0 1c-.645 0-1.165.52-1.165 1.165S7.355 9 8 9s1.165-.52 1.165-1.165S8.645 6.835 8 6.835zm-.933-3.872a.662.662 0 1 1 0 1.324.662.662 0 0 1 0-1.324z"/></svg>
                     </a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <span>&copy; 2025 Calculex. Todos os direitos reservados.</span>
+            <span>&copy; 2025 Calculadora Salarial. Todos os direitos reservados.</span>
             <span class="status-badge">SISTEMA ONLINE</span>
         </div>
     </footer>

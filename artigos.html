@@ -3,59 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Nós - Calculadora Salarial</title> <meta name="description" content="Saiba mais sobre a Calculadora Salarial, nossa missão e como nossas ferramentas funcionam.">
+    <title>Calculadora CLT ou PJ (2025) - Simples, MEI e Fator R</title>
+    <meta name="description" content="Simule seu salário líquido CLT vs. PJ em tempo real. Nossa calculadora compara impostos (INSS, IRRF, Simples Nacional, Fator R) e mostra a opção mais rentável.">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> </head>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
     <nav class="navbar">
-        <div class="container-nav">
+
+    <div class="container-nav">
             <div class="logo">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2H17C18.1046 2 19 2.89543 19 4V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V4C5 2.89543 5.89543 2 7 2Z" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 6H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 10H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18H10" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Calculadora Salarial
             </div>
-            <div class="nav-links">
-                <div class="nav-dropdown">
+            
+            <div class="nav-links"> <div class="nav-dropdown">
                     <a href="#" class="nav-dropdown-toggle">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6 1v3H1V1h5zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm14 12v3H1V12h14zM1 11a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H1zm5-6v3H1V6h5zM1 5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H1z"/></svg>
                         Ferramentas
                     </a>
+                    
                     <div class="nav-dropdown-content">
-                        <a href="/index.html">Calculadora CLT x PJ</a>
-                        <a href="/ferramentas/calc salario clt/calculadora-salario-clt.html">Calculadora Salário Líquido CLT</a>
-                        <a href="/ferramentas/calc ferias/calculadora-ferias.html">Calculadora de Férias</a>
-                        <a href="/calculadora-rescisao.html">Calculadora de Rescisão</a>
+                        <a href="/index.html" class="active">Calculadora CLT x PJ</a>
+                        <a href="/calculadora-salario-clt">Calculadora Salário Líquido CLT</a>
+                        <a href="/calculadora-ferias">Calculadora de Férias</a>
+                        <a href="/calculadora-rescisao">Calculadora de Rescisão</a>
+                        
                         <div class="nav-dropdown-divider"></div>
                         <a href="/artigos.html" class="nav-dropdown-recursos">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11 0H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1H5V1zm6 14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3h8v12z"/><path d="M7.5 4a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5zm2.5 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5zm-5 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11 0H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1H5V1zm6 14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3h8v12z"/>
+                                <path d="M7.5 4a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5zm2.5 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5zm-5 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5z"/>
+                            </svg>
                             Artigos e Guias
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-    </nav>
 
-    <main class="content-container">
-        <div class="card content-card">
+    <main class="artigos-pagina-container">
+        <div class="artigos-header">
+            <h3>Artigos e Guias</h3>
+            <p>Aprenda mais sobre o mundo CLT, PJ e gestão financeira.</p>
+        </div>
+        
+        <div class="artigos-grid">
             
-            <h1>Sobre a Calculadora Salarial</h1>
-            <p>Bem-vindo ao Calculadora Salarial, seu hub de ferramentas financeiras focado no profissional brasileiro.</p>
+            <a href="/artigos/quanto-cobrar-como-pj.html" class="artigo-card card">
+                <div class="artigo-card-header">Conversão de Carreira</div>
+                <h4>Quanto cobrar como PJ? O Guia para converter seu Salário CLT</h4>
+                <p>Recebeu uma proposta PJ? Aprenda a calcular o valor justo para não sair no prejuízo.</p>
+                <span class="artigo-card-link">Ler artigo</span>
+            </a>
             
-            <h2>Nossa Missão</h2>
-            <p>Nossa missão é descomplicar as finanças da sua carreira. Sabemos que as regras de impostos e encargos no Brasil são complexas. Seja você CLT, PJ ou MEI, nosso objetivo é oferecer ferramentas simples, gratuitas e precisas para que você possa tomar decisões informadas sobre seu trabalho e seu dinheiro.</p>
+            <a href="/artigos/clt-ou-pj-vantagens.html" class="artigo-card card">
+                <div class="artigo-card-header">Comparativo</div>
+                <h4>CLT ou PJ em 2025: Vantagens e Desvantagens</h4>
+                <p>Analisamos os dois regimes para você tomar a melhor decisão para sua carreira.</p>
+                <span class="artigo-card-link">Ler artigo</span>
+            </a>
             
-            <h2>Como Funciona</h2>
-            <p>Nossas calculadoras funcionam de maneira direta: você insere as informações básicas do seu cenário (como salário bruto, faturamento PJ, benefícios ou dias de férias) e nossa ferramenta processa esses dados em tempo real.</p>
-            <p>Utilizamos as <strong>tabelas e alíquotas oficiais mais recentes</strong> divulgadas pelo governo (como as do INSS e Imposto de Renda para 2025) e as regras padrão dos regimes tributários (como Simples Nacional e MEI). O resultado é uma simulação clara dos valores líquidos, impostos e custos envolvidos, permitindo que você compare diferentes cenários de forma rápida e confiável.</p>
-            <p><strong>Importante:</strong> Nossas ferramentas são para simulação e informação. Elas não substituem o aconselhamento financeiro ou contábil profissional. Sempre valide os resultados com um especialista.</p>
-            </div>
-    </main>
+            <a href="/artigos/o-que-e-fator-r.html" class="artigo-card card">
+                <div class="artigo-card-header">Guia de Impostos</div>
+                <h4>O que é o Fator R? O Guia que pode Reduzir seu Imposto PJ</h4>
+                <p>Entenda como o Fator R pode reduzir seu imposto no Simples Nacional do Anexo V para o III.</p>
+                <span class="artigo-card-link">Ler artigo</span>
+            </a>
+
+            <a href="/artigos/como-calcular-salario-liquido-clt.html" class="artigo-card card">
+                <div class="artigo-card-header">Holerite</div>
+                <h4>Como Calcular Salário Líquido CLT em 2025 (Passo a Passo)</h4>
+                <p>Veja todos os descontos (INSS, IRRF) e descubra o valor exato que cai na sua conta.</p>
+                <span class="artigo-card-link">Ler artigo</span>
+            </a>
+            
+            <a href="#" class="artigo-card card">
+                <div class="artigo-card-header">Em Breve</div>
+                <h4>Guia do 13º Salário: Como é calculado?</h4>
+                <p>Entenda o que é a primeira e a segunda parcela e quais descontos incidem sobre ele.</p>
+                <span class="artigo-card-link">Ler artigo</span>
+            </a>
+
+            <a href="#" class="artigo-card card">
+                <div class="artigo-card-header">Em Breve</div>
+                <h4>Como calcular suas Férias (com 1/3 constitucional)</h4>
+                <p>Entenda o que é o 1/3 constitucional e quanto você realmente recebe ao tirar férias.</p>
+                <span class="artigo-card-link">Ler artigo</span>
+            </a>
+
+        </div>
+    </main>    
+
     <footer class="footer">
         <div class="footer-grid">
-             <div class="footer-col">
+            <div class="footer-col">
                 <div class="logo">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2H17C18.1046 2 19 2.89543 19 4V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V4C5 2.89543 5.89543 2 7 2Z" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 6H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 10H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18H10" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     Calculadora Salarial
@@ -69,9 +116,9 @@
             <div class="footer-col">
                 <h4>NAVEGAÇÃO</h4>
                 <a href="/index.html">Calculadora CLT x PJ</a>
-                <a href="/ferramentas/calc salario clt/calculadora-salario-clt.html">Calculadora Salário Líquido CLT</a>
-                <a href="/ferramentas/calc ferias/calculadora-ferias.html">Calculadora de Férias</a>
-                <a href="/calculadora-rescisao.html">Calculadora de Rescisão</a>
+                <a href="/calculadora-salario-clt">Calculadora Salário Líquido CLT</a>
+                <a href="/calculadora-ferias">Calculadora de Férias</a>
+                <a href="/calculadora-rescisao">Calculadora de Rescisão</a>
                 <a href="/artigos.html">Artigos e Guias</a>
                 <a href="/sobre.html">Sobre Nós</a>
             </div>
@@ -93,7 +140,7 @@
                 </div>
                 <h4>CONECTE-SE</h4>
                 <div class="social-links">
-                     <a href="#" class="social-icon">
+                    <a href="#" class="social-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.269.087 3.85.048 4.703.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.95.923 1.417.444.47.864.742 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372a3.917 3.917 0 0 0 1.417-.923 3.927 3.927 0 0 0 .923-1.417c.198-.51.333-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.298c-.04-.852-.174-1.433-.372-1.942a3.917 3.917 0 0 0-.923-1.417A3.927 3.927 0 0 0 13.24 0.42c-.51-.198-1.09-.333-1.942-.372C10.445.01 10.173 0 8 0zm0 2.16c2.11 0 2.37.009 3.2.047.78.035 1.2.166 1.48.27.34.13.67.31.91.55.24.25.42.58.55.91.104.28.235.7.27 1.48.038.83.047 1.09.047 3.2s-.009 2.37-.047 3.2c-.035.78-.166 1.2-.27 1.48a2.608 2.608 0 0 1-.55.91c-.25.24-.58.42-.91.55-.28.104-.7.235-1.48.27-.83.038-1.09.047-3.2.047s-2.37-.009-3.2-.047c-.78-.035-1.2-.166-1.48-.27a2.608 2.608 0 0 1-.91-.55c-.24-.25-.42-.58-.55-.91-.104-.28-.235-.7-.27-1.48-.038-.83-.047-1.09-.047-3.2s.009-2.37.047-3.2c.035-.78.166-1.2.27-1.48a2.608 2.608 0 0 1 .55-.91c.25-.24.58-.42.91-.55.28-.104.7-.235 1.48-.27.83-.038 1.09-.047 3.2-.047zM8 5.835a2.165 2.165 0 1 0 0 4.33 2.165 2.165 0 0 0 0-4.33zm0 1c-.645 0-1.165.52-1.165 1.165S7.355 9 8 9s1.165-.52 1.165-1.165S8.645 6.835 8 6.835zm-.933-3.872a.662.662 0 1 1 0 1.324.662.662 0 0 1 0-1.324z"/></svg>
                     </a>
                 </div>
@@ -104,6 +151,5 @@
             <span class="status-badge">SISTEMA ONLINE</span>
         </div>
     </footer>
-
 </body>
 </html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Calculadora de Salário Líquido CLT (2025) - Calculadora Salarial</title>
+    <meta name="description" content="Simule seu salário líquido CLT em tempo real. Insira seu salário bruto, descontos e dependentes e veja o valor exato com descontos de INSS e IRRF 2025.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container-nav">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2H17C18.1046 2 19 2.89543 19 4V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V4C5 2.89543 5.89543 2 7 2Z" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 6H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 10H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18H10" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Calculadora Salarial
+            </div>
+            
+            <div class="nav-links">
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6 1v3H1V1h5zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm14 12v3H1V12h14zM1 11a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H1zm5-6v3H1V6h5zM1 5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H1z"/></svg>
+                        Ferramentas
+                    </a>
+                    <div class="nav-dropdown-content">
+                        <a href="/index.html">Calculadora CLT x PJ</a>
+                        <a href="/calculadora-salario-clt.html" class="active">Calculadora Salário Líquido CLT</a>
+                        <a href="/calculadora-ferias.html">Calculadora de Férias</a>
+                        <a href="/calculadora-rescisao.html">Calculadora de Rescisão</a>
+                        <div class="nav-dropdown-divider"></div>
+                        <a href="/artigos.html" class="nav-dropdown-recursos">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11 0H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1H5V1zm6 14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3h8v12z"/><path d="M7.5 4a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5zm2.5 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5zm-5 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5z"/></svg>
+                            Artigos e Guias
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="calculator-container">
+        
+        <section class="input-panel">
+            <header class="input-header">
+                <h2>Calculadora de Salário Líquido CLT 2025</h2>
+                <p>Simule em tempo real: veja os descontos de INSS e IRRF no seu salário.</p>
+            </header>
+
+            <div class="card" id="clt-input-card">
+                <div class="card-header clt-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-3V4c0-1.11-.89-2-2-2H9c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM9 4h6v2H9V4zm11 15H4V8h16v11z"></path><path d="M10 12H8v-2h2v2zm4 0h-2v-2h2v2zm-4 4H8v-2h2v2zm4 0h-2v-2h2v2z"></path></svg>
+                    Insira seus dados CLT
+                </div>
+                
+                <div class="input-group">
+                    <label for="clt-bruto">Salário Bruto Mensal</label>
+                    <div class="input-group-prefix">
+                        <span class="prefix">R$</span>
+                        <input type="number" id="clt-bruto" placeholder="5.000">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="clt-dependentes">Número de Dependentes</label>
+                    <input type="number" id="clt-dependentes" value="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="clt-beneficios">Benefícios (VT, VR, Plano)</label>
+                    <div class="input-group-prefix">
+                        <span class="prefix">R$</span>
+                        <input type="number" id="clt-beneficios" value="0" placeholder="800">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="clt-descontos">Outros Descontos (Plano, VT)</label>
+                    <div class="input-group-prefix">
+                        <span class="prefix">R$</span>
+                        <input type="number" id="clt-descontos" value="0" placeholder="300">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="clt-plr-anual">PLR (Provisão Anual)</label>
+                    <div class="input-group-prefix">
+                        <span class="prefix">R$</span>
+                     <input type="number" id="clt-plr-anual" value="0" placeholder="2.000">
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="clt-incluir-provisao" checked>
+                    <label for="clt-incluir-provisao">Incluir 13º e Férias no "Pacote"?</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="clt-incluir-fgts" checked>
+                    <label for="clt-incluir-fgts">Incluir FGTS (8%) no "Pacote"?</label>
+                 </div>
+            </div>
+            
+            <div class="conexao-segura">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 9a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V9z"/></svg>
+                Conexões encriptadas e confidencialidade dos dados.
+            </div>
+        </section>
+
+        <section class="results-panel">
+
+            <div class="result-card-comparativo card">
+                <label>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="margin-right: 4px;"><path d="M20 6h-3V4c0-1.11-.89-2-2-2H9c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM9 4h6v2H9V4zm11 15H4V8h16v11z"></path></svg>
+                    Resultado do Cálculo CLT
+                </label>
+                <div class="valor-comparativo clt" id="res-clt-pacote" aria-live="polite">R$ 0,00</div>
+                <div class="detalhe-salario-conta">
+                    <span>Salário em Conta (mês)</span>
+                    <strong id="res-clt-salario-em-conta">R$ 0,00</strong>
+                </div>
+                <div class="detalhe-comparativo">
+                    <span id="res-clt-impostos-label">Total de impostos/descontos</span>
+                    <span id="res-clt-impostos">R$ 0,00</span>
+                </div>
+                <div class="detalhe-aliquota">
+                    <span id="res-clt-aliquota">0,0% do bruto</span>
+                </div>
+            </div>
+
+            <div class="tax-details-grid" id="tax-details-grid">
+                <div class="card tax-detail-card accordion-item">
+                    <button class="card-header-simple clt accordion-button">
+                        <span>Detalhes do Cálculo</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+                    </button>
+
+                    <div class="accordion-content">
+                        <div class="donut-chart-wrapper">
+                            <canvas id="clt-donut-chart"></canvas>
+                        </div>
+                        <div id="tax-details-clt" class="tax-items">
+                            <div class="tax-item"><span>Nenhum dado</span></div>
+                        </div>
+                        
+                        <button class="btn-link-detalhe" id="btn-modal-contracheque">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM0 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4H0zm3 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/></svg>
+                            Simular contracheque (holerite)
+                        </button>
+                     </div>
+                </div>
+            </div>
+            
+        </section>
+
+    </main>
+
+    <section class="custo-empresa-container">
+        <div class="card custo-empresa-card" id="custo-empresa-card">
+            <div class="card-header-simple">Custo Total de Contratação (Visão Empresa)</div>
+
+            <div class="custo-chart-wrapper">
+                <canvas id="custo-empresa-chart"></canvas>
+            </div>
+
+            <div class="custo-empresa-total-wrapper">
+                <span>Custo Mensal Real (Empresa)</span>
+                <strong id="custo-empresa-total">R$ 0,00</strong>
+            </div>
+        </div>
+        
+        </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2H17C18.1046 2 19 2.89543 19 4V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V4C5 2.89543 5.89543 2 7 2Z" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 6H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 10H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18H10" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Calculadora Salarial
+                </div>
+                <p>Comparação inteligente entre CLT e PJ. Análise completa de tributos e recomendações personalizadas para sua carreira.</p>
+                <div class="footer-tags">
+                    <span class="tag secure">Dados Seguros</span>
+                    <span class="tag crypto">Criptografado</span>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>NAVEGAÇÃO</h4>
+                <a href="/index.html">Calculadora CLT x PJ</a>
+                <a href="/calculadora-salario-clt">Calculadora Salário Líquido CLT</a>
+                <a href="/calculadora-ferias">Calculadora de Férias</a>
+                <a href="/calculadora-rescisao">Calculadora de Rescisão</a>
+                <a href="/artigos.html">Artigos e Guias</a>
+                <a href="/sobre.html">Sobre Nós</a>
+            </div>
+            <div class="footer-col">
+                <h4>LEGAL</h4>
+                <a href="/politica-de-privacidade.html">Política de Privacidade</a>
+                <a href="/termos-de-uso.html">Termos de Uso</a>
+                <a href="/lgpd.html">Conformidade LGPD</a>
+            </div>
+            <div class="footer-col">
+                <h4>CONTATO</h4>
+                <div class="contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/></svg>
+                    <span>salarialcalculadora@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03.002-2.137.702-2.877L1.885.511z"/></svg>
+                    <span>+55 (11) 9 9999-9999</span>
+                </div>
+               <h4>CONECTE-SE</h4>
+                <div class="social-links">
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.269.087 3.85.048 4.703.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.95.923 1.417.444.47.864.742 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372a3.917 3.917 0 0 0 1.417-.923 3.927 3.927 0 0 0 .923-1.417c.198-.51.333-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.298c-.04-.852-.174-1.433-.372-1.942a3.917 3.917 0 0 0-.923-1.417A3.927 3.927 0 0 0 13.24 0.42c-.51-.198-1.09-.333-1.942-.372C10.445.01 10.173 0 8 0zm0 2.16c2.11 0 2.37.009 3.2.047.78.035 1.2.166 1.48.27.34.13.67.31.91.55.24.25.42.58.55.91.104.28.235.7.27 1.48.038.83.047 1.09.047 3.2s-.009 2.37-.047 3.2c-.035.78-.166 1.2-.27 1.48a2.608 2.608 0 0 1-.55.91c-.25.24-.58.42-.91.55-.28.104-.7.235-1.48.27-.83.038-1.09.047-3.2.047s-2.37-.009-3.2-.047c-.78-.035-1.2-.166-1.48-.27a2.608 2.608 0 0 1-.91-.55c-.24-.25-.42-.58-.55-.91-.104-.28-.235-.7-.27-1.48-.038-.83-.047-1.09-.047-3.2s.009-2.37.047-3.2c.035-.78.166-1.2.27-1.48a2.608 2.608 0 0 1 .55-.91c.25-.24.58-.42.91-.55.28-.104.7-.235 1.48-.27.83-.038 1.09-.047 3.2-.047zM8 5.835a2.165 2.165 0 1 0 0 4.33 2.165 2.165 0 0 0 0-4.33zm0 1c-.645 0-1.165.52-1.165 1.165S7.355 9 8 9s1.165-.52 1.165-1.165S8.645 6.835 8 6.835zm-.933-3.872a.662.662 0 1 1 0 1.324.662.662 0 0 1 0-1.324z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2025 Calculadora Salarial. Todos os direitos reservados.</span>
+            <span class="status-badge">SISTEMA ONLINE</span>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="modal-contracheque">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-contracheque-close">&times;</button>
+            <h3 class="modal-title">Simulador de Contracheque (Holerite)</h3>
+            <p class="modal-description">
+                Este é um demonstrativo de como seu salário líquido é calculado.
+            </p>
+            <table class="holerite-table">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Proventos</th>
+                        <th>Descontos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Salário Bruto</td>
+                        <td id="modal-salario-bruto" class="holerite-provento">R$ 0,00</td> <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>INSS (Alíquota Efetiva: <span id="modal-inss-aliquota">0.00</span>%)</td>
+                        <td>-</td>
+                        <td id="modal-inss" class="holerite-desconto">R$ 0,00</td> </tr>
+                    <tr>
+                        <td>IRRF (Alíquota Efetiva: <span id="modal-irrf-aliquota">0.00</span>%)</td>
+                        <td>-</td>
+                        <td id="modal-irrf" class="holerite-desconto">R$ 0,00</td> </tr>
+                    <tr>
+                        <td>Outros Descontos</td>
+                        <td>-</td>
+                        <td id="modal-outros-descontos" class="holerite-desconto">R$ 0,00</td> </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="holerite-total">
+                        <td>Totais</td>
+                        <td id="modal-total-proventos">R$ 0,00</td>
+                        <td id="modal-total-descontos">R$ 0,00</td>
+                    </tr>
+                    <tr class="holerite-liquido">
+                        <td colspan="2">Líquido a Receber</td>
+                        <td id="modal-liquido">R$ 0,00</td> </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/countup.js@2.8.0/dist/countUp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="script-clt.js"></script>
+
+</body>
+</html>

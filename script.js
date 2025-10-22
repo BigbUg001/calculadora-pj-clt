@@ -1,5 +1,5 @@
 // Topo do script.js
-const LOGO_BASE64 = "Calculex";
+const LOGO_BASE64 = "Calculadora Salarial";
 /* --- NOVO: Bloco de Animação CountUp.js (À PROVA DE FALHAS) --- */
 
 // Armazena as instâncias dos animadores para que possamos atualizá-las
@@ -385,8 +385,8 @@ function atualizarAlturasAccordions() {
             // Tenta usar a API de Compartilhamento (Mobile)
             if (navigator.share) {
                 navigator.share({
-                    title: 'Simulação Calculex: CLT vs PJ',
-                    text: 'Veja esta simulação que fiz no comparador Calculex:',
+                    title: 'Simulação Calculadora Salarial: CLT vs PJ',
+                    text: 'Veja esta simulação que fiz no comparador Calculadora Salarial:',
                     url: newUrl,
                 })
                 .catch(console.error);

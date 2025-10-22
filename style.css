@@ -1259,9 +1259,8 @@ svg { vertical-align: middle; }
     border-top: 1px solid var(--cor-borda);
 }
 
-/* O .tax-items original agora tem padding interno */
 .accordion-content .tax-items {
-     padding: 1.5rem;
+     padding: 1.5rem 1.5rem 0 1.5rem; /* Remove o padding-bottom */
 }
 
 /* --- FIM: Estilos Accordion --- */
@@ -1418,3 +1417,399 @@ svg { vertical-align: middle; }
 .force-print-open .accordion-icon {
     display: none !important;
 }
+
+/* --- INÍCIO: Bloco de Estilos Dropdown Navbar (VERSÃO ATUALIZADA) --- */
+
+/* 1. Container principal do dropdown */
+.nav-dropdown {
+    position: relative; 
+    display: inline-block; 
+}
+
+/* 2. O botão "Ferramentas" (Agora estilizado como btn-secondary) */
+.nav-dropdown-toggle {
+    /* Estilo de botão secundário */
+    background-color: transparent;
+    border: 2px solid var(--cor-acao-secundaria);
+    color: var(--cor-acao-secundaria);
+    padding: 0.6rem 1.2rem; /* Padding de botão (um pouco mais alto) */
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem; 
+    
+    /* Propriedades flex */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease; 
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* 3. Efeito hover do botão "Ferramentas" */
+.nav-dropdown-toggle:hover,
+.nav-dropdown:hover .nav-dropdown-toggle {
+    /* Efeito hover do btn-secondary */
+    background-color: var(--cor-acao-secundaria);
+    color: var(--cor-fundo-dark); /* Texto escuro no fundo teal */
+    box-shadow: var(--glow-secundario);
+    transform: translateY(-2px);
+}
+
+/* 4. A caixa flutuante (CORRIGIDA) */
+.nav-dropdown-content {
+    display: none; 
+    position: absolute;
+    top: 100%; /* <--- CORREÇÃO 1: Remove a lacuna funcional */
+    right: 0; 
+    left: auto;
+    
+    background-color: var(--cor-card-bg); 
+    border: 1px solid var(--cor-borda-brilho); 
+    border-radius: 8px;
+    min-width: 280px; 
+    box-shadow: var(--glow-card);
+    z-index: 101; 
+
+    /* CORREÇÃO 2: Adiciona 8px de padding-top para recriar a lacuna visual */
+    padding: calc(0.5rem + 8px) 0.5rem 0.5rem 0.5rem; 
+    
+    opacity: 0;
+    transform: translateY(0); /* Remove o transform antigo */
+    transition: all 0.2s ease-out;
+}
+
+/* 5. Mostra o menu ao passar o mouse */
+.nav-dropdown:hover .nav-dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 6. Links dentro do menu */
+.nav-dropdown-content a {
+    color: var(--cor-texto-secundario);
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap; 
+}
+
+.nav-dropdown-content a:hover {
+    background-color: var(--cor-borda);
+    color: var(--cor-acao-secundaria); 
+}
+
+/* 7. Estilo do item ATIVO */
+.nav-dropdown-content a.active {
+    background-color: var(--cor-borda);
+    color: var(--cor-acao-secundaria);
+    font-weight: 600;
+}
+
+/* 8. Divisor */
+.nav-dropdown-divider {
+    height: 1px;
+    background-color: var(--cor-borda);
+    margin: 0.5rem 1rem;
+}
+
+/* 9. Estilo "Artigos" */
+.nav-dropdown-recursos {
+    color: var(--cor-texto-principal) !important;
+    font-weight: 600 !important;
+    display: flex !important; 
+    align-items: center;
+    gap: 0.5rem;
+}
+.nav-dropdown-recursos:hover {
+    color: var(--cor-acao-secundaria) !important;
+}
+
+/* --- FIM: Bloco de Estilos Dropdown Navbar --- */
+
+/* --- INÍCIO: Estilos do Plano (Botão Movido + Seção Artigos) --- */
+
+/* 1. Estilo para o botão "Simular Contracheque" movido */
+.btn-link-detalhe {
+    background: none;
+    border: none;
+    color: var(--cor-texto-secundario);
+    font-family: var(--font-principal);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+
+    /* Aplica o padding horizontal e inferior que o .tax-items não tem mais 
+      e adiciona um padding-top para espaçar da borda.
+    */
+    padding: 1rem 1.5rem 1.5rem 1.5rem; 
+    margin-top: 0; /* Remove margin */
+    width: 100%; 
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    /* Adiciona a borda que o "Total de Descontos" (acima) já tem */
+    border-top: 1px dashed var(--cor-borda);
+}
+.btn-link-detalhe:hover {
+    color: var(--cor-acao-secundaria); 
+}
+
+/* 2. Estilos para a nova Seção "Artigos e Guias" */
+.artigos-container {
+    max-width: 1600px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+.artigos-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+.artigos-header h3 {
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem 0;
+    color: #fff;
+}
+.artigos-header p {
+    color: var(--cor-texto-secundario);
+    margin: 0;
+    font-size: 1.1rem;
+}
+.artigos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+    gap: 1.5rem;
+}
+
+/* 3. Estilos para os Cards de Artigo */
+.artigo-card {
+    /* Herda a classe .card */
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--cor-borda);
+}
+.artigo-card:hover {
+    transform: translateY(-5px);
+    border-left-color: var(--cor-acao-principal); /* Borda roxa no hover */
+    box-shadow: var(--glow-principal), var(--glow-card);
+}
+.artigo-card-header {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cor-acao-principal); /* Tag roxa */
+    margin-bottom: 0.5rem;
+}
+.artigo-card h4 {
+    color: var(--cor-texto-principal);
+    font-size: 1.25rem;
+    margin: 0 0 0.75rem 0;
+}
+.artigo-card p {
+    color: var(--cor-texto-secundario);
+    font-size: 0.95rem;
+    margin: 0 0 1.5rem 0;
+    line-height: 1.6;
+}
+.artigo-card-link {
+    color: var(--cor-acao-secundaria); /* Link teal */
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* 4. Responsividade para Artigos */
+@media (max-width: 900px) {
+    .artigos-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width: 600px) {
+    .artigos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- FIM: Estilos do Plano --- */
+
+/* --- INÍCIO: Estilos das Páginas de Conteúdo (Sobre, Termos, Artigos) --- */
+
+/* 1. Estilo para o container de páginas de texto (Sobre, Termos, etc.) */
+.content-container {
+    max-width: 800px; /* Largura boa para leitura */
+    margin: 2.5rem auto; /* Centraliza na página */
+    padding: 0 2rem; /* Espaçamento lateral em telas pequenas */
+}
+
+.content-card {
+    padding: 2.5rem 3rem; /* Padding interno generoso */
+}
+
+/* 2. Estilos de tipografia para o conteúdo de texto */
+.content-card h1 {
+    font-size: 2.2rem;
+    color: var(--cor-texto-principal);
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+.content-card h2 {
+    font-size: 1.6rem;
+    color: var(--cor-acao-secundaria); /* Teal */
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--cor-borda);
+}
+.content-card p,
+.content-card li {
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+    line-height: 1.8;
+}
+.content-card ul {
+    padding-left: 2rem;
+}
+
+/* 3. Estilo para a Página Hub de Artigos (o container) */
+.artigos-pagina-container {
+    max-width: 1600px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+/* 4. Ajuste no grid de artigos para a página principal dele */
+.artigos-pagina-container .artigos-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas por padrão */
+}
+
+/* (As regras de responsividade que já adicionamos 
+   para .artigos-grid vão funcionar aqui também) */
+
+/* --- FIM: Estilos das Páginas de Conteúdo --- */
+
+/* --- INÍCIO: CORREÇÃO CSS DO CABEÇALHO (Posicionamento Ferramentas + Botão) --- */
+
+/* 1. Garante que o container principal use Flexbox e alinhe itens */
+.container-nav {
+    display: flex;
+    justify-content: space-between; /* Empurra logo para esquerda e nav-actions para direita */
+    align-items: center;
+    /* Remova max-width e margin: auto se você os definiu aqui, 
+       eles devem estar no container pai ou globalmente */
+    padding: 1rem 2rem; /* Mantém o padding original */
+}
+
+/* 2. O grupo da direita (Ferramentas + Calcular Agora) */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Espaço entre o botão Ferramentas e Calcular Agora */
+    margin-left: auto; /* FORÇA este grupo a ir para a direita */
+}
+
+/* 3. Estilo do botão Ferramentas (nav-dropdown-toggle) - Mantido igual */
+.nav-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem; 
+    border: 1px solid var(--cor-acao-secundaria); /* Cor Teal */
+    border-radius: 6px; /* Arredondado */
+    color: var(--cor-acao-secundaria);
+    background-color: transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none; /* Remove sublinhado */
+    font-weight: 600;
+    font-size: 0.95rem; 
+}
+
+.nav-dropdown-toggle:hover {
+    background-color: rgba(0, 212, 200, 0.1); 
+    color: #36E4DA; /* Teal mais claro */
+}
+
+/* 4. Estilo do botão Calcular Agora (btn-primary) - Mantido igual */
+.btn-primary {
+    background: linear-gradient(90deg, var(--cor-acao-principal), var(--cor-acao-principal-hover));
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-family: var(--font-principal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none; /* Remove sublinhado */
+    white-space: nowrap; /* Impede que quebre linha */
+}
+.btn-primary:hover {
+    box-shadow: var(--glow-principal);
+    transform: translateY(-2px);
+}
+
+/* --- FIM: CORREÇÃO CSS DO CABEÇALHO --- */
+
+/* (Mantenha as regras CSS para .nav-dropdown, .nav-dropdown-content, etc., que você já tem) */
+
+/* --- INÍCIO: Centralização dos Botões CTA nos Artigos --- */
+
+/* 1. Centraliza o conteúdo (incluindo o botão) dentro do bloco CTA intermediário */
+.cta-artigo {
+    background-color: var(--cor-card-bg-light); /* Fundo um pouco mais claro para destaque */
+    border-left: 4px solid var(--cor-acao-principal); /* Borda roxa */
+    padding: 1.5rem 2rem;
+    margin: 2rem 0; /* Espaçamento vertical */
+    border-radius: 8px;
+    text-align: center; /* <<< CENTRALIZA O BOTÃO INTERNO */
+}
+
+.cta-artigo h3 {
+    margin-top: 0;
+    color: var(--cor-texto-principal);
+}
+
+.cta-artigo p {
+    color: var(--cor-texto-secundario);
+    margin-bottom: 1.5rem;
+}
+
+/* Garante que o botão dentro do .cta-artigo se comporte bem centralizado */
+.cta-artigo .btn-primary {
+    display: inline-block; /* Comportamento padrão de botão */
+    width: auto; /* Largura automática */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+/* --- INÍCIO: Confirmação/Ajuste CSS para Botão Final Centralizado --- */
+
+/* 1. Container para centralizar o botão GRANDE no final do artigo */
+.cta-final-artigo {
+    text-align: center; /* <<< CENTRALIZA O BOTÃO FINAL */
+    margin-top: 2.5rem; /* Espaço acima do botão final */
+    padding-top: 1.5rem; /* Espaço dentro */
+    border-top: 1px solid var(--cor-borda); /* Linha divisória sutil */
+}
+
+/* 2. Garante que o botão final tenha largura automática e padding */
+.cta-final-artigo .btn-primary {
+    display: inline-block; /* Permite centralização via text-align do pai */
+    width: auto;          /* LARGURA AUTOMÁTICA (ajustada ao texto) */
+    padding: 1rem 2rem;   /* Padding para dar tamanho visual */
+    text-decoration: none !important; /* Remove sublinhado */
+    /* Outros estilos .btn-primary (cor, fundo, etc.) já são herdados */
+}
+
+/* 3. Remove sublinhado de TODOS os links com classe btn-primary (Garante) */
+a.btn-primary, button.btn-primary {
+    text-decoration: none !important;
+}
+
+/* --- FIM: Confirmação/Ajuste CSS --- */
+/* --- FIM: Centralização dos Botões CTA nos Artigos --- */
