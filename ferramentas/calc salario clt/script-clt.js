@@ -1,8 +1,24 @@
+/* --- Bloco: Helper de Performance (Debounce) --- */
+/**
+ * Cria uma versão "debounced" de uma função que atrasa sua execução.
+ */
+function debounce(fn, wait = 300) {
+  let timeoutId;
+  
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      fn.apply(this, args);
+    }, wait);
+  };
+}
+/* --- Fim do Bloco Debounce --- */
+
 /* --- NOVO: Bloco de Animação CountUp.js (À PROVA DE FALHAS) --- */
 let animadores = {};
 let ultimoResultadoCLT = null;
 let cltDonutChart = null;
-let custoEmpresaChart = null;
+// As variáveis custoEmpresaChart e elCustoEmpresaTotal foram removidas
 
 function initAnimadores() {
     const options = {
@@ -70,17 +86,6 @@ const todosInputIDs = [
     'clt-plr-anual', 'clt-incluir-fgts'
 ];
 
-/* --- Bloco: Helper de Performance (Debounce) --- */
-function debounce(fn, wait = 300) {
-  let timeoutId;
-  return function(...args) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      fn.apply(this, args);
-    }, wait);
-  };
-}
-
 /* --- Bloco: Helpers Seguros de UI (Substitui setHTML) --- */
 function criarTaxItem(nome, valor, percentual, tipo = 'desconto', baseLabel = 'da receita') {
     const item = document.createElement('div');
@@ -122,7 +127,8 @@ const getChecked = (id) => document.getElementById(id).checked;
 
 /* --- Bloco: Cache de Seletores DOM --- */
 let elResCltPacote, elResCltSalarioEmConta, elResCltImpostos, elResCltAliquota,
-    elTaxDetailsClt, elCustoEmpresaTotal;
+    elTaxDetailsClt;
+// elCustoEmpresaTotal foi removido
 /* --- Fim do Bloco de Cache --- */
 
 /* --- Bloco: INICIALIZAÇÃO (UX em Tempo Real) --- */
@@ -220,7 +226,7 @@ if (typeof window !== 'undefined') {
         elResCltSalarioEmConta = document.getElementById('res-clt-salario-em-conta');
         elResCltImpostos = document.getElementById('res-clt-impostos');
         elResCltAliquota = document.getElementById('res-clt-aliquota');
-        elCustoEmpresaTotal = document.getElementById('custo-empresa-total');
+        // elCustoEmpresaTotal foi removido
         elTaxDetailsClt = document.getElementById('tax-details-clt');
         /* --- Fim do Bloco de População do Cache --- */
 
@@ -251,14 +257,12 @@ function calcularEAtualizarUI() {
             detalhesImpostos: [], bruto: 0, inss: 0, irrf: 0, salarioEmConta: 0 
         };
 
-        const resCustoEmpresa = (inputsCLT.bruto > 0) ? calcularCLT_CustoEmpresa(inputsCLT) : {
-            totalCusto: 0, bruto: 0, inssPatronal: 0, fgts: 0, provisao13Ferias: 0, provisaoMultaFGTS: 0, beneficios: 0
-        };
+        // resCustoEmpresa foi removido
 
         ultimoResultadoCLT = resCLT;
 
         // 3. Atualizar Painel de Resultados
-        atualizarResultados(resCLT, inputsCLT, resCustoEmpresa);
+        atualizarResultados(resCLT, inputsCLT); // resCustoEmpresa removido
 
     } catch (e) {
         console.error("Erro no cálculo:", e);
@@ -266,7 +270,7 @@ function calcularEAtualizarUI() {
 }
 
 /* --- Bloco: Função de Atualização da UI (Painel Direito) --- */
-function atualizarResultados(clt, inputsCLT, resCustoEmpresa) {
+function atualizarResultados(clt, inputsCLT) { // resCustoEmpresa removido
     const cltFinal = clt.valorFinal || 0;
     const cltSalarioEmConta = clt.salarioEmConta || 0;
     const cltImpostos = clt.totalImpostos || 0;
@@ -277,7 +281,7 @@ function atualizarResultados(clt, inputsCLT, resCustoEmpresa) {
         beneficiosProvisoes: Math.max(0, clt.valorFinal - clt.salarioEmConta), 
         impostosDescontos: clt.totalImpostos 
     };
-    atualizarDonutCharts(cltDonutData);
+    atualizarDonutCharts(cltDonutData); // Gráfico Donut ainda é usado
 
     // --- ANIMAÇÃO ---
     document.querySelectorAll('.card').forEach(el => {
@@ -334,11 +338,11 @@ function atualizarResultados(clt, inputsCLT, resCustoEmpresa) {
         }
     }
 
-    // 3. Card Custo Empresa
-    atualizarCustoEmpresaChart(resCustoEmpresa);
-    if (elCustoEmpresaTotal) {
-        elCustoEmpresaTotal.textContent = formatBRL(resCustoEmpresa.totalCusto);
-    }
+    // 3. Card Custo Empresa (REMOVIDO)
+    // atualizarCustoEmpresaChart(resCustoEmpresa);
+    // if (elCustoEmpresaTotal) {
+    //     elCustoEmpresaTotal.textContent = formatBRL(resCustoEmpresa.totalCusto);
+    // }
 
     atualizarAlturasAccordions();
 }
@@ -386,27 +390,7 @@ function calcularCLT_Colaborador(inputs) {
     };
 }
 
-function calcularCLT_CustoEmpresa(inputs) {
-    const { bruto, beneficios } = inputs;
-    if (bruto <= 0) {
-        return { totalCusto: 0, bruto: 0, inssPatronal: 0, fgts: 0, provisao13Ferias: 0, provisaoMultaFGTS: 0, beneficios: 0};
-    }
-    const inssPatronal = bruto * 0.20;
-    const fgts = bruto * 0.08;
-    const provisao13Ferias = bruto * 0.194;
-    const provisaoMultaFGTS = bruto * 0.04;
-    const totalCustoEmpresa = bruto + inssPatronal + fgts + provisao13Ferias + provisaoMultaFGTS + beneficios;
-
-    return {
-        totalCusto: totalCustoEmpresa,
-        bruto: bruto,
-        inssPatronal: inssPatronal,
-        fgts: fgts,
-        provisao13Ferias: provisao13Ferias,
-        provisaoMultaFGTS: provisaoMultaFGTS,
-        beneficios: beneficios
-    };
-}
+// calcularCLT_CustoEmpresa (REMOVIDO)
 
 /* --- Funções de Provisão --- */
 function calcularProvisaoLiquida13(bruto, dependentes) {
@@ -548,66 +532,4 @@ function atualizarDonutCharts(cltData) {
     );
 }
 
-function atualizarCustoEmpresaChart(data) {
-    const ctx = document.getElementById('custo-empresa-chart');
-    if (!ctx) return;
-
-    const dataSegments = [
-        { label: 'Salário Bruto', value: data.bruto },
-        { label: 'Benefícios (VA, VR, etc)', value: data.beneficios },
-        { label: 'INSS Patronal (20%)', value: data.inssPatronal },
-        { label: 'FGTS (8%)', value: data.fgts },
-        { label: 'Provisão 13º/Férias (19.4%)', value: data.provisao13Ferias },
-        { label: 'Provisão Multa 40% (4%)', value: data.provisaoMultaFGTS }
-    ];
-    const colors = ['#4B633C', '#6A8A56', '#88B273', '#A6D990', '#C4E6B4', '#E2F3DA'];
-    const sortedSegments = dataSegments
-        .filter(segment => segment.value > 0)
-        .sort((a, b) => b.value - a.value); 
-
-    const datasets = [];
-    if (sortedSegments.length === 0) {
-         datasets.push({ label: 'Nenhum dado', data: [1], backgroundColor: '#3A3052' });
-    } else {
-        sortedSegments.forEach((segment, index) => {
-            datasets.push({
-                label: segment.label,
-                data: [segment.value],
-                backgroundColor: colors[index],
-                barThickness: 40,
-            });
-        });
-    }
-    const chartData = { labels: ['Custo Total'], datasets: datasets };
-
-    const config = {
-        type: 'bar',
-        data: chartData,
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return ` ${context.dataset.label}: ${formatBRL(context.raw || 0)}`;
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: { display: false, stacked: true, grid: { display: false } },
-                y: { display: false, stacked: true, grid: { display: false } }
-            }
-        }
-    };
-
-    if (!custoEmpresaChart) {
-        custoEmpresaChart = new Chart(ctx, config);
-    } else {
-        custoEmpresaChart.data = chartData;
-        custoEmpresaChart.update();
-    }
-}
+// atualizarCustoEmpresaChart (REMOVIDO)

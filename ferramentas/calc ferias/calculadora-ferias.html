@@ -46,7 +46,7 @@
         </div>
     </nav>
 
-    <main class="calculator-container">
+    <main class="calculator-container calculator-container-simple">
         
         <section class="input-panel">
             <header class="input-header">
@@ -104,18 +104,13 @@
                 </div>
             </div>
 
-            <div class="tax-details-grid" id="tax-details-grid">
-                <div class="card tax-detail-card accordion-item">
-                    <button class="card-header-simple clt accordion-button active"> <span>Detalhes do Cálculo</span>
-                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+            <div class="card tax-detail-card accordion-item" id="tax-details-grid"> <button class="card-header-simple clt accordion-button active"> <span>Detalhes do Cálculo</span>
                     </button>
 
-                    <div class="accordion-content" style="max-height: fit-content;"> 
-                        <div id="tax-details-ferias" class="tax-items" style="padding: 1.5rem;">
-                            <div class="tax-item"><span>Preencha os dados</span></div>
+                <div class="accordion-content" style="max-height: fit-content;"> 
+                    <div id="tax-details-ferias" class="tax-items" style="padding: 1.5rem;">
                         </div>
-                     </div>
-                </div>
+                 </div>
             </div>
             
         </section>
@@ -164,8 +159,7 @@
     </div>
 </footer>
     
-    <script src="https://unpkg.com/countup.js@2.8.0/dist/countUp.min.js"></script>
-    <script src="/ferramentas/calc ferias/script-ferias.js"></script>
-
+    <script src="https://unpkg.com/countup.js@2.8.0/dist/countUp.min.js" defer></script>
+    <script src="/ferramentas/calc ferias/script-ferias.js" defer></script>
 </body>
 </html>

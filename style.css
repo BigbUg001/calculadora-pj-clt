@@ -1844,10 +1844,6 @@ svg { vertical-align: middle; }
     padding: 0 2rem;
 }
 
-/* 4. Ajuste no grid de artigos para a página principal dele */
-.artigos-pagina-container .artigos-grid {
-    grid-template-columns: repeat(3, 1fr); /* 3 colunas por padrão */
-}
 
 /* (As regras de responsividade que já adicionamos 
    para .artigos-grid vão funcionar aqui também) */
@@ -1975,3 +1971,17 @@ a.btn-primary, button.btn-primary {
 /* --- FIM: Confirmação/Ajuste CSS --- */
 /* --- FIM: Centralização dos Botões CTA nos Artigos --- */
 
+/* --- INÍCIO: Bloco Layout Calculadoras Simples --- */
+/*
+  Esta classe, quando usada com .calculator-container,
+  muda o grid de "450px 1fr" para "1fr 1fr" em desktops.
+*/
+.calculator-container-simple {
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    max-width: 1400px; /* Um pouco mais estreito que o principal */
+}
+
+/* Em telas menores, ele já herda o comportamento de 1 coluna
+  do .calculator-container, então não precisamos de @media query nova.
+*/
+/* --- FIM: Bloco Layout Calculadoras Simples --- */

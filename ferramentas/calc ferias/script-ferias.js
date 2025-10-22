@@ -1,3 +1,19 @@
+/* --- Bloco: Helper de Performance (Debounce) --- */
+/**
+ * Cria uma versão "debounced" de uma função que atrasa sua execução.
+ */
+function debounce(fn, wait = 300) {
+  let timeoutId;
+
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      fn.apply(this, args);
+    }, wait);
+  };
+}
+/* --- Fim do Bloco Debounce --- */
+
 /* --- Bloco de Animação CountUp.js --- */
 let animadores = {};
 
