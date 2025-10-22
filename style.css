@@ -794,6 +794,14 @@ svg { vertical-align: middle; }
         padding-right: 1rem !important;
     }
     /* --- FIM DA CORREÇÃO DE ALINHAMENTO MÓVEL --- */
+
+    /* --- INÍCIO: Correção Grid de Artigos Mobile --- */
+    .artigos-grid {
+        grid-template-columns: 1fr 1fr; /* Força duas coluna no tablet */
+        gap: 1.25rem; /* Pode ajustar o espaço vertical entre os cards */
+    }
+    /* --- FIM: Correção Grid de Artigos Mobile --- */
+
 }
 @media (max-width: 600px) {
     .btn-primary { display: none; }
@@ -895,6 +903,60 @@ svg { vertical-align: middle; }
     }
 
     /* --- FIM: Otimização de Padding Mobile --- */
+
+    /* --- INÍCIO: Correção Grid de Artigos Mobile --- */
+    .artigos-grid {
+        grid-template-columns: 1fr; /* Força UMA coluna no mobile */
+        gap: 1.25rem; /* Pode ajustar o espaço vertical entre os cards */
+    }
+    /* --- FIM: Correção Grid de Artigos Mobile --- */
+
+    /* --- INÍCIO: Otimização Footer Mobile --- */
+
+    /* Reduz padding geral do footer */
+    .footer {
+        padding: 2.5rem 1rem 1.5rem 1rem; /* Reduzido de 4rem topo / 2rem baixo */
+    }
+
+    /* Reduz espaçamento entre as colunas empilhadas */
+    .footer-grid {
+        grid-template-columns: 1fr; /* Garante uma coluna (já deve estar) */
+        gap: 1.5rem; /* Reduzido de 2.5rem */
+        padding-bottom: 2rem; /* Reduzido de 3rem */
+    }
+
+    /* Reduz margem inferior dos títulos das colunas */
+    .footer-col h4 {
+        font-size: 0.95rem; /* Levemente menor */
+        margin-bottom: 1rem; /* Reduzido de 1.5rem */
+    }
+
+    /* Reduz margem inferior dos links e itens de contato */
+    .footer-col a, .contact-item {
+        font-size: 0.85rem; /* Levemente menor */
+        margin-bottom: 0.75rem; /* Reduzido de 1rem */
+    }
+
+    /* Reduz tamanho e margem do parágrafo da primeira coluna */
+     .footer-col p {
+        font-size: 0.85rem; /* Levemente menor */
+        margin-bottom: 1rem; /* Ajuste conforme necessário */
+     }
+
+     /* Reduz margem inferior do logo */
+     .footer-col .logo {
+         margin-bottom: 0.75rem; /* Reduzido de 1rem */
+         font-size: 1.2rem; /* Levemente menor */
+     }
+
+     /* Ajusta espaçamento do footer-bottom */
+     .footer-bottom {
+         padding-top: 1.5rem; /* Reduzido de 2rem */
+         gap: 0.75rem; /* Reduzido de 1rem */
+         font-size: 0.85rem; /* Levemente menor */
+     }
+
+    /* --- FIM: Otimização Footer Mobile --- */
 
 }
 
