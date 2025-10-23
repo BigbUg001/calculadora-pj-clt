@@ -213,13 +213,15 @@ if (typeof window !== 'undefined') {
                 }
             });
         });
-        function atualizarAlturasAccordions() {
+        // Garante visibilidade global
+        window.atualizarAlturasAccordions = function atualizarAlturasAccordions() {
             document.querySelectorAll('.accordion-content').forEach(content => {
                 if (content.style.maxHeight) {
                     content.style.maxHeight = content.scrollHeight + "px";
                 }
             });
-        }
+        };
+
         /* --- FIM: Lógica Accordion --- */
     
         /* --- Bloco: Popula o Cache de Seletores DOM --- */

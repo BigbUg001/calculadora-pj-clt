@@ -342,15 +342,15 @@ accordionButtons.forEach(button => {
 
 // Função para reajustar a altura de accordions abertos
 // (Necessário quando o conteúdo de dentro muda, ex: recalcular)
-function atualizarAlturasAccordions() {
+// Garante visibilidade global
+window.atualizarAlturasAccordions = function atualizarAlturasAccordions() {
     document.querySelectorAll('.accordion-content').forEach(content => {
-        // Se o accordion estiver aberto (tem maxHeight definido)
         if (content.style.maxHeight) {
-            // Recalcula sua altura para o novo conteúdo
             content.style.maxHeight = content.scrollHeight + "px";
         }
     });
-}
+};
+
 /* --- FIM: Lógica Accordion --- */
 
         // 3. Adiciona listeners para o FAQ
@@ -499,7 +499,10 @@ function calcularEAtualizarUI() {
         };
 
         // 2. Obter Inputs PJ
-        const regimePJ = document.querySelector('.pj-tab-btn.active').dataset.regime;
+        // Segurança: pega o botão ativo ou usa 'simples' como fallback
+        const activeTab = document.querySelector('.pj-tab-btn.active') || document.querySelector('.pj-tab-btn');
+        const regimePJ = activeTab ? (activeTab.dataset?.regime || 'simples') : 'simples';
+
         let inputsPJ = { regime: regimePJ };
         let faturamentoPJ = 0;
 

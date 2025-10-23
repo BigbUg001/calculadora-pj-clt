@@ -2026,3 +2026,15 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 /* --- FIM: Estilos para Input de Data --- */
+
+/* correção direta: define um tamanho explícito e responsivo para H1 */
+h1 {
+  font-size: clamp(1.5rem, 1.2rem + 2.0vw, 2.5rem);
+  line-height: 1.15;
+  margin: 0.67em 0;
+}
+
+/* regra explícita para H1 aninhado em section/article/nav/aside (caso queira ser mais conservador) */
+section h1, article h1, nav h1, aside h1 {
+  font-size: clamp(1.4rem, 1.1rem + 1.6vw, 2.2rem);
+}
