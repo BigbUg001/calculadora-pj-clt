@@ -136,6 +136,7 @@ if (typeof window !== 'undefined') {
     
     const calcularComDebounce = debounce(calcularEAtualizarUI, 300);
 
+    // ETAPA 1: Adicionar os listeners assim que o DOM (HTML) estiver pronto
     document.addEventListener('DOMContentLoaded', () => {
         
         // 1. Adiciona listeners (tempo real) a TODOS os campos
@@ -229,11 +230,13 @@ if (typeof window !== 'undefined') {
         // elCustoEmpresaTotal foi removido
         elTaxDetailsClt = document.getElementById('tax-details-clt');
         /* --- Fim do Bloco de População do Cache --- */
-
+    });
+    
+    // ETAPA 2: Inicializar os animadores e fazer o primeiro cálculo
+    // APENAS DEPOIS que TUDO (incluindo countUp.js e chart.js) for carregado.
+    window.addEventListener('load', () => {
         initAnimadores();
-
-        // 4. Calcula uma vez no load
-        calcularEAtualizarUI();
+        calcularEAtualizarUI(); // Calcula uma vez no load
     });
 }
 
@@ -339,10 +342,6 @@ function atualizarResultados(clt, inputsCLT) { // resCustoEmpresa removido
     }
 
     // 3. Card Custo Empresa (REMOVIDO)
-    // atualizarCustoEmpresaChart(resCustoEmpresa);
-    // if (elCustoEmpresaTotal) {
-    //     elCustoEmpresaTotal.textContent = formatBRL(resCustoEmpresa.totalCusto);
-    // }
 
     atualizarAlturasAccordions();
 }

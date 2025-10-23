@@ -1985,3 +1985,44 @@ a.btn-primary, button.btn-primary {
   do .calculator-container, então não precisamos de @media query nova.
 */
 /* --- FIM: Bloco Layout Calculadoras Simples --- */
+
+/* --- INÍCIO: Estilos para Input de Data --- */
+
+/* Aplica o estilo base dos outros inputs */
+.input-group input[type="date"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--cor-borda);
+    background-color: var(--cor-card-bg-light);
+    color: var(--cor-texto-principal); /* Garante que o texto seja legível */
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem; /* Mesmo tamanho de fonte */
+    font-family: var(--font-principal); /* Mesma fonte */
+    transition: all 0.2s ease;
+    line-height: 1.6; /* Garante altura similar */
+
+    /* Ajuda o navegador a estilizar o calendário interno no modo escuro */
+    color-scheme: dark; 
+}
+
+/* Estilo de foco igual aos outros inputs */
+.input-group input[type="date"]:focus {
+    outline: none;
+    border-color: var(--cor-acao-principal);
+    background-color: var(--cor-card-bg);
+    box-shadow: 0 0 0 3px rgba(138, 76, 255, 0.2);
+}
+
+/* Tenta estilizar o ícone do calendário (funciona melhor no Chrome/Edge) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8); /* Inverte a cor para ficar mais claro */
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+/* --- FIM: Estilos para Input de Data --- */
