@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2HPPCNTZ5"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -98,13 +97,17 @@
                     <input type="date" id="data-demissao" class="date-input">
                 </div>
 
-                <div class="input-group">
+                <div class="input-group" id="aviso-previo-group">
                     <label for="aviso-previo">Aviso Prévio</label>
                     <select id="aviso-previo">
                         <option value="indenizado">Indenizado (pela empresa)</option>
                         <option value="trabalhado">Trabalhado (pelo funcionário)</option>
                         <option value="dispensado">Dispensado/Não cumprido (pedido de demissão)</option>
                     </select>
+                </div>
+                <div class="input-group">
+                    <label for="n-dependentes">Número de Dependentes (para IRRF)</label>
+                    <input type="number" id="n-dependentes" value="0" min="0">
                 </div>
 
                 <div class="input-group">
@@ -114,11 +117,28 @@
                         <input type="number" id="saldo-fgts" placeholder="10.000">
                     </div>
                 </div>
-
-                <div class="checkbox-group">
-                    <input type="checkbox" id="ferias-vencidas">
-                    <label for="ferias-vencidas">Possui Férias Vencidas (não tiradas)?</label>
+                
+                <div class="input-group">
+                    <label for="num-ferias-vencidas">Quantidade de Férias Vencidas (não usufruídas)</label>
+                    <input type="number" id="num-ferias-vencidas" value="0" min="0" max="2">
                 </div>
+                <div class="input-group">
+                    <label for="media-salarios">Média dos 3 últimos salários (para Seguro-Desemprego)</label>
+                    <div class="input-group-prefix">
+                        <span class="prefix">R$</span>
+                        <input type="number" id="media-salarios" placeholder="6000">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="num-solicitacao-seguro">Qual vez é esta solicitação de Seguro?</label>
+                    <select id="num-solicitacao-seguro">
+                        <option value="1">1ª Solicitação</option>
+                        <option value="2">2ª Solicitação</option>
+                        <option value="3">3ª Solicitação ou mais</option>
+                    </select>
+                </div>
+
             </div>
             
         </section>
@@ -140,18 +160,37 @@
                     <span id="res-total-descontos">R$ 0,00</span>
                 </div>
             </div>
+            <div class="result-card-principal card" id="rescisao-total-direitos-card" style="border-left-color: var(--cor-acao-secundaria); box-shadow: var(--glow-secundario), var(--glow-card);">
+                <label>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3zm11.5 1.5a.5.5 0 0 0 0 1H13a.5.5 0 0 0 0-1h-1.5zM13 8a.5.5 0 0 0-.5-.5h-10a.5.5 0 0 0 0 1h10a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-10a.5.5 0 0 0 0 1h10a.5.5 0 0 0 .5-.5z"/></svg>
+                    Total de Direitos a Receber
+                </label>
+                <div class="valor-principal" id="res-total-direitos" aria-live="polite" style="color: var(--cor-acao-secundaria);">R$ 0,00</div>
+                <div class="valor-secundario" id="res-total-direitos-desc">Líquido da Rescisão + Saque FGTS</div>
+            </div>
 
             <div class="card tax-detail-card accordion-item" id="tax-details-grid">
-                <button class="card-header-simple clt accordion-button">
+                <button class="card-header-simple clt accordion-button active">
                     <span>Detalhamento da Rescisão</span>
                     <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
                 </button>
 
-                <div class="accordion-content"> 
+                <div class="donut-chart-wrapper" id="rescisao-chart-container" style="border-bottom: 1px solid var(--cor-borda);">
+                </div>
+
                     <div id="tax-details-rescisao" class="tax-items" style="padding: 1.5rem;">
                         <div class="tax-item"><span>Preencha os dados</span></div>
                     </div>
                 </div>
+            </div>
+            <div class="card equivalency-card" id="seguro-desemprego-card" style="display: none;">
+                <div class="card-header-simple">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px; color: var(--cor-acao-secundaria);">
+                        <path d="M1 1.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM1 14.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM3 7a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7z"/>
+                    </svg>
+                    Seguro-Desemprego
+                </div>
+                <p id="seguro-desemprego-texto" style="margin: 0;"></p>
             </div>
             
         </section>
@@ -199,6 +238,8 @@
             <span class="status-badge">SISTEMA ONLINE</span>
         </div>
     </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     
     <script src="https://unpkg.com/countup.js@2.8.0/dist/countUp.umd.js" defer></script>
     

@@ -145,7 +145,7 @@
                         <label for="pj-rbt12">Receita Bruta (12 meses)</label>
                         <div class="input-group-prefix">
                             <span class="prefix">R$</span>
-                            <input type="number" id="pj-rbt12" placeholder="96.000">
+                            <input type="number" id="pj-rbt12" placeholder="0">
                         </div>
                     </div>
                     <div class="input-group">
@@ -168,6 +168,14 @@
                             <span class="prefix">R$</span>
                             <input type="number" id="pj-outros" value="0" placeholder="800">
                         </div>
+                    </div>
+                    <div class="input-group" id="pj-prolabore-calculado-wrapper" style="display: none;">
+                        <label for="pj-prolabore-calculado">Pró-labore Calculado (Estratégico)</label>
+                        <div class="input-group-prefix">
+                            <span class="prefix">R$</span>
+                            <input type="text" id="pj-prolabore-calculado" readonly>
+                        </div>
+                    </div>
                     </div>
                 </div>
 
@@ -337,6 +345,10 @@
                     <div class="accordion-content">
                         <div class="donut-chart-wrapper">
                             <canvas id="pj-donut-chart"></canvas>
+                        </div>
+                        <div class="tax-strategy-box" id="pj-strategy-box" style="display: none;">
+                            <strong>Estratégia Adotada:</strong>
+                            <span id="pj-strategy-text"></span>
                         </div>
                         <div id="tax-details-pj" class="tax-items">
                             <div class="tax-item"><span>Nenhum dado</span></div>
