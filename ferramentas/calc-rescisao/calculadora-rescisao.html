@@ -12,7 +12,9 @@
     </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7745582312546303"
      crossorigin="anonymous"></script>
-    <link rel="canonical" href="https://calculadoracltoupj.com.br/ferramentas/ferramentas/calc-rescisao/calculadora-rescisao">
+    
+    <link rel="canonical" href="https://calculadoracltoupj.com.br/ferramentas/calc-rescisao/calculadora-rescisao">
+    
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -30,6 +32,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=optional">
     <link rel="stylesheet" href="/style.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://unpkg.com/countup.js@2.8.0/dist/countUp.umd.js" defer></script>
+    <script src="/js/calculos-core.js" defer></script>
+    <script src="/ferramentas/calc-rescisao/script-rescisao.js" defer></script>
 </head>
 
 <body>
@@ -37,13 +43,7 @@
     <nav class="navbar">
         <div class="container-nav">
             <div class="logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 2H17C18.1046 2 19 2.89543 19 4V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V4C5 2.89543 5.89543 2 7 2Z" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M9 6H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M9 10H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M9 14H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M9 18H10" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
+                <img src="/favicon.svg" alt="Calculadora Salarial Logo" width="24" height="24">
                 Calculadora Salarial
             </div>
 
@@ -56,16 +56,15 @@
             Ferramentas
         </a>
         <div class="nav-dropdown-content">
-            <a href="/index.html">Calculadora CLT x PJ</a>
-            
-            <a href="/ferramentas/calc-salario-pj/calculadora-salario-pj.html">Calculadora Salário Líquido PJ</a>
-            <a href="/ferramentas/calc-fator-r/calculadora-fator-r.html">Calculadora Fator R</a>
-            <a href="/ferramentas/calc-salario-clt/calculadora-salario-clt.html">Calculadora Salário Líquido CLT</a>
-            <a href="/ferramentas/calc-ferias/calculadora-ferias.html">Calculadora de Férias</a>
-            <a href="/ferramentas/calc-rescisao/calculadora-rescisao.html">Calculadora de Rescisão</a> 
+            <a href="/index">Calculadora CLT x PJ</a>
+            <a href="/ferramentas/calc-salario-pj/calculadora-salario-pj">Calculadora Salário Líquido PJ</a>
+            <a href="/ferramentas/calc-fator-r/calculadora-fator-r">Calculadora Fator R</a>
+            <a href="/ferramentas/calc-salario-clt/calculadora-salario-clt">Calculadora Salário Líquido CLT</a>
+            <a href="/ferramentas/calc-ferias/calculadora-ferias">Calculadora de Férias</a>
+            <a href="/ferramentas/calc-rescisao/calculadora-rescisao">Calculadora de Rescisão</a> 
             
             <div class="nav-dropdown-divider"></div>
-            <a href="/artigos.html" class="nav-dropdown-recursos">
+            <a href="/artigos" class="nav-dropdown-recursos">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11 0H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1H5V1zm6 14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3h8v12z"/><path d="M7.5 4a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5zm2.5 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5zm-5 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5.5z"/></svg>
                 Artigos e Guias
             </a>
@@ -207,14 +206,16 @@
                     </svg>
                 </button>
 
-                <div class="donut-chart-wrapper" id="rescisao-chart-container" style="border-bottom: 1px solid var(--cor-borda);">
-                </div>
+                <div class="accordion-content" style="max-height: fit-content;">
+                    <div class="donut-chart-wrapper" id="rescisao-chart-container" style="border-bottom: 1px solid var(--cor-borda);">
+                    </div>
 
-                <div id="tax-details-rescisao" class="tax-items" style="padding: 1.5rem;">
-                    <div class="tax-item"><span>Preencha os dados</span></div>
+                    <div id="tax-details-rescisao" class="tax-items" style="padding: 1.5rem;">
+                        <div class="tax-item"><span>Preencha os dados</span></div>
+                    </div>
                 </div>
             </div>
-            </div>
+            
             <div class="card equivalency-card" id="seguro-desemprego-card" style="display: none;">
                 <div class="card-header-simple">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px; color: var(--cor-acao-secundaria);">
@@ -229,17 +230,31 @@
 
     </main>
 
+    <main class="tool-content-container">
+        <div class="card content-card">
+            <h2>Entendendo o Cálculo da sua Rescisão</h2>
+            <p>A rescisão é um momento complexo, pois envolve diversos cálculos de direitos que você acumulou ao longo do tempo. O valor final do seu "acerto" não é apenas o seu último salário; ele é uma soma de várias "verbas rescisórias".</p>
+            <p>Esta calculadora considera todos esses pontos para lhe dar o valor líquido mais próximo do real, com base no motivo da sua saída.</p>
+
+            <h3>O que compõe o cálculo da rescisão?</h3>
+            <ul>
+                <li><strong>Saldo de Salário:</strong> Os dias que você trabalhou no mês da demissão antes de ser desligado.</li>
+                <li><strong>Aviso Prévio:</strong> Se a empresa demite sem justa causa, ela deve pagar 30 dias de salário (mais 3 dias por ano trabalhado) se o aviso for indenizado. Se você pede demissão e não cumpre o aviso, a empresa pode descontar esse valor de você.</li>
+                <li><strong>13º Proporcional:</strong> Você recebe 1/12 (um doze avos) do seu salário por cada mês que trabalhou no ano da demissão (contando frações acima de 15 dias).</li>
+                <li><strong>Férias Vencidas + Proporcionais:</strong> Este é um valor importante. Você recebe por quaisquer férias que já tinha direito mas não tirou (vencidas) e também o valor proporcional pelos meses que trabalhou desde suas últimas férias (proporcionais). Ambos os valores são pagos com o bônus de 1/3.</li>
+            </ul>
+
+            <h3>Descontos e Direitos do FGTS</h3>
+            <p>Na rescisão, os impostos (INSS e IRRF) são descontados apenas sobre o Saldo de Salário e o 13º Proporcional. Férias indenizadas e Aviso Prévio são isentos de imposto, o que ajuda a aumentar o valor líquido.</p>
+            <p>Além disso, dependendo do motivo da saída (como "Demissão sem justa causa"), você ganha o direito de sacar seu saldo do FGTS mais uma multa de 40% paga pela empresa. Nossa calculadora já soma esses valores no campo "Total de Direitos a Receber".</p>
+        </div>
+    </main>
+
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-col">
                 <div class="logo">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 2H17C18.1046 2 19 2.89543 19 4V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V4C5 2.89543 5.89543 2 7 2Z" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M9 6H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M9 10H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M9 14H15" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M9 18H10" stroke="#00D4C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+                    <img src="/favicon.svg" alt="Calculadora Salarial Logo" width="24" height="24">
                     Calculadora Salarial
                 </div>
                 <p>Comparação inteligente entre CLT e PJ. Análise completa de tributos e recomendações personalizadas para sua carreira.</p>
@@ -251,16 +266,16 @@
             <div class="footer-col">
                 <h4>NAVEGAÇÃO</h4>
                 <a href="/index.html">Calculadora CLT x PJ</a>
-                <a href="/ferramentas/calc salario clt/calculadora-salario-clt.html">Calculadora Salário Líquido CLT</a>
-                <a href="/ferramentas/calc ferias/calculadora-ferias.html">Calculadora de Férias</a>
-                <a href="/ferramentas/calc-rescisao/calculadora-rescisao.html">Calculadora de Rescisão</a>
-                <a href="/artigos.html">Artigos e Guias</a>
-                <a href="/sobre.html">Sobre Nós</a>
+                <a href="/ferramentas/calc-salario-clt/calculadora-salario-clt">Calculadora Salário Líquido CLT</a>
+                <a href="/ferramentas/calc-ferias/calculadora-ferias">Calculadora de Férias</a>
+                <a href="/ferramentas/calc-rescisao/calculadora-rescisao">Calculadora de Rescisão</a>
+                <a href="/artigos">Artigos e Guias</a>
+                <a href="/sobre">Sobre Nós</a>
             </div>
             <div class="footer-col">
                 <h4>LEGAL</h4>
-                <a href="/politicas-e-termos/politica-de-privacidade.html">Política de Privacidade</a>
-                <a href="/politicas-e-termos/termos-de-uso.html">Termos de Uso</a>
+                <a href="/politicas-e-termos/politica-de-privacidade">Política de Privacidade</a>
+                <a href="/politicas-e-termos/termos-de-uso">Termos de Uso</a>
 
             </div>
             <div class="footer-col">
@@ -280,11 +295,8 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    
 
-    <script src="https://unpkg.com/countup.js@2.8.0/dist/countUp.umd.js" defer></script>
-
-    <script src="/ferramentas/calc-rescisao/script-rescisao.js" defer></script>
-</body>
+    </body>
 
 </html>

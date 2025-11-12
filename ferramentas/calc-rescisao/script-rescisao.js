@@ -1,1 +1,308 @@
-function debounce(o,e=300){let t;return function(...a){clearTimeout(t),t=setTimeout((()=>{o.apply(this,a)}),e)}}let animadores={},rescisaoDonutChart=null;function initAnimadores(){const o={duration:.8,useEasing:!0,decimal:",",separator:".",prefix:"R$ "},e={"res-total-rescisao":o,"res-total-proventos":{...o,prefix:"+R$ "},"res-total-descontos":{...o,prefix:"-R$ "},"res-total-direitos":o};try{if(!("undefined"!=typeof countUp))return void console.error("ERRO CRÍTICO: Biblioteca CountUp.js não carregou a tempo!");for(const o in e){const t=document.getElementById(o);t?(animadores[o]=new countUp.CountUp(t,0,e[o]),animadores[o].error?console.error(`Erro ao criar animador para #${o}:`,animadores[o].error):animadores[o].start()):console.warn(`Elemento #${o} não encontrado.`)}}catch(o){console.error("Erro fatal no initAnimadores:",o)}}const TETO_INSS=8157.41,FAIXAS_INSS=[{teto:1518,aliquota:.075,deduzir:0},{teto:2793.88,aliquota:.09,deduzir:22.77},{teto:4190.83,aliquota:.12,deduzir:106.59},{teto:8157.41,aliquota:.14,deduzir:190.42}],INSS_TETO=TETO_INSS*FAIXAS_INSS[3].aliquota-FAIXAS_INSS[3].deduzir,FAIXAS_IRRF=[{limite:2428.8,aliquota:0,deducao:0},{limite:2826.65,aliquota:.075,deducao:182.16},{limite:3751.05,aliquota:.15,deducao:409.71},{limite:4664.68,aliquota:.225,deducao:682.81},{limite:1/0,aliquota:.275,deducao:912.91}],TETO_SEGURO=2313.74,FAIXAS_SEGURO=[{teto:1968.36,aliquota:.8,parcela:0},{teto:3280.93,aliquota:.5,parcela:1574.69},{teto:1/0,aliquota:0,parcela:2313.74}],SALARIO_MINIMO=1518,DEDUCAO_DEPENDENTE_IRRF=189.59,formatadorBRL_instancia=new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}),formatBRL=o=>formatadorBRL_instancia.format(o||0),getFloat=o=>parseFloat(document.getElementById(o).value)||0,getString=o=>document.getElementById(o).value||"",getChecked=o=>document.getElementById(o).checked;function criarTaxItem(o,e,t="desconto"){const a=document.createElement("div");a.className="tax-item","provento"===t&&a.classList.add("provento");const r=document.createElement("span");r.textContent=o;const i=document.createElement("strong");return i.textContent=`${"provento"===t?"+":"-"}${formatBRL(e)}`,a.append(r,i),a}function criarTaxItemTotal(o,e,t="desconto"){const a=document.createElement("div");a.className="tax-item tax-item-total","provento"===t&&a.classList.add("provento");const r=document.createElement("span");r.textContent=o;const i=document.createElement("strong");return i.textContent=`${"provento"===t?"+":"-"}${formatBRL(e)}`,a.append(r,i),a}function calcularINSS_Progressivo(o){if(o<=0||isNaN(o))return 0;let e=Math.min(o,TETO_INSS);for(const o of FAIXAS_INSS)if(e<=o.teto)return Math.max(0,e*o.aliquota-o.deduzir);return INSS_TETO}function calcularIRRF_PelaTabela(o,e=0){if(o<=0||isNaN(o))return 0;const t=(e||0)*DEDUCAO_DEPENDENTE_IRRF,a=Math.max(0,o-t);for(const o of FAIXAS_IRRF)if(a<=o.limite)return Math.max(0,a*o.aliquota-o.deducao);const r=FAIXAS_IRRF[FAIXAS_IRRF.length-1];return Math.max(0,a*r.aliquota-r.deducao)}function calcularRescisao(){const o=getFloat("salario-bruto"),e=getString("tipo-rescisao"),t=getString("aviso-previo"),a=getString("data-admissao"),r=getString("data-demissao");let i=getFloat("saldo-fgts");const s=getFloat("num-ferias-vencidas");let n=getFloat("media-salarios");const l=getFloat("num-solicitacao-seguro"),d=getFloat("n-dependentes");n<=0&&o>0&&(n=o);let c={saldoSalario:0,avisoPrevio:0,decimoTerceiro:0,totalFerias:0},u={inss:0,irrf:0,avisoPrevio:0},m=[],p={multa:0,saqueTotal:0},v={direito:!1,parcelas:0,valorParcela:0,texto:""};const h={liquidoFinal:0,brutoTotal:0,descontosTotal:0,detalhes:[],brutoDetalhado:{},direitosFGTS:{},mesesDeTrabalho:0,seguro:v};if(!o||!a||!r)return h;const g=new Date(a+"T00:00:00"),S=new Date(r+"T00:00:00");if(isNaN(g.getTime())||isNaN(S.getTime()))return{...h,detalhes:[{nome:"Erro: Verifique as datas",valor:0,tipo:"info"}]};if(S<g)return{...h,detalhes:[{nome:"Erro: Demissão antes da admissão",valor:0,tipo:"info"}]};let f=S.getFullYear()-g.getFullYear(),T=S.getMonth()-g.getMonth(),F=S.getDate()-g.getDate();F<0&&(T--,F+=new Date(S.getFullYear(),S.getMonth(),0).getDate()),T<0&&(f--,T+=12);const I=12*f+T+(F>=15?1:0),E=S.getDate(),A=S.getMonth()+1;let R=i>0?i:.08*o*I;if(c.saldoSalario=o/30*E,"justa_causa"!==e){c.decimoTerceiro=o/12*A;const e=s*o,t=e/3;let a=I%12;I>0&&0===a&&s<f&&(a=12);const r=o/12*a,i=r/3;c.totalFerias=e+t+r+i}else c.totalFerias=s*o+s*o/3;const N=.08*c.saldoSalario,_=.08*c.decimoTerceiro,b=R+N+_;if("sem_justa_causa"===e){if("indenizado"===t){const e=Math.min(90,30+3*Math.max(0,f));c.avisoPrevio=o/30*e}p.multa=.4*b,p.saqueTotal=R+p.multa+N+_,m.push({nome:"Multa 40% FGTS (pago pela empresa)",valor:p.multa,tipo:"info"}),m.push({nome:"Direito a Saque FGTS (Saldo + Multa + Verbas)",valor:p.saqueTotal,tipo:"info"}),v=calcularSeguroDesemprego(I,n,l)}else if("pedido_demissao"===e)"dispensado"===t&&(u.avisoPrevio=o),m.push({nome:"Não tem direito a Saque FGTS",valor:0,tipo:"info"}),m.push({nome:"Não tem direito a Multa FGTS",valor:0,tipo:"info"}),v.texto="<strong>Não tem direito.</strong> O Seguro-Desemprego não é pago em casos de pedido de demissão.";else if("justa_causa"===e)m.push({nome:"Não tem direito a Aviso Prévio",valor:0,tipo:"info"}),m.push({nome:"Não tem direito a 13º Proporcional",valor:0,tipo:"info"}),m.push({nome:"Não tem direito a Férias Proporcionais",valor:0,tipo:"info"}),m.push({nome:"Não tem direito a Saque/Multa FGTS",valor:0,tipo:"info"}),v.texto="<strong>Não tem direito.</strong> A demissão por justa causa não dá direito ao Seguro-Desemprego.";else if("acordo_mutuo"===e){if("indenizado"===t){const e=Math.min(90,30+3*Math.max(0,f));c.avisoPrevio=o/30*e/2}p.multa=.2*b,p.saqueTotal=.8*R+p.multa+N+_,m.push({nome:"Multa 20% FGTS (Acordo)",valor:p.multa,tipo:"info"}),m.push({nome:"Direito a Saque FGTS (80% do saldo + Verbas)",valor:p.saqueTotal,tipo:"info"}),v.texto="<strong>Não tem direito.</strong> A modalidade de Acordo Mútuo não dá direito ao Seguro-Desemprego."}const y=calcularINSS_Progressivo(c.saldoSalario),x=calcularINSS_Progressivo(c.decimoTerceiro);u.inss=y+x;const D=c.saldoSalario-y,q=c.decimoTerceiro-x,P=c.totalFerias,C=calcularIRRF_PelaTabela(D,d),M=calcularIRRF_PelaTabela(q,d),O=calcularIRRF_PelaTabela(P,d);u.irrf=C+M+O;const L=c.saldoSalario+c.avisoPrevio+c.decimoTerceiro+c.totalFerias,B=u.inss+u.irrf+u.avisoPrevio,z=L-B,G=[];return c.saldoSalario>0&&G.push({nome:`Saldo de Salário (${E} dias)`,valor:c.saldoSalario,tipo:"provento"}),c.avisoPrevio>0&&G.push({nome:"Aviso Prévio Indenizado",valor:c.avisoPrevio,tipo:"provento"}),c.decimoTerceiro>0&&G.push({nome:`13º Proporcional (${A}/12 avos)`,valor:c.decimoTerceiro,tipo:"provento"}),c.totalFerias>0&&G.push({nome:"Total Férias (Vencidas + Prop. + 1/3)",valor:c.totalFerias,tipo:"provento"}),y>0&&G.push({nome:"INSS (sobre Saldo de Salário)",valor:y,tipo:"desconto"}),x>0&&G.push({nome:"INSS (sobre 13º)",valor:x,tipo:"desconto"}),C>0&&G.push({nome:"IRRF (sobre Saldo de Salário)",valor:C,tipo:"desconto"}),M>0&&G.push({nome:"IRRF (sobre 13º)",valor:M,tipo:"desconto"}),O>0&&G.push({nome:"IRRF (sobre Férias)",valor:O,tipo:"desconto"}),u.avisoPrevio>0&&G.push({nome:"Aviso Prévio (não cumprido)",valor:u.avisoPrevio,tipo:"desconto"}),m.forEach((o=>G.push(o))),{liquidoFinal:z,brutoTotal:L,descontosTotal:B,detalhes:G,brutoDetalhado:c,direitosFGTS:{saldo:R,multa:p.multa,saqueTotal:p.saqueTotal},mesesDeTrabalho:I,seguro:v}}function atualizarUI(){try{const o=calcularRescisao(),e=getString("tipo-rescisao"),t=isNaN(o.liquidoFinal)?0:o.liquidoFinal,a=isNaN(o.brutoTotal)?0:o.brutoTotal,r=isNaN(o.descontosTotal)?0:o.descontosTotal,i=t+(isNaN(o.direitosFGTS.saqueTotal)?0:o.direitosFGTS.saqueTotal);animadores["res-total-rescisao"]&&animadores["res-total-rescisao"].update(t),animadores["res-total-proventos"]&&animadores["res-total-proventos"].update(a),animadores["res-total-descontos"]&&animadores["res-total-descontos"].update(r),animadores["res-total-direitos"]&&animadores["res-total-direitos"].update(i),atualizarRescisaoDonutChart(o.brutoDetalhado,o.direitosFGTS,o.seguro.direito,e);const s=document.getElementById("tax-details-rescisao");if(s){s.textContent="";let e=0,t=0;const a=document.createDocumentFragment(),r=document.createDocumentFragment(),i=document.createDocumentFragment();(o.detalhes||[]).forEach((o=>{if(o&&(0!==o.valor||"info"===o.tipo&&!o.nome.includes("Seguro")))if("provento"===o.tipo)a.appendChild(criarTaxItem(o.nome,o.valor,"provento")),e+=o.valor;else if("desconto"===o.tipo)r.appendChild(criarTaxItem(o.nome,o.valor,"desconto")),t+=o.valor;else if("info"===o.tipo){const e=criarTaxItem(o.nome,o.valor,"provento");e.style.color="var(--cor-texto-secundario)",e.querySelector("strong")&&(e.querySelector("strong").style.color="var(--cor-texto-secundario)",e.querySelector("strong").textContent=o.valor>0?formatBRL(o.valor):"Não"),i.appendChild(e)}})),e>0&&(a.appendChild(criarTaxItemTotal("Total de Verbas",e,"provento")),s.appendChild(a)),t>0&&(r.appendChild(criarTaxItemTotal("Total de Descontos",t,"desconto")),s.appendChild(r)),i.childElementCount>0&&s.appendChild(i),0===s.childElementCount&&(o.detalhes&&o.detalhes.length>0&&o.detalhes[0].nome.startsWith("Erro:")?s.innerHTML=`<div class="tax-item"><span style="color: var(--cor-negativo);">${o.detalhes[0].nome}</span></div>`:s.innerHTML='<div class="tax-item"><span>Preencha os dados</span></div>')}const n=document.getElementById("seguro-desemprego-card"),l=document.getElementById("seguro-desemprego-texto");n&&l&&(0===a&&0===r&&0===t?n.style.display="none":(n.style.display="block",l.innerHTML=o.seguro.texto)),atualizarAlturasAccordions()}catch(o){console.error("Erro DENTRO de atualizarUI:",o)}}function atualizarRescisaoDonutChart(o,e,t,a){const r=document.getElementById("rescisao-chart-container");if(!r)return;rescisaoDonutChart&&rescisaoDonutChart.destroy(),r.innerHTML="";const i=document.createElement("canvas");i.id="rescisao-donut-chart",r.appendChild(i);const s=i,{saldoSalario:n,avisoPrevio:l,decimoTerceiro:d,totalFerias:c}=o,{multa:u,saqueTotal:m}=e,p=m-u,v=[],h=[],g=[];n>0&&(v.push("Saldo de Salário"),h.push(n),g.push("#98c379")),l>0&&(v.push("Aviso Prévio"),h.push(l),g.push("#61afef")),d>0&&(v.push("13º Salário"),h.push(d),g.push("#e5c07b")),c>0&&(v.push("Férias (Total)"),h.push(c),g.push("#c678dd")),"sem_justa_causa"!==a&&"acordo_mutuo"!==a||(u>0&&(v.push("Multa FGTS"),h.push(u),g.push("#e06c75")),p>0&&(v.push("Saque Saldo FGTS"),h.push(p),g.push("#d19a66"))),t&&(v.push("Seguro-Desemprego"),h.push(.1),g.push("#56b6c2")),0===h.length&&(v.push("Nenhum provento"),h.push(1),g.push("#3A3052"));rescisaoDonutChart=new Chart(s,{type:"doughnut",data:{labels:v,datasets:[{data:h,backgroundColor:g,borderColor:"rgba(33, 28, 48, 0.5)",borderWidth:2,hoverOffset:4}]},options:{responsive:!0,maintainAspectRatio:!1,cutout:"70%",plugins:{legend:{display:!0,position:"bottom",labels:{color:"#A09CB0",font:{family:"Poppins"},padding:10,filter:function(o,e){return"Seguro-Desemprego"!==o.text}}},tooltip:{callbacks:{label:function(o){const e=o.label||"",t=o.raw||0;if("Seguro-Desemprego"===e)return" Seguro-Desemprego (Ver card)";const a=o.chart.data.datasets[0].data.reduce(((o,e)=>o+e),0),r=a>0?(t/a*100).toFixed(1):0;return` ${e}: ${formatBRL(t)} (${r.replace(".",",")}%)`}}}}}})}function atualizarAlturasAccordions(){document.querySelectorAll(".accordion-content").forEach((o=>{const e=o.previousElementSibling;e&&e.classList.contains("active")&&(o.style.maxHeight=o.scrollHeight+"px")}))}function atualizarOpcoesAvisoPrevio(){const o=getString("tipo-rescisao"),e=document.getElementById("aviso-previo"),t=document.getElementById("aviso-previo-group");if(!e||!t)return;const a=Array.from(e.options),r={sem_justa_causa:["indenizado","trabalhado"],pedido_demissao:["trabalhado","dispensado"],acordo_mutuo:["indenizado","trabalhado"],justa_causa:[]}[o]||[];if(0===r.length)return void(t.style.display="none");t.style.display="block";let i=null;a.forEach((o=>{r.includes(o.value)?(o.style.display="block",i||(i=o.value)):o.style.display="none"})),r.includes(e.value)||(e.value=i)}function calcularSeguroDesemprego(o,e,t){let a=0,r=!1,i="";if(1===t?o>=24?a=5:o>=12&&(a=4):2===t?o>=24?a=5:o>=12?a=4:o>=9&&(a=3):o>=24?a=5:o>=12?a=4:o>=6&&(a=3),0===a)return i=`<strong>Não tem direito.</strong> Para a ${t}ª solicitação, você precisaria de mais tempo de trabalho (mínimo de ${[0,12,9,6][t]} meses). Você trabalhou ${o} meses.`,{direito:r,parcelas:a,valorParcela:0,texto:i};let s=0;return s=e<=FAIXAS_SEGURO[0].teto?e*FAIXAS_SEGURO[0].aliquota:e<=FAIXAS_SEGURO[1].teto?(e-FAIXAS_SEGURO[0].teto)*FAIXAS_SEGURO[1].aliquota+FAIXAS_SEGURO[1].parcela:FAIXAS_SEGURO[2].parcela,s=Math.max(s,SALARIO_MINIMO),r=!0,i=`<strong>Direito provável a ${a} parcelas de ${formatBRL(s)}.</strong> (Total: ${formatBRL(a*s)}).`,{direito:r,parcelas:a,valorParcela:s,texto:i}}if("undefined"!=typeof window){const o=debounce(atualizarUI,300),e=atualizarUI;document.addEventListener("DOMContentLoaded",(()=>{["tipo-rescisao","salario-bruto","data-admissao","data-demissao","aviso-previo","saldo-fgts","num-ferias-vencidas","media-salarios","num-solicitacao-seguro","n-dependentes"].forEach((t=>{const a=document.getElementById(t);if(a){"change"===("SELECT"===a.tagName||"date"===a.type?"change":"input")?a.addEventListener("change",e):a.addEventListener("input",o),"tipo-rescisao"===t&&a.addEventListener("change",atualizarOpcoesAvisoPrevio)}}));document.querySelectorAll(".accordion-button").forEach((o=>{o.addEventListener("click",(()=>{o.classList.toggle("active");const e=o.nextElementSibling;e.style.maxHeight?e.style.maxHeight=null:e.style.maxHeight=e.scrollHeight+"px"}))})),atualizarOpcoesAvisoPrevio()})),window.addEventListener("load",(()=>{try{initAnimadores(),atualizarUI()}catch(o){console.error("Erro durante o window.onload:",o)}}))}
+/**
+ * ===================================================================
+ * === ARQUIVO: ferramentas/calc-rescisao/script-rescisao.js
+ * === STATUS: Refatorado (Etapa 2)
+ * ===================================================================
+ * * Constantes e funções de cálculo globais (INSS, IRRF, formatBRL, etc.)
+ * * foram removidas e agora são carregadas de /js/calculos-core.js
+ * */
+
+let animadores = {},
+    rescisaoDonutChart = null;
+
+function initAnimadores() {
+    const o = { duration: 0.8, useEasing: !0, decimal: ",", separator: ".", prefix: "R$ " },
+        e = { "res-total-rescisao": o, "res-total-proventos": { ...o, prefix: "+R$ " }, "res-total-descontos": { ...o, prefix: "-R$ " }, "res-total-direitos": o };
+    try {
+        if (!("undefined" != typeof countUp)) return void console.error("ERRO CRÍTICO: Biblioteca CountUp.js não carregou a tempo!");
+        for (const o in e) {
+            const t = document.getElementById(o);
+            t ? ((animadores[o] = new countUp.CountUp(t, 0, e[o])), animadores[o].error ? console.error(`Erro ao criar animador para #${o}:`, animadores[o].error) : animadores[o].start()) : console.warn(`Elemento #${o} não encontrado.`);
+        }
+    } catch (o) {
+        console.error("Erro fatal no initAnimadores:", o);
+    }
+}
+
+// Funções globais (formatadorBRL, SALARIO_MINIMO, TETO_INSS, FAIXAS_INSS, FAIXAS_IRRF, etc...)
+// ... são carregadas do /js/calculos-core.js
+
+const TETO_SEGURO = 2313.74,
+    FAIXAS_SEGURO = [
+        { teto: 1968.36, aliquota: 0.8, parcela: 0 },
+        { teto: 3280.93, aliquota: 0.5, parcela: 1574.69 },
+        { teto: 1 / 0, aliquota: 0, parcela: 2313.74 },
+    ];
+
+function calcularRescisao() {
+    const o = getFloat("salario-bruto"),
+        e = getString("tipo-rescisao"),
+        t = getString("aviso-previo"),
+        a = getString("data-admissao"),
+        r = getString("data-demissao");
+    let i = getFloat("saldo-fgts");
+    const s = getFloat("num-ferias-vencidas");
+    let n = getFloat("media-salarios");
+    const l = getFloat("num-solicitacao-seguro"),
+        d = getFloat("n-dependentes");
+    n <= 0 && o > 0 && (n = o);
+    let c = { saldoSalario: 0, avisoPrevio: 0, decimoTerceiro: 0, totalFerias: 0 },
+        u = { inss: 0, irrf: 0, avisoPrevio: 0 },
+        m = [],
+        p = { multa: 0, saqueTotal: 0 },
+        v = { direito: !1, parcelas: 0, valorParcela: 0, texto: "" };
+    const h = { liquidoFinal: 0, brutoTotal: 0, descontosTotal: 0, detalhes: [], brutoDetalhado: {}, direitosFGTS: {}, mesesDeTrabalho: 0, seguro: v };
+    if (!o || !a || !r) return h;
+    const g = new Date(a + "T00:00:00"),
+        S = new Date(r + "T00:00:00");
+    if (isNaN(g.getTime()) || isNaN(S.getTime())) return { ...h, detalhes: [{ nome: "Erro: Verifique as datas", valor: 0, tipo: "info" }] };
+    if (S < g) return { ...h, detalhes: [{ nome: "Erro: Demissão antes da admissão", valor: 0, tipo: "info" }] };
+    let f = S.getFullYear() - g.getFullYear(),
+        T = S.getMonth() - g.getMonth(),
+        F = S.getDate() - g.getDate();
+    F < 0 && (T--, (F += new Date(S.getFullYear(), S.getMonth(), 0).getDate())), T < 0 && (f--, (T += 12));
+    const I = 12 * f + T + (F >= 15 ? 1 : 0),
+        E = S.getDate(),
+        A = S.getMonth() + 1;
+    let R = i > 0 ? i : 0.08 * o * I;
+    if (((c.saldoSalario = (o / 30) * E), "justa_causa" !== e)) {
+        c.decimoTerceiro = (o / 12) * A;
+        const e = s * o,
+            t = e / 3;
+        let a = I % 12;
+        I > 0 && 0 === a && s < f && (a = 12);
+        const r = (o / 12) * a,
+            i = r / 3;
+        c.totalFerias = e + t + r + i;
+    } else c.totalFerias = s * o + (s * o) / 3;
+    const N = 0.08 * c.saldoSalario,
+        _ = 0.08 * c.decimoTerceiro,
+        b = R + N + _;
+    if ("sem_justa_causa" === e) {
+        if ("indenizado" === t) {
+            const e = Math.min(90, 30 + 3 * Math.max(0, f));
+            c.avisoPrevio = (o / 30) * e;
+        }
+        (p.multa = 0.4 * b),
+            (p.saqueTotal = R + p.multa + N + _),
+            m.push({ nome: "Multa 40% FGTS (pago pela empresa)", valor: p.multa, tipo: "info" }),
+            m.push({ nome: "Direito a Saque FGTS (Saldo + Multa + Verbas)", valor: p.saqueTotal, tipo: "info" }),
+            (v = calcularSeguroDesemprego(I, n, l));
+    } else if ("pedido_demissao" === e)
+        "dispensado" === t && (u.avisoPrevio = o),
+            m.push({ nome: "Não tem direito a Saque FGTS", valor: 0, tipo: "info" }),
+            m.push({ nome: "Não tem direito a Multa FGTS", valor: 0, tipo: "info" }),
+            (v.texto = "<strong>Não tem direito.</strong> O Seguro-Desemprego não é pago em casos de pedido de demissão.");
+    else if ("justa_causa" === e)
+        m.push({ nome: "Não tem direito a Aviso Prévio", valor: 0, tipo: "info" }),
+            m.push({ nome: "Não tem direito a 13º Proporcional", valor: 0, tipo: "info" }),
+            m.push({ nome: "Não tem direito a Férias Proporcionais", valor: 0, tipo: "info" }),
+            m.push({ nome: "Não tem direito a Saque/Multa FGTS", valor: 0, tipo: "info" }),
+            (v.texto = "<strong>Não tem direito.</strong> A demissão por justa causa não dá direito ao Seguro-Desemprego.");
+    else if ("acordo_mutuo" === e) {
+        if ("indenizado" === t) {
+            const e = Math.min(90, 30 + 3 * Math.max(0, f));
+            c.avisoPrevio = (o / 30) * e / 2;
+        }
+        (p.multa = 0.2 * b),
+            (p.saqueTotal = 0.8 * R + p.multa + N + _),
+            m.push({ nome: "Multa 20% FGTS (Acordo)", valor: p.multa, tipo: "info" }),
+            m.push({ nome: "Direito a Saque FGTS (80% do saldo + Verbas)", valor: p.saqueTotal, tipo: "info" }),
+            (v.texto = "<strong>Não tem direito.</strong> A modalidade de Acordo Mútuo não dá direito ao Seguro-Desemprego.");
+    }
+    
+    // Funções de calculos-core.js
+    const y = calcularINSS_Progressivo(c.saldoSalario),
+        x = calcularINSS_Progressivo(c.decimoTerceiro);
+    u.inss = y + x;
+    const D = c.saldoSalario - y,
+        q = c.decimoTerceiro - x,
+        P = c.totalFerias,
+        C = calcularIRRF_PelaTabela(D, d),
+        M = calcularIRRF_PelaTabela(q, d),
+        O = calcularIRRF_PelaTabela(P, d); // Férias indenizadas são isentas, mas aqui calculamos sobre o total por simplicidade (calculadora-ferias.js faz o mesmo)
+    
+    u.irrf = C + M + O;
+    const L = c.saldoSalario + c.avisoPrevio + c.decimoTerceiro + c.totalFerias,
+        B = u.inss + u.irrf + u.avisoPrevio,
+        z = L - B,
+        G = [];
+    return (
+        c.saldoSalario > 0 && G.push({ nome: `Saldo de Salário (${E} dias)`, valor: c.saldoSalario, tipo: "provento" }),
+        c.avisoPrevio > 0 && G.push({ nome: "Aviso Prévio Indenizado", valor: c.avisoPrevio, tipo: "provento" }),
+        c.decimoTerceiro > 0 && G.push({ nome: `13º Proporcional (${A}/12 avos)`, valor: c.decimoTerceiro, tipo: "provento" }),
+        c.totalFerias > 0 && G.push({ nome: "Total Férias (Vencidas + Prop. + 1/3)", valor: c.totalFerias, tipo: "provento" }),
+        y > 0 && G.push({ nome: "INSS (sobre Saldo de Salário)", valor: y, tipo: "desconto" }),
+        x > 0 && G.push({ nome: "INSS (sobre 13º)", valor: x, tipo: "desconto" }),
+        C > 0 && G.push({ nome: "IRRF (sobre Saldo de Salário)", valor: C, tipo: "desconto" }),
+        M > 0 && G.push({ nome: "IRRF (sobre 13º)", valor: M, tipo: "desconto" }),
+        O > 0 && G.push({ nome: "IRRF (sobre Férias)", valor: O, tipo: "desconto" }),
+        u.avisoPrevio > 0 && G.push({ nome: "Aviso Prévio (não cumprido)", valor: u.avisoPrevio, tipo: "desconto" }),
+        m.forEach((o) => G.push(o)),
+        { liquidoFinal: z, brutoTotal: L, descontosTotal: B, detalhes: G, brutoDetalhado: c, direitosFGTS: { saldo: R, multa: p.multa, saqueTotal: p.saqueTotal }, mesesDeTrabalho: I, seguro: v }
+    );
+}
+function atualizarUI() {
+    try {
+        const o = calcularRescisao(),
+            e = getString("tipo-rescisao"),
+            t = isNaN(o.liquidoFinal) ? 0 : o.liquidoFinal,
+            a = isNaN(o.brutoTotal) ? 0 : o.brutoTotal,
+            r = isNaN(o.descontosTotal) ? 0 : o.descontosTotal,
+            i = t + (isNaN(o.direitosFGTS.saqueTotal) ? 0 : o.direitosFGTS.saqueTotal);
+        animadores["res-total-rescisao"] && animadores["res-total-rescisao"].update(t),
+            animadores["res-total-proventos"] && animadores["res-total-proventos"].update(a),
+            animadores["res-total-descontos"] && animadores["res-total-descontos"].update(r),
+            animadores["res-total-direitos"] && animadores["res-total-direitos"].update(i),
+            atualizarRescisaoDonutChart(o.brutoDetalhado, o.direitosFGTS, o.seguro.direito, e);
+        const s = document.getElementById("tax-details-rescisao");
+        if (s) {
+            s.textContent = "";
+            let e = 0,
+                t = 0;
+            const a = document.createDocumentFragment(),
+                r = document.createDocumentFragment(),
+                i = document.createDocumentFragment();
+            (o.detalhes || []).forEach((o) => {
+                if (o && (0 !== o.valor || ("info" === o.tipo && !o.nome.includes("Seguro"))))
+                    if ("provento" === o.tipo) a.appendChild(criarTaxItem(o.nome, o.valor, "provento")), (e += o.valor);
+                    else if ("desconto" === o.tipo) r.appendChild(criarTaxItem(o.nome, o.valor, "desconto")), (t += o.valor);
+                    else if ("info" === o.tipo) {
+                        const e = criarTaxItem(o.nome, o.valor, "provento");
+                        (e.style.color = "var(--cor-texto-secundario)"), e.querySelector("strong") && ((e.querySelector("strong").style.color = "var(--cor-texto-secundario)"), (e.querySelector("strong").textContent = o.valor > 0 ? formatBRL(o.valor) : "Não")), i.appendChild(e);
+                    }
+            }),
+                e > 0 && (a.appendChild(criarTaxItemTotal("Total de Verbas", e, "provento")), s.appendChild(a)),
+                t > 0 && (r.appendChild(criarTaxItemTotal("Total de Descontos", t, "desconto")), s.appendChild(r)),
+                i.childElementCount > 0 && s.appendChild(i),
+                0 === s.childElementCount &&
+                    (o.detalhes && o.detalhes.length > 0 && o.detalhes[0].nome.startsWith("Erro:")
+                        ? (s.innerHTML = `<div class="tax-item"><span style="color: var(--cor-negativo);">${o.detalhes[0].nome}</span></div>`)
+                        : (s.innerHTML = '<div class="tax-item"><span>Preencha os dados</span></div>'));
+        }
+        const n = document.getElementById("seguro-desemprego-card"),
+            l = document.getElementById("seguro-desemprego-texto");
+        n && l && (0 === a && 0 === r && 0 === t ? (n.style.display = "none") : ((n.style.display = "block"), (l.innerHTML = o.seguro.texto))), atualizarAlturasAccordions();
+    } catch (o) {
+        console.error("Erro DENTRO de atualizarUI:", o);
+    }
+}
+function atualizarRescisaoDonutChart(o, e, t, a) {
+    const r = document.getElementById("rescisao-chart-container");
+    if (!r) return;
+    rescisaoDonutChart && rescisaoDonutChart.destroy(), (r.innerHTML = "");
+    const i = document.createElement("canvas");
+    (i.id = "rescisao-donut-chart"), r.appendChild(i);
+    const s = i,
+        { saldoSalario: n, avisoPrevio: l, decimoTerceiro: d, totalFerias: c } = o,
+        { multa: u, saqueTotal: m } = e,
+        p = m - u,
+        v = [],
+        h = [],
+        g = [];
+    n > 0 && (v.push("Saldo de Salário"), h.push(n), g.push("#1976D2")), // Azul Sólido
+        l > 0 && (v.push("Aviso Prévio"), h.push(l), g.push("#0D47A1")), // Azul Marinho
+        d > 0 && (v.push("13º Salário"), h.push(d), g.push("#F57C00")), // Laranja
+        c > 0 && (v.push("Férias (Total)"), h.push(c), g.push("#FB8C00")), // Laranja Claro
+        "sem_justa_causa" !== a && "acordo_mutuo" !== a
+            ? t && (v.push("Seguro-Desemprego"), h.push(0.1), g.push("#42A5F5")) // Azul claro (só para mostrar que tem)
+            : (u > 0 && (v.push("Multa FGTS"), h.push(u), g.push("#D32F2F")), // Vermelho
+              p > 0 && (v.push("Saque Saldo FGTS"), h.push(p), g.push("#c678dd")), // Roxo (do tema antigo, manter?)
+              t && (v.push("Seguro-Desemprego"), h.push(0.1), g.push("#42A5F5"))), // Azul claro
+        0 === h.length && (v.push("Nenhum provento"), h.push(1), g.push("#3A3052"));
+        
+    rescisaoDonutChart = new Chart(s, {
+        type: "doughnut",
+        data: {
+            labels: v,
+            datasets: [{ data: h, backgroundColor: g, borderColor: "rgba(255,255,255,0)", borderWidth: 0, hoverOffset: 4 }], // Borda removida
+        },
+        options: {
+            responsive: !0,
+            maintainAspectRatio: !1,
+            cutout: "70%",
+            plugins: {
+                legend: { display: !0, position: "bottom", labels: { color: "#A09CB0", font: { family: "Poppins" }, padding: 10, filter: function (o, e) {
+                    return "Seguro-Desemprego" !== o.text;
+                } } },
+                tooltip: {
+                    callbacks: {
+                        label: function (o) {
+                            const e = o.label || "",
+                                t = o.raw || 0;
+                            if ("Seguro-Desemprego" === e) return " Seguro-Desemprego (Ver card)";
+                            const a = o.chart.data.datasets[0].data.reduce((o, e) => o + e, 0),
+                                r = a > 0 ? ((t / a) * 100).toFixed(1) : 0;
+                            return ` ${e}: ${formatBRL(t)} (${r.replace(".", ",")}%)`;
+                        },
+                    },
+                },
+            },
+        },
+    });
+}
+function atualizarAlturasAccordions() {
+    document.querySelectorAll(".accordion-content").forEach((o) => {
+        const e = o.previousElementSibling;
+        e && e.classList.contains("active") && (o.style.maxHeight = o.scrollHeight + "px");
+    });
+}
+function atualizarOpcoesAvisoPrevio() {
+    const o = getString("tipo-rescisao"),
+        e = document.getElementById("aviso-previo"),
+        t = document.getElementById("aviso-previo-group");
+    if (!e || !t) return;
+    const a = Array.from(e.options),
+        r = { sem_justa_causa: ["indenizado", "trabalhado"], pedido_demissao: ["trabalhado", "dispensado"], acordo_mutuo: ["indenizado", "trabalhado"], justa_causa: [] }[o] || [];
+    if (0 === r.length) return void (t.style.display = "none");
+    (t.style.display = "block");
+    let i = null;
+    a.forEach((o) => {
+        r.includes(o.value) ? ((o.style.display = "block"), i || (i = o.value)) : (o.style.display = "none");
+    }),
+        r.includes(e.value) || (e.value = i);
+}
+function calcularSeguroDesemprego(o, e, t) {
+    let a = 0,
+        r = !1,
+        i = "";
+    if ((1 === t ? (o >= 24 ? (a = 5) : o >= 12 && (a = 4)) : 2 === t ? (o >= 24 ? (a = 5) : o >= 12 ? (a = 4) : o >= 9 && (a = 3)) : o >= 24 ? (a = 5) : o >= 12 ? (a = 4) : o >= 6 && (a = 3), 0 === a))
+        return (i = `<strong>Não tem direito.</strong> Para a ${t}ª solicitação, você precisaria de mais tempo de trabalho (mínimo de ${[0, 12, 9, 6][t]} meses). Você trabalhou ${o} meses.`), { direito: r, parcelas: a, valorParcela: 0, texto: i };
+    let s = 0;
+    return (
+        (s = e <= FAIXAS_SEGURO[0].teto ? e * FAIXAS_SEGURO[0].aliquota : e <= FAIXAS_SEGURO[1].teto ? (e - FAIXAS_SEGURO[0].teto) * FAIXAS_SEGURO[1].aliquota + FAIXAS_SEGURO[1].parcela : FAIXAS_SEGURO[2].parcela),
+        (s = Math.max(s, SALARIO_MINIMO)),
+        (r = !0),
+        (i = `<strong>Direito provável a ${a} parcelas de ${formatBRL(s)}.</strong> (Total: ${formatBRL(a * s)}).`),
+        { direito: r, parcelas: a, valorParcela: s, texto: i }
+    );
+}
+if ("undefined" != typeof window) {
+    // A função debounce() é carregada do /js/calculos-core.js
+    const o = debounce(atualizarUI, 300),
+        e = atualizarUI;
+    document.addEventListener("DOMContentLoaded", () => {
+        ["tipo-rescisao", "salario-bruto", "data-admissao", "data-demissao", "aviso-previo", "saldo-fgts", "num-ferias-vencidas", "media-salarios", "num-solicitacao-seguro", "n-dependentes"].forEach((t) => {
+            const a = document.getElementById(t);
+            if (a) {
+                const t = "SELECT" === a.tagName || "date" === a.type ? "change" : "input";
+                "input" === t ? a.addEventListener(t, o) : a.addEventListener("change", e), "tipo-rescisao" === t && a.addEventListener("change", atualizarOpcoesAvisoPrevio);
+            }
+        });
+        document.querySelectorAll(".accordion-button").forEach((o) => {
+            o.addEventListener("click", () => {
+                o.classList.toggle("active");
+                const e = o.nextElementSibling;
+                e.style.maxHeight ? (e.style.maxHeight = null) : (e.style.maxHeight = e.scrollHeight + "px");
+            });
+        }),
+            atualizarOpcoesAvisoPrevio();
+    }),
+        window.addEventListener("load", () => {
+            try {
+                initAnimadores(), atualizarUI();
+            } catch (o) {
+                console.error("Erro durante o window.onload:", o);
+            }
+        });
+}

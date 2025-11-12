@@ -1,0 +1,225 @@
+/**
+ * ===================================================================
+ * === ARQUIVO: ferramentas/calc-salario-clt/script-clt.js
+ * === STATUS: Refatorado (Etapa 2)
+ * ===================================================================
+ * * Constantes e funções de cálculo globais (INSS, IRRF, formatBRL, etc.)
+ * * foram removidas e agora são carregadas de /js/calculos-core.js
+ * */
+
+let animadores = {},
+    ultimoResultadoCLT = null,
+    cltDonutChart = null;
+
+function initAnimadores() {
+    const t = { duration: 1, useEasing: !0, decimal: ",", separator: ".", prefix: "R$ " },
+        e = { "res-clt-pacote": t, "res-clt-salario-em-conta": t };
+    try {
+        for (const t in e) {
+            const o = document.getElementById(t);
+            o ? ((animadores[t] = new countUp.CountUp(o, 0, e[t])), animadores[t].error ? console.error(`Erro no CountUp para #${t}:`, animadores[t].error) : animadores[t].start()) : console.warn(`Elemento de animação #${t} não encontrado. O valor será estático.`);
+        }
+    } catch (t) {
+        console.error("Erro fatal ao inicializar o CountUp.js.", t);
+    }
+}
+
+// Funções globais (formatadorBRL, SALARIO_MINIMO, TETO_INSS, FAIXAS_INSS, FAIXAS_IRRF, etc...)
+// ... são carregadas do /js/calculos-core.js
+
+const todosInputIDs = ["clt-bruto", "clt-dependentes", "clt-beneficios", "clt-descontos", "clt-incluir-provisao", "clt-plr-anual", "clt-incluir-fgts"];
+
+// Funções globais (criarTaxItem, criarTaxItemTotal, formatBRL, getFloat, getChecked)
+// ... são carregadas do /js/calculos-core.js
+
+let elResCltPacote, elResCltSalarioEmConta, elResCltImpostos, elResCltAliquota, elTaxDetailsClt;
+
+if ("undefined" != typeof window) {
+    // A função debounce() é carregada do /js/calculos-core.js
+    const t = debounce(calcularEAtualizarUI, 300);
+    document.addEventListener("DOMContentLoaded", () => {
+        todosInputIDs.forEach((e) => {
+            const o = document.getElementById(e);
+            if (o) {
+                const e = "SELECT" === o.tagName || "checkbox" === o.type ? "change" : "input";
+                "input" === e ? o.addEventListener(e, t) : o.addEventListener(e, calcularEAtualizarUI);
+            }
+        });
+        const e = document.getElementById("modal-contracheque"),
+            o = document.getElementById("btn-modal-contracheque"),
+            a = document.getElementById("modal-contracheque-close");
+        function n() {
+            e.style.display = "none";
+        }
+        o &&
+            o.addEventListener("click", function (t) {
+                t.preventDefault();
+                const o = getFloat("clt-descontos");
+                if (!ultimoResultadoCLT || ultimoResultadoCLT.bruto <= 0) return void alert("Por favor, insira um Salário Bruto primeiro.");
+                const a = ultimoResultadoCLT,
+                    n = a.inss + a.irrf + o,
+                    l = (a.inss / (a.bruto || 1)) * 100,
+                    r = (a.irrf / (a.bruto || 1)) * 100;
+                (document.getElementById("modal-salario-bruto").textContent = formatBRL(a.bruto)),
+                    (document.getElementById("modal-total-proventos").textContent = formatBRL(a.bruto)),
+                    (document.getElementById("modal-inss").textContent = formatBRL(a.inss)),
+                    (document.getElementById("modal-irrf").textContent = formatBRL(a.irrf)),
+                    (document.getElementById("modal-outros-descontos").textContent = formatBRL(o)),
+                    (document.getElementById("modal-total-descontos").textContent = formatBRL(n)),
+                    (document.getElementById("modal-inss-aliquota").textContent = l.toFixed(2).replace(".", ",")),
+                    (document.getElementById("modal-irrf-aliquota").textContent = r.toFixed(2).replace(".", ",")),
+                    (document.getElementById("modal-liquido").textContent = formatBRL(a.salarioEmConta)),
+                    (e.style.display = "flex");
+            }),
+            a && a.addEventListener("click", n),
+            e &&
+                e.addEventListener("click", (t) => {
+                    t.target === e && n();
+                }),
+            document.querySelectorAll(".accordion-button").forEach((t) => {
+                t.addEventListener("click", () => {
+                    t.classList.toggle("active");
+                    const e = t.nextElementSibling;
+                    e.style.maxHeight ? (e.style.maxHeight = null) : (e.style.maxHeight = e.scrollHeight + "px");
+                });
+            }),
+            (window.atualizarAlturasAccordions = function () {
+                document.querySelectorAll(".accordion-content").forEach((t) => {
+                    t.style.maxHeight && (t.style.maxHeight = t.scrollHeight + "px");
+                });
+            }),
+            (elResCltPacote = document.getElementById("res-clt-pacote")),
+            (elResCltSalarioEmConta = document.getElementById("res-clt-salario-em-conta")),
+            (elResCltImpostos = document.getElementById("res-clt-impostos")),
+            (elResCltAliquota = document.getElementById("res-clt-aliquota")),
+            (elTaxDetailsClt = document.getElementById("tax-details-clt"));
+    }),
+        window.addEventListener("load", () => {
+            initAnimadores(), calcularEAtualizarUI();
+        });
+}
+function calcularEAtualizarUI() {
+    try {
+        const t = { bruto: getFloat("clt-bruto"), dependentes: getFloat("clt-dependentes"), beneficios: getFloat("clt-beneficios"), descontos: getFloat("clt-descontos"), incluirProvisao: getChecked("clt-incluir-provisao"), plrAnual: getFloat("clt-plr-anual"), incluirFGTS: getChecked("clt-incluir-fgts") },
+            e = t.bruto > 0 ? calcularCLT_Colaborador(t) : { valorFinal: 0, totalImpostos: 0, aliquotaEfetiva: 0, detalhesImpostos: [], bruto: 0, inss: 0, irrf: 0, salarioEmConta: 0 };
+        (ultimoResultadoCLT = e), atualizarResultados(e, t);
+    } catch (t) {
+        console.error("Erro no cálculo:", t);
+    }
+}
+function atualizarResultados(t, e) {
+    const o = t.valorFinal || 0,
+        a = t.salarioEmConta || 0,
+        n = t.totalImpostos || 0;
+    if ((atualizarDonutCharts({ salarioEmConta: t.salarioEmConta, beneficiosProvisoes: Math.max(0, t.valorFinal - t.salarioEmConta), impostosDescontos: t.totalImpostos }), document.querySelectorAll(".card").forEach((t) => {
+        t.classList.remove("is-updating"), t.offsetWidth, t.classList.add("is-updating");
+    }), animadores["res-clt-pacote"] ? animadores["res-clt-pacote"].update(o) : elResCltPacote && (elResCltPacote.textContent = formatBRL(o)), animadores["res-clt-salario-em-conta"] ? animadores["res-clt-salario-em-conta"].update(a) : elResCltSalarioEmConta && (elResCltSalarioEmConta.textContent = formatBRL(a)), elResCltImpostos && (elResCltImpostos.textContent = formatBRL(n)), elResCltAliquota && (elResCltAliquota.textContent = `${(100 * t.aliquotaEfetiva).toFixed(1)}% do bruto`.replace(".", ",")), elTaxDetailsClt)) {
+        elTaxDetailsClt.textContent = "";
+        let e = 0,
+            o = 0;
+        const a = document.createDocumentFragment(),
+            n = document.createDocumentFragment();
+        if (
+            (t.detalhesImpostos.forEach((t) => {
+                "provento" === t.tipo && t.valor > 0 ? (a.appendChild(criarTaxItem(t.nome, t.valor, t.percentual, "provento", "do bruto")), (e += t.valor)) : "desconto" === t.tipo && t.valor > 0 && (n.appendChild(criarTaxItem(t.nome, t.valor, t.percentual, "desconto", "do bruto")), (o += t.valor));
+            }),
+            e > 0 && (a.appendChild(criarTaxItemTotal("Total de Benefícios", e, "provento")), elTaxDetailsClt.appendChild(a)),
+            o > 0 && (n.appendChild(criarTaxItemTotal("Total de Descontos", o, "desconto")), elTaxDetailsClt.appendChild(n)),
+            0 === elTaxDetailsClt.childElementCount)
+        ) {
+            const t = document.createElement("div");
+            t.className = "tax-item";
+            const e = document.createElement("span");
+            (e.textContent = "Nenhum detalhe"), t.appendChild(e), elTaxDetailsClt.appendChild(t);
+        }
+    }
+    atualizarAlturasAccordions();
+}
+function calcularCLT_Colaborador(t) {
+    const { bruto: e, dependentes: o, beneficios: a, descontos: n, incluirProvisao: l, plrAnual: r, incluirFGTS: c } = t,
+        i = n,
+        s = calcularINSS_Progressivo(e), // Função de calculos-core.js
+        u = calcularIRRF_Preciso(e, s, o, i), // Função de calculos-core.js
+        d = s + u + i,
+        m = e - d,
+        p = (r || 0) / 12,
+        C = m + a + p,
+        E = l ? calcularProvisaoLiquida13(e, o) : 0,
+        I = l ? calcularProvisaoLiquidaFerias(e, s, u, o, i) : 0,
+        f = 0.08 * e,
+        R = C + (c ? f : 0) + (E + I),
+        h = [];
+    return (
+        a > 0 && h.push({ nome: "Benefícios (VR, VA, etc)", valor: a, percentual: a / (e || 1), tipo: "provento" }),
+        p > 0 && h.push({ nome: "PLR (Provisão Mensal)", valor: p, percentual: p / (e || 1), tipo: "provento" }),
+        c && f > 0 && h.push({ nome: "FGTS (Depósito Mensal)", valor: f, percentual: f / (e || 1), tipo: "provento" }),
+        l && E > 0 && h.push({ nome: "13º (Média Líquida)", valor: E, percentual: E / (e || 1), tipo: "provento" }),
+        l && I > 0 && h.push({ nome: "Férias + 1/3 (Média Líquida)", valor: I, percentual: I / (e || 1), tipo: "provento" }),
+        s > 0 && h.push({ nome: "INSS", valor: s, percentual: s / (e || 1), tipo: "desconto" }),
+        u > 0 && h.push({ nome: "IRRF", valor: u, percentual: u / (e || 1), tipo: "desconto" }),
+        i > 0 && h.push({ nome: "Outros Descontos", valor: i, percentual: i / (e || 1), tipo: "desconto" }),
+        { valorFinal: R, salarioEmConta: m, totalImpostos: d, aliquotaEfetiva: e > 0 ? d / e : 0, detalhesImpostos: h, bruto: e, inss: s, irrf: u }
+    );
+}
+function calcularProvisaoLiquida13(t, e) {
+    if (t <= 0) return 0;
+    const o = calcularINSS_Progressivo(t); // Função de calculos-core.js
+    return (t - o - calcularIRRF_PelaTabela(t - o, e)) / 12; // Função de calculos-core.js
+}
+function calcularProvisaoLiquidaFerias(t, e, o, a, n) {
+    if (t <= 0) return 0;
+    const l = t + t / 3,
+        r = calcularINSS_Progressivo(l); // Função de calculos-core.js
+    return (l - r - calcularIRRF_Preciso(l, r, a, n) - n) / 12; // Função de calculos-core.js
+}
+// Funções de INSS e IRRF (calcularINSS_Progressivo, calcularIRRF_Preciso, calcularIRRF_PelaTabela)
+// ... foram removidas e agora são carregadas de /js/calculos-core.js
+
+function criarOuAtualizarDonut(t, e, o, a, n) {
+    const l = document.getElementById(e);
+    if (!l) return null;
+    const r = [],
+        c = [],
+        i = [];
+    a.forEach((t, e) => {
+        t > 0 && (r.push(t), c.push(o[e]), i.push(n[e]));
+    }),
+        0 === r.length && (r.push(1), c.push("Nenhum dado"), i.push("#3A3052"));
+    
+    // CORREÇÃO 3.2: Borda do Donut removida (alinhado ao style.css)
+    const s = { labels: c, datasets: [{ data: r, backgroundColor: i, borderColor: "rgba(255,255,255,0)", borderWidth: 0, hoverOffset: 4 }] },
+        u = {
+            type: "doughnut",
+            data: s,
+            options: {
+                responsive: !0,
+                maintainAspectRatio: !0,
+                cutout: "70%",
+                plugins: {
+                    legend: { display: !0, position: "bottom", labels: { color: "#A09CB0", font: { family: "Poppins" }, padding: 10 } },
+                    tooltip: {
+                        callbacks: {
+                            label: function (t) {
+                                const e = t.label || "",
+                                    o = t.raw || 0,
+                                    a = t.chart.data.datasets[0].data.reduce((t, e) => t + e, 0),
+                                    n = a > 0 ? ((o / a) * 100).toFixed(1) : 0;
+                                return "Nenhum dado" === e ? "Nenhum dado" : ` ${e}: ${formatBRL(o)} (${n.replace(".", ",")}%)`;
+                            },
+                        },
+                    },
+                },
+            },
+        };
+    return t ? ((t.data = s), t.update(), t) : new Chart(l, u);
+}
+function atualizarDonutCharts(t) {
+    // CORREÇÃO 3.2: Cores do gráfico CLT atualizadas
+    cltDonutChart = criarOuAtualizarDonut(
+        cltDonutChart,
+        "clt-donut-chart",
+        ["Salário em Conta", "Benefícios/Provisões", "Impostos/Descontos"],
+        [t.salarioEmConta, t.beneficiosProvisoes, t.impostosDescontos],
+        ["#1976D2", "#F57C00", "#D32F2F"] // Azul Sólido, Laranja, Vermelho
+    );
+}
